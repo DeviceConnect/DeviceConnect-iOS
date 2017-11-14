@@ -7,7 +7,6 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 #import <ImageIO/CGImageProperties.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
@@ -15,6 +14,7 @@
 #import "DPHostIPodAudioPlayer.h"
 #import "DPHostMoviePlayer.h"
 #import "DPHostUtils.h"
+#import <Photos/Photos.h>
 
 @implementation DPHostMediaPlayerFactory
 + (DPHostMediaPlayer*)createPlayerWithMediaId:(NSString *)mediaId plugin:(DPHostDevicePlugin *)plugin error:(NSError **)error
@@ -83,7 +83,7 @@
         return nil;
     }
     NSMutableArray *ctxArr = [NSMutableArray array];
-    [ctxArr addObjectsFromArray:[self contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
+    [ctxArr addObjectsFromArray:[self contextsBySearchingPhotoLibraryWithQuery:query mimeType:mimeType]];
     [ctxArr addObjectsFromArray:[self contextsBySearchingIPodLibraryWithQuery:query mimeType:mimeType]];
     if (offset && offset.integerValue >= ctxArr.count) {
         *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
@@ -106,88 +106,70 @@
 }
 
 #pragma mark - Private Method
-+ (NSArray *)contextsBySearchingAssetsLibraryWithQuery:(NSString *)query
+
++ (NSArray *)contextsBySearchingPhotoLibraryWithQuery:(NSString *)query
                                               mimeType:(NSString *)mimeType
 {
-    __block BOOL failed = NO;
     __block NSMutableArray *ctxArr = [NSMutableArray new];
-    
-    ALAssetsLibrary *library = [ALAssetsLibrary new];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
-    NSUInteger groupTypes = ALAssetsGroupAll;
     NSString *mimeTypeLowercase = mimeType.lowercaseString;
-    id mainLoopBlock = ^(ALAssetsGroup *group, BOOL *stop1)
-    {
-        if (failed) {
-            // 失敗状態になっているのなら、処理を切り上げる。
-            *stop1 = YES;
-            return;
-        }
-        
-        if(group != nil) {
-            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop2)
-             {
-                 if (failed) {
-                     // 失敗状態になっているのなら、処理を切り上げる。
-                     *stop2 = YES;
-                     return;
-                 }
-                 
-                 if (result) {
-                     DPHostMediaContext *ctx = [DPHostMediaContext contextWithAsset:result];
-                     if (!ctx) {
-                         // コンテキスト作成失敗；スキップ
-                         return;
-                     }
-                     
-                     // クエリー検索
-                     if (query) {
-                         // クエリーのマッチングはファイル名に対して行う。
-                         NSRange result = [ctx.title rangeOfString:query];
-                         if (result.location == NSNotFound && result.length == 0) {
-                             // クエリーにマッチせず；スキップ。
-                             return;
-                         }
-                     }
-                     // MIMEタイプ検索
-                     if (mimeType) {
-                         NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
-                         if (result.location == NSNotFound && result.length == 0) {
-                             // MIMEタイプにマッチせず；スキップ。
-                             return;
-                         }
-                     }
-                     
-                     @synchronized(ctxArr) {
-                         [ctxArr addObject:ctx];
-                     }
-                 }
-             }];
-        } else {
-            // group == nil ⇒ イテレーション終了
-            dispatch_semaphore_signal(semaphore);
-        }
-    };
-    id failBlock = ^(NSError *error)
-    {
-        failed = YES;
-        return;
-    };
-    
-    [library enumerateGroupsWithTypes:groupTypes
-                            usingBlock:mainLoopBlock
-                          failureBlock:failBlock];
-    
-    // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
-    long result = dispatch_semaphore_wait(semaphore, timeout);
-    if (result != 0) {
-        // タイムアウト
-        failed = YES;
+
+    PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:[DPHostMediaPlayerFactory getAlbum] options:nil];
+    if (assets.count == 0) {
+        return ctxArr;
     }
+    [assets enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+        if (asset) {
+            DPHostMediaContext *ctx = [DPHostMediaContext contextWithPHAsset:asset];
+            if (!ctx) {
+                // コンテキスト作成失敗；スキップ
+                return;
+            }
+            
+            // クエリー検索
+            if (query) {
+                // クエリーのマッチングはファイル名に対して行う。
+                NSRange result = [ctx.title rangeOfString:query];
+                if (result.location == NSNotFound && result.length == 0) {
+                    // クエリーにマッチせず；スキップ。
+                    return;
+                }
+            }
+            // MIMEタイプ検索
+            if (mimeType) {
+                NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
+                if (result.location == NSNotFound && result.length == 0) {
+                    // MIMEタイプにマッチせず；スキップ。
+                    return;
+                }
+            }
+            
+            @synchronized(ctxArr) {
+                [ctxArr addObject:ctx];
+            }
+        }
+    }];
     
-    return failed ? nil : ctxArr;
+    return ctxArr;
 }
+
++ (PHAssetCollection *)getAlbum {
+    PHFetchResult *assetCollections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumVideos
+                                                                               options:nil];
+    if (assetCollections.count == 0) {
+        return nil;
+    }
+    __block PHAssetCollection * myAlbum;
+    [assetCollections enumerateObjectsUsingBlock:^(PHAssetCollection *album, NSUInteger idx, BOOL *stop) {
+        if ([album.localizedTitle isEqualToString:@"Videos"]) {
+            myAlbum = album;
+            *stop = YES;
+        }
+    }];
+    
+    return myAlbum;
+}
+
 
 + (NSArray *)contextsBySearchingIPodLibraryWithQuery:(NSString *)query
                                             mimeType:(NSString *)mimeType
@@ -360,5 +342,6 @@
         *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
     }
 }
+
 
 @end

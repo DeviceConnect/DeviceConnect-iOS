@@ -60,8 +60,11 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                              [response setErrorToUnknownWithMessage:@"Directory can not be specified."];
                              return YES;
                          }
-                         
-                         [DConnectFileProfile setURI:[[NSURL fileURLWithPath:dstPath] absoluteString] target:response];
+                         if (![dstPath hasPrefix:@"file://"]) {
+                             dstPath = [NSString stringWithFormat:@"file://%@", dstPath];
+                         }
+                         NSURL *url = [NSURL URLWithString:[dstPath stringByReplacingOccurrencesOfString:@" " withString:@"%20"]];
+                         [DConnectFileProfile setURI:url.absoluteString target:response];
                          NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:[dstPath pathExtension]];
                          if (!mimeType) {
                              mimeType = [DConnectFileManager mimeTypeForArbitraryData];

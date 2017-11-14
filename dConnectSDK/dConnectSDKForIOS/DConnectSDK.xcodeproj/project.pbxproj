@@ -135,6 +135,7 @@
 		AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB291C642AC500B4C62C /* RoutingConnection.m */; };
 		AB67AB311C642AC500B4C62C /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */; };
 		AB67AB641C644BC700B4C62C /* GCIPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB631C644BC700B4C62C /* GCIPUtil.m */; };
+		AB9F67081FB94988003A8EA0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9F67071FB94988003A8EA0 /* Photos.framework */; };
 		BE21BC67197E109B00BAF018 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE24744B197914940035E83B /* DConnectSDK.framework */; };
 		BE21BC6F197E11B600BAF018 /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BE21BC6B197E11B600BAF018 /* Hash.m */; };
 		BE21BC70197E11B600BAF018 /* Multipart.m in Sources */ = {isa = PBXBuildFile; fileRef = BE21BC6D197E11B600BAF018 /* Multipart.m */; };
@@ -479,6 +480,7 @@
 		AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingHTTPServer.m; sourceTree = "<group>"; };
 		AB67AB621C644BC700B4C62C /* GCIPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCIPUtil.h; sourceTree = "<group>"; };
 		AB67AB631C644BC700B4C62C /* GCIPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCIPUtil.m; sourceTree = "<group>"; };
+		AB9F67071FB94988003A8EA0 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		BE21B730197E108900BAF018 /* build-state.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = "build-state.dat"; sourceTree = "<group>"; };
 		BE21B731197E108900BAF018 /* DConnectSDK-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-all-target-headers.hmap"; sourceTree = "<group>"; };
 		BE21B732197E108900BAF018 /* DConnectSDK-generated-files.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-generated-files.hmap"; sourceTree = "<group>"; };
@@ -2122,6 +2124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9F67081FB94988003A8EA0 /* Photos.framework in Frameworks */,
 				C29D32EC191B202A001015CC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4112,6 +4115,7 @@
 		C29D32EA191B202A001015CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB9F67071FB94988003A8EA0 /* Photos.framework */,
 				BE21B72D197E108900BAF018 /* DConnectSDK.build */,
 				BE24744B197914940035E83B /* DConnectSDK.framework */,
 				300564B0196FB68600A4E708 /* libsqlite3.0.dylib */,

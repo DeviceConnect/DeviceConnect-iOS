@@ -207,8 +207,6 @@
          "please perform Media PUT API first to present the view controller."];
         return block;
     }
-    Float64 dur = CMTimeGetSeconds(self.playerController.player.currentTime);
-    Float64 durInMiliSec = 1000 * dur;
     __weak DPHostMoviePlayer *weakSelf = self;
     block = ^{
         CMTimeScale timeScale = weakSelf.playerController.player.currentTime.timescale;
@@ -309,7 +307,6 @@
 
         [DConnectMediaPlayerProfile setPos:durInMiliSec target:message];
     }
-    
     // イベント送信
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
@@ -319,31 +316,60 @@
     }
 }
 
+
 - (void)viewControllerWithURL:(NSURL *)url
 {
     self.session = [AVAudioSession sharedInstance];
     [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:url];
-    // 再生完了通知をさせない様にする
-    // 再生完了時に閉じる処理を実行させたくないので、再生完了通知を一旦消す。
-    [[NSNotificationCenter defaultCenter] removeObserver:self.playerController
-                                                    name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:nil];
-    // 再生完了の通知；独自の再生完了時に処理を行わせる。
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(videoFinished:)
-                                                 name:AVPlayerItemDidPlayToEndTimeNotification
-                                               object:nil];
-
+    if (!url.scheme) {
+        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[url.absoluteString] options:nil];
+        if (assets.count == 0) {
+            return;
+        }
+        __weak DPHostMoviePlayer *weakSelf = self;
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        // 30秒経ったらタイムアウト
+        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
+        [assets enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+            PHVideoRequestOptions *options = [PHVideoRequestOptions new];
+            [[PHImageManager defaultManager] requestPlayerItemForVideo:asset
+                                                                options:options
+                                                          resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+                                                              [weakSelf showPlayerForPlayerItem:playerItem];
+                                                              dispatch_semaphore_signal(semaphore);
+                                                          }];
+        }];
+        // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
+        dispatch_semaphore_wait(semaphore, timeout);
+    } else {
+        [self showPlayerForPlayerItem:[AVPlayerItem playerItemWithURL:url]];
+    }
+}
+- (void)showPlayerForPlayerItem:(AVPlayerItem *)item {
     self.player = [AVPlayer playerWithPlayerItem:item];
     self.playerController = [AVPlayerViewController new];
     self.playerController.player = self.player;
     self.playerController.videoGravity = AVLayerVideoGravityResizeAspect;
     self.playerController.allowsPictureInPicturePlayback = NO;
     self.playerController.showsPlaybackControls = YES;
+    // 再生完了通知をさせない様にする
+    // 再生完了時に閉じる処理を実行させたくないので、再生完了通知を一旦消す。
+    __weak DPHostMoviePlayer *weakSelf = self;
+     dispatch_async(dispatch_get_main_queue(), ^{
+         [[NSNotificationCenter defaultCenter] removeObserver:weakSelf
+                                                         name:AVPlayerItemDidPlayToEndTimeNotification
+                                                       object:item];
+         // 再生完了の通知；独自の再生完了時に処理を行わせる。
+         [[NSNotificationCenter defaultCenter] addObserver:weakSelf
+                                                  selector:@selector(videoFinished:)
+                                                      name:AVPlayerItemDidPlayToEndTimeNotification
+                                                    object:item];
+
+    });
 }
 
 #pragma mark - Movie Notification
+
 - (void) videoFinished:(NSNotification*)notification
 {
     __weak DPHostMoviePlayer *weakSelf = self;

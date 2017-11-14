@@ -96,9 +96,10 @@
                               return YES;
                           }
                           [recorder takePhotoWithSuccessCompletion:^(NSURL *assetURL) {
+                              
                               [DConnectMediaStreamRecordingProfile setUri:assetURL.absoluteString target:response];
                               [DConnectMediaStreamRecordingProfile setPath:assetURL.path target:response];
-                              NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:assetURL.path.pathExtension];
+                              NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:@"jpg"];
                               [DConnectMediaStreamRecordingProfile setMIMEType:mimeType target:response];
                               [response setResult:DConnectMessageResultTypeOk];
                               [[DConnectManager sharedManager] sendResponse:response];
@@ -413,12 +414,8 @@
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         DConnectMessage *photo = [DConnectMessage message];
         
-        DConnectManager *mgr = [DConnectManager sharedManager];
-        NSString *uri = [NSString stringWithFormat:@"http://%@:%d/files?uri=%@",
-                         mgr.settings.host, mgr.settings.port,
-                         [DPHostUtils percentEncodeString:path withEncoding:NSUTF8StringEncoding]];
-        [DConnectMediaStreamRecordingProfile setPath:uri target:photo];
-        
+        [DConnectMediaStreamRecordingProfile setUri:path target:photo];
+        [DConnectMediaStreamRecordingProfile setPath:path target:photo];
         [DConnectMediaStreamRecordingProfile setMIMEType:mimeType target:photo];
         [DConnectMediaStreamRecordingProfile setPhoto:photo target:eventMsg];
         

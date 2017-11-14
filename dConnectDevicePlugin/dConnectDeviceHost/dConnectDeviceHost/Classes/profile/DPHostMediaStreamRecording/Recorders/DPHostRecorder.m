@@ -37,7 +37,6 @@
         self.supportedPreviewSizes = [NSArray array];
         self.supportedMimeTypes = [NSArray array];
         self.session = [AVCaptureSession new];
-        self.library = [ALAssetsLibrary new];
         self.captureQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
         self.videoOrientation = AVCaptureVideoOrientationPortrait;
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];

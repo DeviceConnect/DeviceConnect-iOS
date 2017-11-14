@@ -8,7 +8,7 @@
 //
 
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#import <Photos/Photos.h>
 #import "DConnectFilesProfile.h"
 #import "DConnectFileManager.h"
 
@@ -42,8 +42,38 @@ NSString *const DConnectFilesProfileParamUri = @"uri";
                          if (!mimeType) {
                              mimeType = [DConnectFileManager mimeTypeForArbitraryData];
                          }
-                         
-                         if ([[uri scheme] isEqualToString:@"assets-library"]) {
+                         if (![uri scheme]) {
+                             //localIdentifierは、スキーマがnilになる
+                             PHFetchResult *fetch = [PHAsset fetchAssetsWithLocalIdentifiers:@[[uri absoluteString]] options:nil];
+                             if (fetch.count == 0) {
+                                  [response setErrorToInvalidRequestParameter];
+                                 return YES;
+                             }
+                             __block NSMutableArray *assets = [NSMutableArray array];
+                             [fetch enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+                                 [assets addObject:asset];
+                             }];
+                             PHImageRequestOptions *options = [PHImageRequestOptions new];
+                             options.synchronous = YES;
+                             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+                             dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 10);
+                             [[PHImageManager defaultManager] requestImageDataForAsset:assets.firstObject options:options
+                                                                         resultHandler:^(NSData * imageData,
+                                                                                         NSString *dataUTI,
+                                                                                         UIImageOrientation orientation,
+                                                                                         NSDictionary *info) {
+                                                                             if (imageData) {
+                                                                                 [response setData:imageData forKey:DConnectFilesProfileParamData];
+                                                                                 [response setString:mimeType forKey:DConnectFilesProfileParamMimeType];
+                                                                                 [response setResult:DConnectMessageResultTypeOk];
+                                                                             } else {
+                                                                                 [response setErrorToInvalidRequestParameter];
+                                                                             }
+                                                                             dispatch_semaphore_signal(semaphore);
+                                                                         }];
+                             dispatch_semaphore_wait(semaphore, timeout);
+                             return YES;
+                         } else if ([[uri scheme] isEqualToString:@"assets-library"]) {
                              // アセット：専用のアクセス手段を必要とする。
                              // 常に待つので0を指定しておく
                              dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);

@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <Photos/Photos.h>
 #import "DPHostStreamRecorder.h"
 #import "DPHostUtils.h"
 
@@ -215,7 +216,6 @@
 // 動画データの保存
 - (void)saveMovieFileForCompletionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler {
     __block NSError *err = nil;
-    __weak DPHostStreamRecorder *weakSelf = self;
     [self.writer finishWritingWithCompletionHandler:
      ^{
          
@@ -224,32 +224,28 @@
              completionHandler(nil, err);
              return;
          }
-         NSURL *fileUrl = self.writer.outputURL;
-         
-         // 動画をカメラロールに追加。
-         [weakSelf.library writeVideoAtPathToSavedPhotosAlbum:fileUrl
-                                              completionBlock:
-          ^(NSURL *assetURL, NSError *error) {
-              if (error) {
-                  err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:[NSString stringWithFormat:@"Failed to save a movie to camera roll:%@.", error.localizedDescription]];
-                  completionHandler(nil, err);
-                  return;
-              } else if (!assetURL) {
-                  err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to save a movie to camera roll; aseetURL is nil."];
-                  completionHandler(nil, err);
-                  return;
-              }
-              NSFileManager *fileMgr = [NSFileManager defaultManager];
-              if ([fileMgr fileExistsAtPath:[fileUrl path]]
-                  && ![fileMgr removeItemAtURL:fileUrl error:&err]) {
-                  if (!err) {
-                      err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to remove a movie file."];
-                  }
-                  completionHandler(nil, err);
-                  return;
-              }
-              completionHandler(assetURL, nil);
-          }];
+         __block NSURL *fileUrl = self.writer.outputURL;
+         __block NSString *localId = nil;
+         PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
+         __block PHAssetCollection *assetCollection = nil;
+         [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+             assetCollection = obj;
+         }];
+         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+             PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:fileUrl];
+             PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+             PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
+             [collectonRequest addAssets:@[placeHolder]];
+             localId = placeHolder.localIdentifier;
+         }   completionHandler:^(BOOL success, NSError *error) {
+             if (error) {
+                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
+                 completionHandler(nil, err);
+                 return;
+             }
+             [[NSFileManager defaultManager] removeItemAtURL:fileUrl error:&err];
+             completionHandler([NSURL URLWithString:localId], err);
+         }];
      }];
 }
 @end

@@ -65,8 +65,6 @@ typedef NS_ENUM(NSUInteger, DPHostRecorderState) {
 @property NSArray *supportedPreviewSizes;
 // レコードがサポートしているMimeType
 @property NSArray *supportedMimeTypes;
-/// TODO: PHPhotoLibraryに変更する
-@property ALAssetsLibrary *library;
 
 
 // コンストラクタ

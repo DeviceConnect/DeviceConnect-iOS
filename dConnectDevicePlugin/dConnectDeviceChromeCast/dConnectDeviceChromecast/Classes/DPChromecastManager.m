@@ -16,7 +16,7 @@
 #import "DPChromecastService.h"
 #import "DPChromecastReachability.h"
 
-static NSString *const kReceiverAppID = @"Your Application Id";
+static NSString *const kReceiverAppID = @"1F0ABF07";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -58,7 +58,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	static id sharedInstance;
 	static dispatch_once_t onceSpheroToken;
 	dispatch_once(&onceSpheroToken, ^{
-		sharedInstance = [[self alloc] init];
+		sharedInstance = [self new];
 	});
 	return sharedInstance;
 }

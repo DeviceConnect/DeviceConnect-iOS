@@ -69,7 +69,10 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
                              return YES;
                          }
-                         NSURL *url = [NSURL URLWithString:mediaId];
+                         if (![mediaId hasPrefix:@"file://"]) {
+                             mediaId = [NSString stringWithFormat:@"file://%@", mediaId];
+                         }
+                         NSURL *url = [NSURL URLWithString:[mediaId stringByReplacingOccurrencesOfString:@" " withString:@"%20"]];
                          DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
                          if (ctx) {
                              [ctx setVariousMetadataToMessage:response omitMediaId:YES];
@@ -138,6 +141,9 @@
                                  //ViewControllerが閉じるのを待つ
                                  sleep(1.0);
                              }
+                         }
+                         if (![mediaId hasPrefix:@"file://"]) {
+                             mediaId = [NSString stringWithFormat:@"file://%@", mediaId];
                          }
                          weakSelf.mediaPlayer = [DPHostMediaPlayerFactory createPlayerWithMediaId:[mediaId stringByReplacingOccurrencesOfString:@" " withString:@"%20"]
                                                                                            plugin:weakSelf.plugin

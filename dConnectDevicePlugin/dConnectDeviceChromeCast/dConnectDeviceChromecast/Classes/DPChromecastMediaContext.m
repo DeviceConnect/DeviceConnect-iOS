@@ -12,10 +12,11 @@
 
 #import "DPChromecastMediaContext.h"
 
+
 NSString *DPChromecastMediaIdSchemeIPodAudio = @"ipod-audio";
 NSString *DPChromecastMediaIdSchemeIPodMovie = @"ipod-movie";
-NSString *DPChromecastMediaIdSchemeAssetsLibrary = @"assets-library";
 NSString *DPChromecastMediaIdSchemeIPodLibrary = @"ipod-library";
+NSString *DPChromecastMediaIdSchemeFile = @"file";
 
 const MPMediaType TargetDPChromecastMPMediaType = MPMediaTypeAny;
 
@@ -32,7 +33,6 @@ static NSMutableArray *contextCacheVal;
 @end
 
 @implementation DPChromecastMediaContext
-
 + (void)initialize
 {
     if (self == [DPChromecastMediaContext class]) {
@@ -77,16 +77,55 @@ static NSMutableArray *contextCacheVal;
 
 + (instancetype)contextWithURL:(NSURL *)url {
     __block DPChromecastMediaContext *ctx;
-    
+    if (!url) {
+        return nil;
+    }
     if ((ctx = [DPChromecastMediaContext findContextWithMediaId:url.absoluteString])) {
         // キャッシュにヒット；キャッシュを返却する。
         return ctx;
     }
-    
-    if ([url.scheme isEqualToString:DPChromecastMediaIdSchemeIPodAudio]
-        || [url.scheme isEqualToString:DPChromecastMediaIdSchemeIPodMovie]) {
+    if (!url.scheme) {
+        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[url.absoluteString] options:nil];
+        if (assets.count == 0) {
+            return nil;
+        }
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        // 30秒経ったらタイムアウト
+        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
+        [assets enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+            ctx = [DPChromecastMediaContext contextWithPHAsset:asset];
+            dispatch_semaphore_signal(semaphore);
+        }];
+        // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
+        dispatch_semaphore_wait(semaphore, timeout);
+    } else if ([url.scheme isEqualToString:DPChromecastMediaIdSchemeFile]) {
+        ctx = [self new];
+        if (ctx) {
+            // iPodプレイヤーで再生させない
+            ctx.useIPodPlayer = NO;
+            
+            // ===== type =====
+            NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:url.pathExtension];
+            if ([mimeType hasPrefix:@"audio"]) {
+                ctx.type = @"Audio";
+                ctx.isAudio = YES;
+            } else if ([mimeType hasPrefix:@"video"]) {
+                ctx.type = @"Movie";
+                ctx.isAudio = NO;
+            } else {
+                // タイプが写真・不明なものは取り扱わない。
+                return nil;
+            }
+            ctx.title = url.lastPathComponent;
+            ctx.duration = 0;
+            ctx.mediaId = url.absoluteString;
+        }
+    } else if ([url.scheme isEqualToString:DPChromecastMediaIdSchemeIPodAudio]
+               || [url.scheme isEqualToString:DPChromecastMediaIdSchemeIPodMovie]) {
         NSNumber *persistentId = [DPChromecastMediaContext persistentIdWithMediaIdURL:url];
-        
+        if (persistentId) {
+            return nil;
+        }
         MPMediaQuery *mediaQuery = [MPMediaQuery new];
         [mediaQuery addFilterPredicate:
          [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:TargetDPChromecastMPMediaType]
@@ -104,18 +143,6 @@ static NSMutableArray *contextCacheVal;
         }
         
         ctx = [DPChromecastMediaContext contextWithMediaItem:mediaItem];
-    } else if ([url.scheme isEqualToString:DPChromecastMediaIdSchemeAssetsLibrary]) {
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        // 30秒経ったらタイムアウト
-        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
-
-        [[ALAssetsLibrary new] assetForURL:url resultBlock:^(ALAsset *asset) {
-            ctx = [DPChromecastMediaContext contextWithAsset:asset];
-            dispatch_semaphore_signal(semaphore);
-        } failureBlock:^(NSError *error) {}];
-        
-        // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
-        dispatch_semaphore_wait(semaphore, timeout);
     } else if ([url.scheme isEqualToString:DPChromecastMediaIdSchemeIPodLibrary]) {
         // ipod-library:スキームのidはPersistentIdなので、それを取得する。
         NSNumber *persistentId = nil;
@@ -154,132 +181,87 @@ static NSMutableArray *contextCacheVal;
         }
         
         ctx = [DPChromecastMediaContext contextWithMediaItem:mediaItem];
-    }    
+    }
+    
     return ctx;
 }
 
-+ (void)checkParameterWithAsset:(ALAsset *)asset
-                            url:(NSURL *)url
-                       context:(DPChromecastMediaContext *)context
+
+
++ (void)checkParameterWithPHAsset:(PHAsset *)asset
+                          context:(DPChromecastMediaContext *)context
 {
-    ALAssetRepresentation *defaultRep = asset.defaultRepresentation;
-    NSDictionary *metadata = defaultRep.metadata;
-    NSDictionary *exifDict = metadata[(NSString *)kCGImagePropertyExifDictionary];
-    NSDictionary *iptcDict = metadata[(NSString *)kCGImagePropertyIPTCDictionary];
-    NSDictionary *pngDict = metadata[(NSString *)kCGImagePropertyPNGDictionary];
-    NSDictionary *tiffDict = metadata[(NSString *)kCGImagePropertyTIFFDictionary];
-    NSDictionary *ciffDict = metadata[(NSString *)kCGImagePropertyCIFFDictionary];
-    NSDictionary *canonDict = metadata[(NSString *)kCGImagePropertyMakerCanonDictionary];
-    
-    context.media = [AVAsset assetWithURL:url];
-    
-    // ===== mediaId =====
-    context.mediaId = url.absoluteString;
-    
-    // ===== mimeType =====
-    NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:defaultRep.filename.pathExtension];
-    if (!mimeType) {
-        mimeType = [DConnectFileManager mimeTypeForArbitraryData];
-    }
-    context.mimeType = mimeType;
     
     // ===== title =====
-    // kCGImagePropertyPNGTitle
-    NSString *title = pngDict[(NSString *)kCGImagePropertyPNGTitle];
-    // kCGImagePropertyTIFFDocumentName
-    if (!title) {
-        title = tiffDict[(NSString *)kCGImagePropertyTIFFDocumentName];
-    }
-    // kCGImagePropertyCIFFImageName
-    if (!title) {
-        title = ciffDict[(NSString *)kCGImagePropertyCIFFImageName];
-    }
-    if (!title) {
-        title = defaultRep.filename;
-    }
-    context.title = title;
+    PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+    __block NSURL *u = nil;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    // 30秒経ったらタイムアウト
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
+    [[PHImageManager defaultManager] requestPlayerItemForVideo:asset
+                                                       options:options
+                                                 resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+                                                     // ===== mediaId =====
+                                                     context.mediaId = asset.localIdentifier;
+                                                     
+                                                     // ===== mimeType =====
+                                                     NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:@"mp4"];
+                                                     if (!mimeType) {
+                                                         mimeType = [DConnectFileManager mimeTypeForArbitraryData];
+                                                     }
+                                                     context.mimeType = mimeType;
+                                                     NSString *token = info[@"PHImageFileSandboxExtensionTokenKey"];
+                                                     NSArray *tokenKeys = [token componentsSeparatedByString:@";"];
+                                                     NSString * url = [tokenKeys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[c] '/private/var/mobile/Media'"]].firstObject;
+                                                     u = [NSURL URLWithString:url];
+                                                     context.title = @"NO Title";
+                                                     if (u) {
+                                                         context.title = u.lastPathComponent;
+                                                     }
+                                                     context.duration = @(asset.duration);
+                                                     dispatch_semaphore_signal(semaphore);
+                                                 }];
     
-    // ===== description =====
-    // kCGImagePropertyExifUserComment
-    NSString *description = exifDict[(NSString *)kCGImagePropertyExifUserComment];
-    // kCGImagePropertyPNGDescription
-    if (!description) {
-        description = pngDict[(NSString *)kCGImagePropertyPNGDescription];
-    }
-    // kCGImagePropertyCIFFDescription
-    if (!description) {
-        description = ciffDict[(NSString *)kCGImagePropertyCIFFDescription];
-    }
-    context.desc = description;
-    context.duration = [asset valueForProperty:ALAssetPropertyDuration];
-    NSString *creator = exifDict[(NSString *)kCGImagePropertyExifCameraOwnerName];
-    if (!creator) {
-        creator = pngDict[(NSString *)kCGImagePropertyPNGAuthor];
-    }
-    if (!creator) {
-        creator = tiffDict[(NSString *)kCGImagePropertyTIFFArtist];
-    }
-    if (!creator) {
-        creator = ciffDict[(NSString *)kCGImagePropertyCIFFOwnerName];
-    }
-    if (!creator) {
-        creator = canonDict[(NSString *)kCGImagePropertyMakerCanonOwnerName];
-    }
-    if (creator) {
-        DConnectArray *creators = [DConnectArray array];
-        DConnectMessage *message = [DConnectMessage message];
-        [DConnectMediaPlayerProfile setCreator:creator target:message];
-        [DConnectMediaPlayerProfile setRole:@"Owner" target:message];
-        [creators addMessage:message];
-        context.creators = creators;
-    }
-    
-    NSString *keywordsStr = iptcDict[(NSString *)kCGImagePropertyIPTCKeywords];
-    if (keywordsStr) {
-        DConnectArray *keywords =
-        [DConnectArray initWithArray:
-         [keywordsStr componentsSeparatedByCharactersInSet:
-          (NSCharacterSet *)[NSCharacterSet characterSetWithCharactersInString:@",;"]]];
-        context.keywords = keywords;
-    }
+    // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
+    dispatch_semaphore_wait(semaphore, timeout);
 }
 
-+ (instancetype)contextWithAsset:(ALAsset *)asset
+
++ (instancetype)contextWithPHAsset:(PHAsset *)asset
 {
     if (!asset) {
         return nil;
     }
-    
     DPChromecastMediaContext *instance = [self new];
-    
     if (instance) {
         // iPodプレイヤーで再生させない
         instance.useIPodPlayer = NO;
         
         // ===== type =====
-        NSString *type = [asset valueForProperty:ALAssetPropertyType];
-        if ([type isEqualToString:ALAssetTypePhoto] || [type isEqualToString:ALAssetTypeUnknown]) {
+        PHAssetMediaType type = asset.mediaType;
+        if (type == PHAssetMediaTypeImage || type == PHAssetMediaTypeUnknown) {
             // タイプが写真・不明なものは取り扱わない。
             return nil;
-        } else if ([type isEqualToString:ALAssetTypeVideo]) {
+        } else if (type == PHAssetMediaTypeAudio) {
+            instance.type = @"Audio";
+            instance.isAudio = YES;
+        } else if (type == PHAssetMediaTypeVideo) {
             instance.type = @"Movie";
+            instance.isAudio = NO;
         }
-        instance.isAudio = NO;
         
-        NSURL *url = [asset valueForProperty:ALAssetPropertyAssetURL];
-        if (!url) {
+        NSString *localIdentifier = asset.localIdentifier;
+        if (!localIdentifier) {
             return nil;
         }
         
-        [self checkParameterWithAsset:asset url:url context:instance];
+        [self checkParameterWithPHAsset:asset context:instance];
     }
     
     // キャッシュする。
     [instance cache];
-    
     return instance;
 }
-
 + (instancetype)contextWithMediaItem:(MPMediaItem *)mediaItem
 {
     if (!mediaItem) {
@@ -323,7 +305,7 @@ static NSMutableArray *contextCacheVal;
         instance.mimeType = mimeType;
         
         instance.title = [mediaItem valueForProperty:MPMediaItemPropertyTitle];
-
+        
         instance.duration = [mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
         
         instance.desc = [mediaItem valueForProperty:MPMediaItemPropertyComments];
@@ -381,5 +363,4 @@ static NSMutableArray *contextCacheVal;
         [DConnectMediaPlayerProfile setGenres:_genres target:message];
     }
 }
-
 @end

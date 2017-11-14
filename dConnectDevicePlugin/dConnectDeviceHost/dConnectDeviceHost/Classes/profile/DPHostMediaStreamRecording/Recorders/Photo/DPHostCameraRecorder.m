@@ -8,7 +8,7 @@
 //
 
 #import <Photos/Photos.h>
-
+#import <MobileCoreServices/UTCoreTypes.h>
 #import "DPHostCameraRecorder.h"
 #import "DPHostRecorder.h"
 #import "DPHostUtils.h"
@@ -239,7 +239,6 @@
 - (void)saveFileWithCompletionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler
 {
     AVCaptureStillImageOutput *stillImageOutput = (AVCaptureStillImageOutput *)self.photoConnection.output;
-    __weak DPHostCameraRecorder *weakSelf = self;
     [stillImageOutput captureStillImageAsynchronouslyFromConnection:self.photoConnection
                                                   completionHandler:
      ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
@@ -275,16 +274,55 @@
          meta[(NSString*) kCGImagePropertyOrientation] = @(kCGImagePropertyOrientationUp);
          UIImage *jpeg = [[UIImage alloc] initWithData:jpegData];
          UIImage *fixJpeg = [DPHostRecorderUtils fixOrientationWithImage:jpeg position:self.videoCaptureDevice.position];
+         NSData* imageData = UIImageJPEGRepresentation(fixJpeg, 1.0f);
+         CGImageSourceRef fixSource = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
+         NSString *tmpName = NSProcessInfo.processInfo.globallyUniqueString;
+         __block NSURL *tmpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@%@.jpg", NSTemporaryDirectory(), tmpName]];
+
+         CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef) tmpUrl, kUTTypeJPEG, 1, nil);
+         CGImageDestinationAddImageFromSource(destination, fixSource, 0, (__bridge CFDictionaryRef) meta);
+         CGImageDestinationFinalize(destination);
+         if (source) {
+             CFRelease(source);
+         }
+         if (fixSource) {
+             CFRelease(fixSource);
+         }
+         if (destination) {
+             CFRelease(destination);
+         }
+         __block NSString *localId = nil;
+         PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
+         __block PHAssetCollection *assetCollection = nil;
+         [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+             assetCollection = obj;
+         }];
          
-         [[weakSelf library] writeImageToSavedPhotosAlbum:fixJpeg.CGImage metadata:meta completionBlock:
-          ^(NSURL *assetURL, NSError *error) {
-              if (!assetURL || error) {
-                  err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to save a photo to camera roll."];
-                  completionHandler(nil, err);
-                  return;
-              }
-              completionHandler(assetURL, err);
-          }];
+         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+             PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:tmpUrl];
+             PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+             PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
+             [collectonRequest addAssets:@[placeHolder]];
+             localId = placeHolder.localIdentifier;
+         }   completionHandler:^(BOOL success, NSError *error) {
+             if (error) {
+                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
+                 completionHandler(nil, err);
+                 return;
+             }
+             [[NSFileManager defaultManager] removeItemAtURL:tmpUrl error:&err];
+             
+             completionHandler([NSURL URLWithString:localId], err);
+         }];
+//         [[weakSelf library] writeImageToSavedPhotosAlbum:fixJpeg.CGImage metadata:meta completionBlock:
+//          ^(NSURL *assetURL, NSError *error) {
+//              if (!assetURL || error) {
+//                  err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to save a photo to camera roll."];
+//                  completionHandler(nil, err);
+//                  return;
+//              }
+//              completionHandler(assetURL, err);
+//          }];
      }];
 }
 

@@ -86,6 +86,7 @@
 		AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */; };
 		AB912A7F1F8F4092002ABE36 /* DPHostMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */; };
 		AB912A821F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */; };
+		AB9F67061FB94712003A8EA0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */; };
 		ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
@@ -201,6 +202,7 @@
 		AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMoviePlayer.m; sourceTree = "<group>"; };
 		AB912A801F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMediaPlayerFactory.h; sourceTree = "<group>"; };
 		AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaPlayerFactory.m; sourceTree = "<group>"; };
+		AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9F67061FB94712003A8EA0 /* MobileCoreServices.framework in Frameworks */,
 				AB1D2A331FB55838000B0AA5 /* DConnectSDK.framework in Frameworks */,
 				AB1D29D41FB137D4000B0AA5 /* Photos.framework in Frameworks */,
 				ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */,
@@ -335,6 +338,7 @@
 		97FE19E9192B2FB400808FA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */,
 				AB1D2A321FB55838000B0AA5 /* DConnectSDK.framework */,
 				AB1D29D31FB137D4000B0AA5 /* Photos.framework */,
 				ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */,
