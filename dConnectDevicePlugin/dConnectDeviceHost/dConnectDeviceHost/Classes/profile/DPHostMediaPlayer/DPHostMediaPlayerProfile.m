@@ -69,11 +69,16 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
                              return YES;
                          }
-                         if (![mediaId hasPrefix:@"file://"]) {
+                         if (![mediaId hasPrefix:MediaContextMediaIdSchemeIPodAudio]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeFile]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeIPodLibrary]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeIPodMovie]
+                             && [mediaId hasPrefix:@"/"]) {
                              mediaId = [NSString stringWithFormat:@"file://%@", mediaId];
                          }
                          NSURL *url = [NSURL URLWithString:[mediaId stringByReplacingOccurrencesOfString:@" " withString:@"%20"]];
                          DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
+
                          if (ctx) {
                              [ctx setVariousMetadataToMessage:response omitMediaId:YES];
                              [response setResult:DConnectMessageResultTypeOk];
@@ -142,7 +147,11 @@
                                  sleep(1.0);
                              }
                          }
-                         if (![mediaId hasPrefix:@"file://"]) {
+                         if (![mediaId hasPrefix:MediaContextMediaIdSchemeIPodAudio]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeFile]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeIPodLibrary]
+                             && ![mediaId hasPrefix:MediaContextMediaIdSchemeIPodMovie]
+                             && [mediaId hasPrefix:@"/"]) {
                              mediaId = [NSString stringWithFormat:@"file://%@", mediaId];
                          }
                          weakSelf.mediaPlayer = [DPHostMediaPlayerFactory createPlayerWithMediaId:[mediaId stringByReplacingOccurrencesOfString:@" " withString:@"%20"]

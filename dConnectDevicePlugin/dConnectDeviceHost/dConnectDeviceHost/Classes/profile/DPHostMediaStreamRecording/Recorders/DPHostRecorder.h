@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, DPHostRecorderState) {
 @property BOOL needRecalculationOfTotalPauseDuration;
 
 // ID
-@property NSNumber *recorderId;
+@property NSString *recorderId;
 // Recorder名
 @property NSString *name;
 // RecorderのMimeType

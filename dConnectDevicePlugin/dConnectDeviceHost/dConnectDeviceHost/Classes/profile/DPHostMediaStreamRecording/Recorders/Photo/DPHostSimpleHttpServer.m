@@ -210,6 +210,7 @@ static uint64_t getUptimeInMilliseconds()
     [socket writeData:headerData withTimeout:HTTP_TIMEOUT tag:0];
     [socket writeData:imageData withTimeout:HTTP_TIMEOUT tag:0];
     [socket writeData:endData withTimeout:HTTP_TIMEOUT tag:0];
+    
 }
 
 - (DPHostConnection *) foundConnection:(GCDAsyncSocket *)socket

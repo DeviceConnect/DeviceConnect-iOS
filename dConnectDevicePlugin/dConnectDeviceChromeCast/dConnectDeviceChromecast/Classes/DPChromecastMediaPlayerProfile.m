@@ -67,7 +67,7 @@ static NSString *const DPChromeCastDefaultVideoURL = @"https://github.com/Device
                              [DConnectMediaPlayerProfile setTitle:@"Title: Sample" target:response];
                              [DConnectMediaPlayerProfile setLanguage:@"ja" target:response];
                              [DConnectMediaPlayerProfile setDescription:@"Sample Movie" target:response];
-                             [DConnectMediaPlayerProfile setDuration:9999 target:response];
+                             [DConnectMediaPlayerProfile setDuration:600 target:response];
                              
                          } else {
                              NSURL *url = [NSURL URLWithString:mediaId];
@@ -278,7 +278,6 @@ static NSString *const DPChromeCastDefaultVideoURL = @"https://github.com/Device
                                      [weakSelf saveMovie:ctx
                                                 callback:
                                       ^(NSString *url) {
-                                          NSLog(@"url:%@", url);
                                                 if (url) {
                                                     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
                                                     NSInteger requestId = [mgr loadMediaWithID:serviceId

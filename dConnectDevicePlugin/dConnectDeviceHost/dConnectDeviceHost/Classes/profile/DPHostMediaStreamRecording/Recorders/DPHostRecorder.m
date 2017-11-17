@@ -29,7 +29,7 @@
 {
     self = [super init];
     if (self) {
-        self.recorderId = recorderId;
+        self.recorderId = [recorderId stringValue];
         self.isMuted = NO;
         self.videoCaptureDevice = videoDevice;
         self.audioCaptureDevice = audioDevice;

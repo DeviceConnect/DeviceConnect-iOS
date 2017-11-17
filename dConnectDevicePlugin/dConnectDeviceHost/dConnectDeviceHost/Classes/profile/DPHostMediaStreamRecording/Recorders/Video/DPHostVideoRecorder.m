@@ -14,6 +14,17 @@
 @end
 @implementation DPHostVideoRecorder
 
+- (instancetype)initWithRecorderId:(NSNumber*)recorderId
+                       videoDevice:(AVCaptureDevice*)videoDevice
+                       audioDevice:(AVCaptureDevice*)audioDevice
+{
+    self = [super initWithRecorderId:recorderId videoDevice:videoDevice audioDevice:audioDevice];
+    if (self) {
+        self.recorderId = [NSString stringWithFormat:@"video_%d", [recorderId intValue]];
+    }
+    return self;
+}
+
 - (void)initialize
 {
     [super initialize];
@@ -21,20 +32,18 @@
     self.state = DPHostRecorderStateInactive;
     [self setVideoSourceTypeWithDelegate:self];
     [self setAudioSourceTypeWithDelegate:self];
-    NSMutableString *name = @"movie_audio_video_".mutableCopy;
+    NSMutableString *name = @"iOSHost Video Recorder-".mutableCopy;
     
     switch (self.videoCaptureDevice.position) {
         case AVCaptureDevicePositionBack:
-            [name appendString:@"back_"];
-            [name appendString:[NSString stringWithFormat:@"%lu", (((unsigned long) AVCaptureDevicePositionBack) - 1)]];
+            [name appendString:@"back"];
             break;
         case AVCaptureDevicePositionFront:
-            [name appendString:@"front_"];
-             [name appendString:[NSString stringWithFormat:@"%lu", (((unsigned long) AVCaptureDevicePositionFront) - 1)]];
+            [name appendString:@"front"];
             break;
         case AVCaptureDevicePositionUnspecified:
         default:
-             [name appendString:[NSString stringWithFormat:@"%d", (((int) AVCaptureDevicePositionUnspecified) - 1)]];
+             [name appendString:@"unknown"];
             break;
     }
     self.name = [NSString stringWithString:name];

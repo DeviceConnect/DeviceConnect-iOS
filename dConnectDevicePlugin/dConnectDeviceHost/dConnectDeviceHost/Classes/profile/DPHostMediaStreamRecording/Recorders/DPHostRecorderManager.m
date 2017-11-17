@@ -58,9 +58,6 @@
                                                                                audioDevice:nil];
         
         [photoArray addObject:cRecorder];
-        recorderIdCount++;
-    }
-    for (AVCaptureDevice *videoDev in videoDevArr) {
         for (AVCaptureDevice *audioDev in audioDevArr) {
             DPHostVideoRecorder *vRecorder = [[DPHostVideoRecorder alloc] initWithRecorderId:@(recorderIdCount)
                                                                                  videoDevice:videoDev
@@ -78,7 +75,7 @@
     [recs addObjectsFromArray:photoArray];
     [recs addObjectsFromArray:videoArray];
     for (AVCaptureDevice *audioDev in audioDevArr) {
-        [recs addObject:[[DPHostAudioRecorder alloc] initWithRecorderId:@(recorderIdCount)
+        [recs addObject:[[DPHostAudioRecorder alloc] initWithRecorderId:@(0)
                                                             videoDevice:nil
                                                             audioDevice:audioDev]];
     }
@@ -107,7 +104,7 @@
         return self.defaultPhotoRecorder;
     }
     for (DPHostRecorder *recorder in self.recorders) {
-        if ([recorderId isEqualToString:[recorder.recorderId stringValue]]) {
+        if ([recorderId isEqualToString:recorder.recorderId]) {
             return recorder;
         }
     }
@@ -120,7 +117,7 @@
         return (DPHostCameraRecorder *) self.defaultPhotoRecorder;
     }
     for (DPHostRecorder *recorder in self.recorders) {
-        if ([recorderId isEqualToString:[recorder.recorderId stringValue]] && [recorder isKindOfClass:[DPHostPhotoRecorder class]]) {
+        if ([recorderId isEqualToString:recorder.recorderId] && [recorder isKindOfClass:[DPHostPhotoRecorder class]]) {
             return (DPHostPhotoRecorder *) recorder;
         }
     }
@@ -133,7 +130,7 @@
         return (DPHostStreamRecorder *) self.defaultVideoRecorder;
     }
     for (DPHostRecorder *recorder in self.recorders) {
-        if ([recorderId isEqualToString:[recorder.recorderId stringValue]] && [recorder isKindOfClass:[DPHostStreamRecorder class]]) {
+        if ([recorderId isEqualToString:recorder.recorderId] && [recorder isKindOfClass:[DPHostStreamRecorder class]]) {
             return (DPHostStreamRecorder *) recorder;
         }
     }

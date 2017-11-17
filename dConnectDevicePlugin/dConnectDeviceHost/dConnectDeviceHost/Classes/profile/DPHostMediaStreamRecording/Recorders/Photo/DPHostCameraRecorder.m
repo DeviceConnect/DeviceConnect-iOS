@@ -25,6 +25,17 @@
 @end
 @implementation DPHostCameraRecorder
 
+- (instancetype)initWithRecorderId:(NSNumber*)recorderId
+                       videoDevice:(AVCaptureDevice*)videoDevice
+                       audioDevice:(AVCaptureDevice*)audioDevice
+{
+    self = [super initWithRecorderId:recorderId videoDevice:videoDevice audioDevice:audioDevice];
+    if (self) {
+        self.recorderId = [NSString stringWithFormat:@"photo_%d", [recorderId intValue]];
+    }
+    return self;
+}
+
 
 - (void)initialize
 {
@@ -35,20 +46,18 @@
     self.secPerFrame = CMTimeMake(2, 1000);
     [self setPhotoDataSourceType];
     [self setVideoSourceTypeWithDelegate:self];
-    NSMutableString *name = @"photo_".mutableCopy;
+    NSMutableString *name = @"iOSHost Camera Recorder-".mutableCopy;
     
     switch (self.videoCaptureDevice.position) {
         case AVCaptureDevicePositionBack:
-            [name appendString:@"back_"];
-            [name appendString:[NSString stringWithFormat:@"%lu", (((unsigned long) AVCaptureDevicePositionBack) - 1)]];
+            [name appendString:@"back"];
             break;
         case AVCaptureDevicePositionFront:
-            [name appendString:@"front_"];
-            [name appendString:[NSString stringWithFormat:@"%lu", (((unsigned long) AVCaptureDevicePositionFront) - 1)]];
+            [name appendString:@"front"];
             break;
         case AVCaptureDevicePositionUnspecified:
         default:
-            [name appendString:[NSString stringWithFormat:@"%d", (((int) AVCaptureDevicePositionUnspecified) - 1)]];
+            [name appendString:@"unknown"];
             break;
     }
     self.name = [NSString stringWithString:name];
@@ -148,7 +157,7 @@
     }
     
     self.httpServer = [DPHostSimpleHttpServer new];
-    self.httpServer.listenPort = 10000;
+    self.httpServer.listenPort = 9000;
     BOOL result = [self.httpServer start];
     if (!result) {
         failCompletion(@"MJPEG Server cannot running.");
@@ -314,15 +323,7 @@
              
              completionHandler([NSURL URLWithString:localId], err);
          }];
-//         [[weakSelf library] writeImageToSavedPhotosAlbum:fixJpeg.CGImage metadata:meta completionBlock:
-//          ^(NSURL *assetURL, NSError *error) {
-//              if (!assetURL || error) {
-//                  err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to save a photo to camera roll."];
-//                  completionHandler(nil, err);
-//                  return;
-//              }
-//              completionHandler(assetURL, err);
-//          }];
+
      }];
 }
 

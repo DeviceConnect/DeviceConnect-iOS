@@ -201,12 +201,16 @@
 + (void)setLightOnOff:(BOOL)bSwitch
 {
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    [captureDevice lockForConfiguration:NULL];
-    if (bSwitch) {
-        captureDevice.torchMode = AVCaptureTorchModeOn;
-    } else {
-        captureDevice.torchMode = AVCaptureTorchModeOff;
+    if ([captureDevice isTorchAvailable]
+        && [captureDevice isTorchModeSupported:AVCaptureTorchModeOn]
+        && [captureDevice isTorchModeSupported:AVCaptureTorchModeOff]) {
+        [captureDevice lockForConfiguration:NULL];
+        if (bSwitch) {
+            captureDevice.torchMode = AVCaptureTorchModeOn;
+        } else {
+            captureDevice.torchMode = AVCaptureTorchModeOff;
+        }
+        [captureDevice unlockForConfiguration];
     }
-    [captureDevice unlockForConfiguration];
 }
 @end

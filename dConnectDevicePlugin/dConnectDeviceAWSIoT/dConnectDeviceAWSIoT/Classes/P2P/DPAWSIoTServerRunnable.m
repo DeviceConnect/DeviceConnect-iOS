@@ -47,7 +47,7 @@
         if (headerSize > 0) {
             NSData *d = [self convHeader:_headerData];
             [self.connection sendData:d.bytes length:(int)d.length];
-            [self.connection sendData:data.bytes offset:headerSize length:data.length - headerSize];
+            [self.connection sendData:data.bytes offset:headerSize length:(int) (data.length - headerSize)];
             _headerEndFlag = YES;
         }
     } else {

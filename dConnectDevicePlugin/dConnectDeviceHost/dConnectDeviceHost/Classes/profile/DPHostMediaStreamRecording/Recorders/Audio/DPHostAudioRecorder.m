@@ -13,14 +13,23 @@
 @end
 @implementation DPHostAudioRecorder
 
-
+- (instancetype)initWithRecorderId:(NSNumber*)recorderId
+                       videoDevice:(AVCaptureDevice*)videoDevice
+                       audioDevice:(AVCaptureDevice*)audioDevice
+{
+    self = [super initWithRecorderId:recorderId videoDevice:videoDevice audioDevice:audioDevice];
+    if (self) {
+        self.recorderId = [NSString stringWithFormat:@"audio_%d", [recorderId intValue]];
+    }
+    return self;
+}
 - (void)initialize
 {
     [super initialize];
     self.mimeType = [DConnectFileManager searchMimeTypeForExtension:@"mp4"];
     self.state = DPHostRecorderStateInactive;
     [self setAudioSourceTypeWithDelegate:self];
-    self.name = @"movie_audio_0";
+    self.name = @"iOSHost Audio Recorder";
 }
 
 #pragma mark - AVCapture{Audio,Video}DataOutputSampleBufferDelegate

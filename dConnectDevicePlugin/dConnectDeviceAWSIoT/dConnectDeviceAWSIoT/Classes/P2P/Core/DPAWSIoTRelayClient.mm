@@ -100,7 +100,6 @@ using namespace std;
         NSLog(@"DPAWSIoTRelayClient: connect: %s", UDT::getlasterror().getErrorMessage());
         return 0;
     }
-    
     freeaddrinfo(peer);
     
     _socket = [[DPAWSIoTSocketTask alloc] initWithSocket:socket];

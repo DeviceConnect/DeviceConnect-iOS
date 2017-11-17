@@ -15,7 +15,7 @@
 extern NSString *MediaContextMediaIdSchemeIPodAudio; ///< iPodライブラリの音声メディアのmediaIdに使用されるスキーム
 extern NSString *MediaContextMediaIdSchemeIPodMovie; ///< iPodライブラリの動画メディアのmediaIdに使用されるスキーム
 extern NSString *MediaContextMediaIdSchemeIPodLibrary;
-
+extern NSString *MediaContextMediaIdSchemeFile;
 typedef NS_ENUM(NSUInteger, MediaPlayerType) {
     MediaPlayerTypeIPod,     ///< iPodミュージックプレイヤー
     MediaPlayerTypeMoviePlayer, ///< MoviePlayer + 独自UI

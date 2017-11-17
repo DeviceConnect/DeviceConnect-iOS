@@ -45,7 +45,7 @@
                              [recorderItr performReading:^{
                                  
                                    DConnectMessage *recorder = [DConnectMessage message];
-                                   [DConnectMediaStreamRecordingProfile setRecorderId:[recorderItr.recorderId stringValue] target:recorder];
+                                   [DConnectMediaStreamRecordingProfile setRecorderId:recorderItr.recorderId target:recorder];
                                    [DConnectMediaStreamRecordingProfile setRecorderName:recorderItr.name target:recorder];
  
                                    NSString *state;
@@ -96,7 +96,6 @@
                               return YES;
                           }
                           [recorder takePhotoWithSuccessCompletion:^(NSURL *assetURL) {
-                              
                               [DConnectMediaStreamRecordingProfile setUri:assetURL.absoluteString target:response];
                               [DConnectMediaStreamRecordingProfile setPath:assetURL.path target:response];
                               NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:@"jpg"];
@@ -310,7 +309,7 @@
                          return YES;
                      }];
         
-        // API登録(didReceivePutOnDataAvailableRequest相当)
+        // API登録(didReceivePutPreviewRequest相当)
         NSString *putPreviewRequestApiPath = [self apiPath: nil
                                              attributeName: DConnectMediaStreamRecordingProfileAttrPreview];
         [self addPutPath: putPreviewRequestApiPath
@@ -375,7 +374,7 @@
                             return YES;
                         }];
         
-        // API登録(didReceiveDeleteOnDataAvailableRequest相当)
+        // API登録(didReceiveDeletePreviewRequest相当)
         NSString *deletePreviewRequestApiPath = [self apiPath: nil
                                                 attributeName: DConnectMediaStreamRecordingProfileAttrPreview];
         [self addDeletePath: deletePreviewRequestApiPath
