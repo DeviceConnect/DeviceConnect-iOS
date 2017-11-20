@@ -13,15 +13,12 @@
 
 @end
 
-@implementation DPLinkingSystemProfile {
-    NSString *_version;
-}
+@implementation DPLinkingSystemProfile
 
-- (instancetype) initWithVersion:(NSString *)version
+- (instancetype) init
 {
     self = [super init];
     if (self) {
-        _version = version;
         self.dataSource = self;
         
         __weak typeof(self) weakSelf = self;
@@ -38,7 +35,7 @@
 
 + (instancetype) systemProfile
 {
-    return [[DPLinkingSystemProfile alloc] initWithVersion:@"1.0"];
+    return [DPLinkingSystemProfile new];
 }
 
 #pragma mark - DConnectSystemProfileDataSource
