@@ -38,7 +38,7 @@
 
 + (instancetype) systemProfile
 {
-    return [[DPLinkingSystemProfile alloc] init];
+    return [[DPLinkingSystemProfile alloc] initWithVersion:@"1.0"];
 }
 
 #pragma mark - DConnectSystemProfileDataSource
