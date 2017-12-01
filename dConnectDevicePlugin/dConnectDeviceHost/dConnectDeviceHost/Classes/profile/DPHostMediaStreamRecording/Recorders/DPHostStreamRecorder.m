@@ -225,18 +225,10 @@
                  return;
              }
              __block NSURL *fileUrl = self.writer.outputURL;
-             __block NSString *localId = nil;
-             PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
-             __block PHAssetCollection *assetCollection = nil;
-             [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                 assetCollection = obj;
-             }];
+             __block PHObjectPlaceholder *placeHolder;
              [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                  PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:fileUrl];
-                 PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-                 PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
-                 [collectonRequest addAssets:@[placeHolder]];
-                 localId = placeHolder.localIdentifier;
+                 placeHolder = [assetRequest placeholderForCreatedAsset];
              }   completionHandler:^(BOOL success, NSError *error) {
                  if (error) {
                      completionHandler(nil, [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription]);
@@ -244,7 +236,7 @@
                  }
                  NSError *err = nil;
                  [[NSFileManager defaultManager] removeItemAtURL:fileUrl error:&err];
-                 completionHandler([NSURL URLWithString:localId], err);
+                 completionHandler([NSURL URLWithString:placeHolder.localIdentifier], err);
              }];
          }];
     };

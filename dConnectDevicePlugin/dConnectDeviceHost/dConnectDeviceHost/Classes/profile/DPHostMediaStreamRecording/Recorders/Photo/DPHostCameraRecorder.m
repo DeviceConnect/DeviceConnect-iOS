@@ -287,9 +287,9 @@
              NSData* imageData = UIImageJPEGRepresentation(fixJpeg, 1.0f);
              CGImageSourceRef fixSource = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
              NSString *tmpName = NSProcessInfo.processInfo.globallyUniqueString;
-             __block NSURL *tmpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@%@.jpg", NSTemporaryDirectory(), tmpName]];
-             
+             __block NSURL *tmpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@%@.jpeg", NSTemporaryDirectory(), tmpName]];
              CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef) tmpUrl, kUTTypeJPEG, 1, nil);
+
              CGImageDestinationAddImageFromSource(destination, fixSource, 0, (__bridge CFDictionaryRef) meta);
              CGImageDestinationFinalize(destination);
              if (source) {
@@ -301,28 +301,19 @@
              if (destination) {
                  CFRelease(destination);
              }
-             __block NSString *localId = nil;
-             PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
-             __block PHAssetCollection *assetCollection = nil;
-             [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                 assetCollection = obj;
-             }];
-             
+             __block PHObjectPlaceholder *placeHolder;
              [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                  PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:tmpUrl];
-                 PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-                 PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
-                 [collectonRequest addAssets:@[placeHolder]];
-                 localId = placeHolder.localIdentifier;
+                 placeHolder = [assetRequest placeholderForCreatedAsset];
              }   completionHandler:^(BOOL success, NSError *error) {
-                 if (error) {
+                 if (!success) {
                      err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
                      completionHandler(nil, err);
                      return;
                  }
                  [[NSFileManager defaultManager] removeItemAtURL:tmpUrl error:&err];
                  
-                 completionHandler([NSURL URLWithString:localId], err);
+                 completionHandler([NSURL URLWithString:placeHolder.localIdentifier], err);
              }];
              
          }];
