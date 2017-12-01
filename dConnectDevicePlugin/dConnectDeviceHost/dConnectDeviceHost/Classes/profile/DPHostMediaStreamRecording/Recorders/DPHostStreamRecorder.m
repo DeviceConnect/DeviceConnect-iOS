@@ -215,37 +215,66 @@
 #pragma mark - Private Method
 // 動画データの保存
 - (void)saveMovieFileForCompletionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler {
-    __block NSError *err = nil;
-    [self.writer finishWritingWithCompletionHandler:
-     ^{
-         
-         if (self.writer.status == AVAssetWriterStatusFailed) {
-             err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to finishing an aseet writer"];
-             completionHandler(nil, err);
-             return;
-         }
-         __block NSURL *fileUrl = self.writer.outputURL;
-         __block NSString *localId = nil;
-         PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
-         __block PHAssetCollection *assetCollection = nil;
-         [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-             assetCollection = obj;
-         }];
-         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-             PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:fileUrl];
-             PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-             PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
-             [collectonRequest addAssets:@[placeHolder]];
-             localId = placeHolder.localIdentifier;
-         }   completionHandler:^(BOOL success, NSError *error) {
-             if (error) {
-                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
-                 completionHandler(nil, err);
+
+    void (^recordBlock) (void) = ^(void){
+        [self.writer finishWritingWithCompletionHandler:
+         ^{
+             
+             if (self.writer.status == AVAssetWriterStatusFailed) {
+                 completionHandler(nil,  [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to finishing an aseet writer"]);
                  return;
              }
-             [[NSFileManager defaultManager] removeItemAtURL:fileUrl error:&err];
-             completionHandler([NSURL URLWithString:localId], err);
+             __block NSURL *fileUrl = self.writer.outputURL;
+             __block NSString *localId = nil;
+             PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
+             __block PHAssetCollection *assetCollection = nil;
+             [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                 assetCollection = obj;
+             }];
+             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                 PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:fileUrl];
+                 PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                 PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
+                 [collectonRequest addAssets:@[placeHolder]];
+                 localId = placeHolder.localIdentifier;
+             }   completionHandler:^(BOOL success, NSError *error) {
+                 if (error) {
+                     completionHandler(nil, [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription]);
+                     return;
+                 }
+                 NSError *err = nil;
+                 [[NSFileManager defaultManager] removeItemAtURL:fileUrl error:&err];
+                 completionHandler([NSURL URLWithString:localId], err);
+             }];
          }];
-     }];
+    };
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    switch (status) {
+        case PHAuthorizationStatusAuthorized:
+        default:
+            break;
+        case PHAuthorizationStatusNotDetermined:
+        case PHAuthorizationStatusRestricted:
+        case PHAuthorizationStatusDenied:
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
+                    switch (status) {
+                        case PHAuthorizationStatusNotDetermined:
+                        case PHAuthorizationStatusRestricted:
+                        case PHAuthorizationStatusDenied:
+                            completionHandler(nil, [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Not Authorized to Record."]);
+                            return;
+                        case PHAuthorizationStatusAuthorized:
+                        default:
+                            break;
+                    }
+                    recordBlock();
+                }];
+
+            });
+            return;
+
+    }
+    recordBlock();
 }
 @end

@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Page.h"
+#import "GHData.h"
 
 @interface BookmarkIconViewModel : NSObject
 @property (weak, nonatomic) Page* page;

@@ -247,84 +247,116 @@
 // 写真の保存
 - (void)saveFileWithCompletionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler
 {
-    AVCaptureStillImageOutput *stillImageOutput = (AVCaptureStillImageOutput *)self.photoConnection.output;
-    [stillImageOutput captureStillImageAsynchronouslyFromConnection:self.photoConnection
-                                                  completionHandler:
-     ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-         __block NSError *err = nil;
-         if (!imageDataSampleBuffer || error) {
-             err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to take a photo."];
-             completionHandler(nil, err);
-             return;
-         }
-         NSData *jpegData;
-         @try {
-             jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-         }
-         @catch (NSException *exception) {
-             NSString *message;
-             if ([[exception name] isEqualToString:NSInvalidArgumentException]) {
-                 message = @"Non-JPEG data was given.";
-             } else {
-                 message = [NSString stringWithFormat:@"%@ encountered.", [exception name]];
-             }
-             err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:message];
-             completionHandler(nil, err);
-             return;
-         }
-         
-         // EXIF情報を水平に統一する。ブラウザによってはEXIF情報により画像の向きが変わるため。
-         CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpegData, NULL);
-         NSDictionary *metadata = (__bridge NSDictionary*) CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
-         NSMutableDictionary *meta = [NSMutableDictionary dictionaryWithDictionary:metadata];
-         NSMutableDictionary *tiff = meta[(NSString*) kCGImagePropertyTIFFDictionary];
-         tiff[(NSString*) kCGImagePropertyTIFFOrientation] = @(kCGImagePropertyOrientationUp);
-         meta[(NSString*) kCGImagePropertyTIFFDictionary] = tiff;
-         meta[(NSString*) kCGImagePropertyOrientation] = @(kCGImagePropertyOrientationUp);
-         UIImage *jpeg = [[UIImage alloc] initWithData:jpegData];
-         UIImage *fixJpeg = [DPHostRecorderUtils fixOrientationWithImage:jpeg position:self.videoCaptureDevice.position];
-         NSData* imageData = UIImageJPEGRepresentation(fixJpeg, 1.0f);
-         CGImageSourceRef fixSource = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
-         NSString *tmpName = NSProcessInfo.processInfo.globallyUniqueString;
-         __block NSURL *tmpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@%@.jpg", NSTemporaryDirectory(), tmpName]];
-
-         CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef) tmpUrl, kUTTypeJPEG, 1, nil);
-         CGImageDestinationAddImageFromSource(destination, fixSource, 0, (__bridge CFDictionaryRef) meta);
-         CGImageDestinationFinalize(destination);
-         if (source) {
-             CFRelease(source);
-         }
-         if (fixSource) {
-             CFRelease(fixSource);
-         }
-         if (destination) {
-             CFRelease(destination);
-         }
-         __block NSString *localId = nil;
-         PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
-         __block PHAssetCollection *assetCollection = nil;
-         [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-             assetCollection = obj;
-         }];
-         
-         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-             PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:tmpUrl];
-             PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-             PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
-             [collectonRequest addAssets:@[placeHolder]];
-             localId = placeHolder.localIdentifier;
-         }   completionHandler:^(BOOL success, NSError *error) {
-             if (error) {
-                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
+    __block void (^takephotoBlock) (void) = ^(void){
+        AVCaptureStillImageOutput *stillImageOutput = (AVCaptureStillImageOutput *)self.photoConnection.output;
+        [stillImageOutput captureStillImageAsynchronouslyFromConnection:self.photoConnection
+                                                      completionHandler:
+         ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+             __block NSError *err = nil;
+             if (!imageDataSampleBuffer || error) {
+                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Failed to take a photo."];
                  completionHandler(nil, err);
                  return;
              }
-             [[NSFileManager defaultManager] removeItemAtURL:tmpUrl error:&err];
+             NSData *jpegData;
+             @try {
+                 jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+             }
+             @catch (NSException *exception) {
+                 NSString *message;
+                 if ([[exception name] isEqualToString:NSInvalidArgumentException]) {
+                     message = @"Non-JPEG data was given.";
+                 } else {
+                     message = [NSString stringWithFormat:@"%@ encountered.", [exception name]];
+                 }
+                 err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:message];
+                 completionHandler(nil, err);
+                 return;
+             }
              
-             completionHandler([NSURL URLWithString:localId], err);
+             // EXIF情報を水平に統一する。ブラウザによってはEXIF情報により画像の向きが変わるため。
+             CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpegData, NULL);
+             NSDictionary *metadata = (__bridge NSDictionary*) CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+             NSMutableDictionary *meta = [NSMutableDictionary dictionaryWithDictionary:metadata];
+             NSMutableDictionary *tiff = meta[(NSString*) kCGImagePropertyTIFFDictionary];
+             tiff[(NSString*) kCGImagePropertyTIFFOrientation] = @(kCGImagePropertyOrientationUp);
+             meta[(NSString*) kCGImagePropertyTIFFDictionary] = tiff;
+             meta[(NSString*) kCGImagePropertyOrientation] = @(kCGImagePropertyOrientationUp);
+             UIImage *jpeg = [[UIImage alloc] initWithData:jpegData];
+             UIImage *fixJpeg = [DPHostRecorderUtils fixOrientationWithImage:jpeg position:self.videoCaptureDevice.position];
+             NSData* imageData = UIImageJPEGRepresentation(fixJpeg, 1.0f);
+             CGImageSourceRef fixSource = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
+             NSString *tmpName = NSProcessInfo.processInfo.globallyUniqueString;
+             __block NSURL *tmpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@%@.jpg", NSTemporaryDirectory(), tmpName]];
+             
+             CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef) tmpUrl, kUTTypeJPEG, 1, nil);
+             CGImageDestinationAddImageFromSource(destination, fixSource, 0, (__bridge CFDictionaryRef) meta);
+             CGImageDestinationFinalize(destination);
+             if (source) {
+                 CFRelease(source);
+             }
+             if (fixSource) {
+                 CFRelease(fixSource);
+             }
+             if (destination) {
+                 CFRelease(destination);
+             }
+             __block NSString *localId = nil;
+             PHFetchResult *collectonResuts = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
+             __block PHAssetCollection *assetCollection = nil;
+             [collectonResuts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                 assetCollection = obj;
+             }];
+             
+             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                 PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:tmpUrl];
+                 PHAssetCollectionChangeRequest *collectonRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                 PHObjectPlaceholder *placeHolder = [assetRequest placeholderForCreatedAsset];
+                 [collectonRequest addAssets:@[placeHolder]];
+                 localId = placeHolder.localIdentifier;
+             }   completionHandler:^(BOOL success, NSError *error) {
+                 if (error) {
+                     err = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:error.localizedDescription];
+                     completionHandler(nil, err);
+                     return;
+                 }
+                 [[NSFileManager defaultManager] removeItemAtURL:tmpUrl error:&err];
+                 
+                 completionHandler([NSURL URLWithString:localId], err);
+             }];
+             
          }];
+    };
+    // PHPPhotoLibraryの許可を取れているか
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    switch (status) {
+        case PHAuthorizationStatusAuthorized:
+        default:
+            break;
+        case PHAuthorizationStatusNotDetermined:
+        case PHAuthorizationStatusRestricted:
+        case PHAuthorizationStatusDenied:
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
+                    switch (status) {
+                        case PHAuthorizationStatusNotDetermined:
+                        case PHAuthorizationStatusRestricted:
+                        case PHAuthorizationStatusDenied:
+                            completionHandler(nil, [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Not Authorized to take photo."]);
+                            return;
+                        case PHAuthorizationStatusAuthorized:
+                        default:
+                            break;
+                    }
+                    takephotoBlock();
+                }];
 
-     }];
+            });
+            return;
+            
+    }
+    takephotoBlock();
+
 }
 
 

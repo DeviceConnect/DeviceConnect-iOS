@@ -23,6 +23,8 @@
 
 @implementation DPHostMediaStreamRecordingProfile
 
+
+
 - (instancetype)init
 {
     self = [super init];
@@ -95,18 +97,21 @@
                               [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                               return YES;
                           }
-                          [recorder takePhotoWithSuccessCompletion:^(NSURL *assetURL) {
-                              [DConnectMediaStreamRecordingProfile setUri:assetURL.absoluteString target:response];
-                              [DConnectMediaStreamRecordingProfile setPath:assetURL.path target:response];
-                              NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:@"jpg"];
-                              [DConnectMediaStreamRecordingProfile setMIMEType:mimeType target:response];
-                              [response setResult:DConnectMessageResultTypeOk];
-                              [[DConnectManager sharedManager] sendResponse:response];
-                              [weakSelf sendOnPhotoEventWithPath:assetURL.absoluteString mimeType:mimeType];
-                          } failCompletion:^(NSString *errorMessage) {
-                              [response setErrorToUnknownWithMessage:errorMessage];
-                              [[DConnectManager sharedManager] sendResponse:response];
-                          }];
+                          void (^block) (void) = ^(void) {
+                              [recorder takePhotoWithSuccessCompletion:^(NSURL *assetURL) {
+                                  [DConnectMediaStreamRecordingProfile setUri:assetURL.absoluteString target:response];
+                                  [DConnectMediaStreamRecordingProfile setPath:assetURL.path target:response];
+                                  NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:@"jpg"];
+                                  [DConnectMediaStreamRecordingProfile setMIMEType:mimeType target:response];
+                                  [response setResult:DConnectMessageResultTypeOk];
+                                  [[DConnectManager sharedManager] sendResponse:response];
+                                  [weakSelf sendOnPhotoEventWithPath:assetURL.absoluteString mimeType:mimeType];
+                              } failCompletion:^(NSString *errorMessage) {
+                                  [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                  [[DConnectManager sharedManager] sendResponse:response];
+                              }];
+                          };
+                          [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                           return NO;
                       }];
         
@@ -139,15 +144,18 @@
                                         usedRecorderName]];
                               return YES;
                           }
-                          [recorder startRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder, NSString *fileName) {
-                                [response setResult:DConnectMessageResultTypeOk];
-                                [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateRecording
-                                                                          path:fileName mimeType:recorder.mimeType errorMessage:nil];
-                                [[DConnectManager sharedManager] sendResponse:response];
-                          } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                                [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                                [[DConnectManager sharedManager] sendResponse:response];
-                          }];
+                          void (^block) (void) = ^(void) {
+                              [recorder startRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder, NSString *fileName) {
+                                  [response setResult:DConnectMessageResultTypeOk];
+                                  [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateRecording
+                                                                            path:fileName mimeType:recorder.mimeType errorMessage:nil];
+                                  [[DConnectManager sharedManager] sendResponse:response];
+                              } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                  [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                  [[DConnectManager sharedManager] sendResponse:response];
+                              }];
+                          };
+                          [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                           return NO;
 
                       }];
@@ -163,17 +171,20 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         [recorder stopRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder, NSString *fileName) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [DConnectMediaStreamRecordingProfile setUri:fileName target:response];
-                             [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateStop
-                                                                       path:fileName mimeType:recorder.mimeType errorMessage:nil];
-                             [[DConnectManager sharedManager] sendResponse:response];
-
-                         } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         void (^block) (void) = ^(void) {
+                             [recorder stopRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder, NSString *fileName) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [DConnectMediaStreamRecordingProfile setUri:fileName target:response];
+                                 [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateStop
+                                                                           path:fileName mimeType:recorder.mimeType errorMessage:nil];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                                 
+                             } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                          return NO;
                      }];
         // API登録(didReceivePutPauseRequest相当)
@@ -188,14 +199,16 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         
-                         [recorder pauseRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         void (^block) (void) = ^(void) {
+                             [recorder pauseRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                          return NO;
                      }];
         
@@ -210,14 +223,16 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         
-                         [recorder resumeRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         void (^block) (void) = ^(void) {
+                             [recorder resumeRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                          return NO;
                      }];
         
@@ -234,14 +249,16 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         
-                         [recorder muteRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         void (^block) (void) = ^(void) {
+                             [recorder muteRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                          return NO;
                      }];
         
@@ -256,14 +273,16 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         
-                         [recorder unMuteRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         __block void (^block) (void) = ^(void) {
+                             [recorder unMuteRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             } failCompletion:^(DPHostStreamRecorder *recorder, NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                          return NO;
                      }];
         
@@ -320,15 +339,18 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                              return YES;
                          }
-                         
-                         [recorder startWebServerWithSuccessCompletion:^(NSString *uri) {
-                             [response setResult:DConnectMessageResultTypeOk];
-                             [DConnectMediaStreamRecordingProfile setUri:uri target:response];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         } failCompletion:^(NSString *errorMessage) {
-                             [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                         }];
+                         void (^block) (void) = ^(void) {
+                             [recorder startWebServerWithSuccessCompletion:^(NSString *uri) {
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [DConnectMediaStreamRecordingProfile setUri:uri target:response];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             } failCompletion:^(NSString *errorMessage) {
+                                 [response setErrorToIllegalDeviceStateWithMessage:errorMessage];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         };
+                         [weakSelf requestAuthorizedAfterRunBlock:block response:response];
+
                          return NO;
                      }];
         
@@ -385,13 +407,45 @@
                                 [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                                 return YES;
                             }
-                            [recorder stopWebServer];
-                            [response setResult:DConnectMessageResultTypeOk];
+                            void (^block) (void) = ^(void) {
+                                [recorder stopWebServer];
+                                [response setResult:DConnectMessageResultTypeOk];
+                            };
+                            [weakSelf requestAuthorizedAfterRunBlock:block response:response];
                             return YES;
                         }];
         
     }
     return self;
+}
+
+#pragma mark - Private Method
+- (void)requestAuthorizedAfterRunBlock:(void (^)(void))block response:(DConnectResponseMessage *)response {
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    switch (status) {
+        case AVAuthorizationStatusAuthorized:
+        default:
+            break;
+        case AVAuthorizationStatusDenied:
+        case AVAuthorizationStatusRestricted:
+        case AVAuthorizationStatusNotDetermined:
+            // 初回起動時に許可設定を促すダイアログが表示される
+            NSLog(@"aaaaa");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    if (granted) {
+                        block();
+                    } else {
+                        [response setErrorToUnknownWithMessage:@"Not Authorized to take photo."];
+                        [[DConnectManager sharedManager] sendResponse:response];
+                    }
+                }];
+
+            });
+            return;
+    }
+    
+    block();
 }
 
 

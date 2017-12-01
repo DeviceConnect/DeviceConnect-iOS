@@ -10,7 +10,8 @@
 #import "DPHostRecorder.h"
 #import "DPHostRecorderUtils.h"
 @interface DPHostRecorder()
-@property dispatch_queue_t captureQueue;
+@property dispatch_queue_t captureStartQueue;
+@property dispatch_queue_t captureEndQueue;
 @property (nonatomic) UIDeviceOrientation referenceOrientation;
 /// 録画開始時のビデオの向き
 @property (nonatomic) AVCaptureVideoOrientation videoOrientation;
@@ -37,7 +38,8 @@
         self.supportedPreviewSizes = [NSArray array];
         self.supportedMimeTypes = [NSArray array];
         self.session = [AVCaptureSession new];
-        self.captureQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
+        self.captureStartQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
+        self.captureEndQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
         self.videoOrientation = AVCaptureVideoOrientationPortrait;
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -63,12 +65,12 @@
 
 - (void) performReading:(void(^)(void))callback
 {
-    dispatch_sync(self.captureQueue, callback);
+    dispatch_sync(self.captureStartQueue, callback);
 }
 
 - (void) performWriting:(void(^)(void))callback
 {
-    dispatch_barrier_sync(self.captureQueue, callback);
+    dispatch_barrier_sync(self.captureEndQueue, callback);
 }
 
 - (void)startRecordingWithError:(NSError **)error {
@@ -225,7 +227,7 @@
      @{
        (id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
        }];
-    [videoOut setSampleBufferDelegate:delegate queue:self.captureQueue];
+    [videoOut setSampleBufferDelegate:delegate queue:self.captureStartQueue];
     if ([self.session canAddOutput:videoOut]) {
         [self.session addOutput:videoOut];
     } else {
@@ -261,7 +263,7 @@
     }
     
     AVCaptureAudioDataOutput *audioOut = [AVCaptureAudioDataOutput new];
-    [audioOut setSampleBufferDelegate:delegate queue:self.captureQueue];
+    [audioOut setSampleBufferDelegate:delegate queue:self.captureStartQueue];
     if ([self.session canAddOutput:audioOut]) {
         [self.session addOutput:audioOut];
     } else {
