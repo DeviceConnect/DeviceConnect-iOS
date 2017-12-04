@@ -443,7 +443,7 @@ static UIViewController *loadingHUD;
 }
 
 // アラート表示
-+ (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler {
++ (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)(void))handler {
 	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
 																			 message:message
 																	  preferredStyle:UIAlertControllerStyleAlert];

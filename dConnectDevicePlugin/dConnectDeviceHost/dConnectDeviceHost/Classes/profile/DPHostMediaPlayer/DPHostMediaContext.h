@@ -7,17 +7,15 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
 #import <DConnectSDK/DConnectSDK.h>
-
+#import <Photos/Photos.h>
 extern NSString *MediaContextMediaIdSchemeIPodAudio; ///< iPodライブラリの音声メディアのmediaIdに使用されるスキーム
 extern NSString *MediaContextMediaIdSchemeIPodMovie; ///< iPodライブラリの動画メディアのmediaIdに使用されるスキーム
-extern NSString *MediaContextMediaIdSchemeAssetsLibrary;
 extern NSString *MediaContextMediaIdSchemeIPodLibrary;
-
+extern NSString *MediaContextMediaIdSchemeFile;
 typedef NS_ENUM(NSUInteger, MediaPlayerType) {
     MediaPlayerTypeIPod,     ///< iPodミュージックプレイヤー
     MediaPlayerTypeMoviePlayer, ///< MoviePlayer + 独自UI
@@ -67,14 +65,14 @@ extern const MPMediaType TargetMPMediaType;
 + (instancetype)contextWithURL:(NSURL *)url;
 
 /**
- @brief カメラロール等のアセットのメディアコンテキストを返却する
+ @brief カメラロール等のPHAssetのメディアコンテキストを返却する
  
  動画以外のアセットはメディアコンテキストとして生成
  
  @param asset アセット
  @return メディアコンテキスト
  */
-+ (instancetype)contextWithAsset:(ALAsset *)asset;
++ (instancetype)contextWithPHAsset:(PHAsset *)asset;
 
 /**
  @brief iTunesライブラリ項目のメディアコンテキストを返却する

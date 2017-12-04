@@ -26,29 +26,31 @@
 
     NSString *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:uri]];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    // 通信チェック
-    XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:nil];
-    // resultのチェック
-    NSNumber *result = [dic objectForKey:DConnectMessageResult];
-    XCTAssert([result intValue] == DConnectMessageResultTypeOk);
-    
-    // パラメータのチェック
-    NSArray *files = [dic objectForKey:DConnectFileProfileParamFile];
-    XCTAssertNotNil(files, @"Failed to get file list. \"%s\"", __PRETTY_FUNCTION__);
-    XCTAssert([files count] > 0, @"Failed to get file list. \"%s\"", __PRETTY_FUNCTION__);
-    for (int i = 0; i < [files count]; i++) {
-        NSDictionary *file = [files objectAtIndex:i];
-    }
+    NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        // 通信チェック
+        XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:nil];
+        // resultのチェック
+        NSNumber *result = [dic objectForKey:DConnectMessageResult];
+        XCTAssert([result intValue] == DConnectMessageResultTypeOk);
+        
+        // パラメータのチェック
+        NSArray *files = [dic objectForKey:DConnectFileProfileParamFile];
+        XCTAssertNotNil(files, @"Failed to get file list. \"%s\"", __PRETTY_FUNCTION__);
+        XCTAssert([files count] > 0, @"Failed to get file list. \"%s\"", __PRETTY_FUNCTION__);
+        for (int i = 0; i < [files count]; i++) {
+            NSDictionary *file = [files objectAtIndex:i];
+        }
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
+
 }
 
 - (void) testReceive {
@@ -62,21 +64,23 @@
     
     NSString *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:uri]];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    // 通信チェック
-    XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:nil];
-    // resultのチェック
-    NSNumber *result = [dic objectForKey:DConnectMessageResult];
-    XCTAssert([result intValue] == DConnectMessageResultTypeOk);
+    NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        // 通信チェック
+        XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:nil];
+        // resultのチェック
+        NSNumber *result = [dic objectForKey:DConnectMessageResult];
+        XCTAssert([result intValue] == DConnectMessageResultTypeOk);
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
+
 }
 
 @end

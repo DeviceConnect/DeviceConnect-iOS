@@ -279,7 +279,6 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/battery/chargingTime?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
-
     CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 

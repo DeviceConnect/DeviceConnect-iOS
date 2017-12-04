@@ -26,7 +26,6 @@
 #import "DPHostGeolocationProfile.h"
 #import "DPHostLightProfile.h"
 
-
 NSString *const DPHostDevicePluginServiceId = @"host";
 
 @implementation DPHostService

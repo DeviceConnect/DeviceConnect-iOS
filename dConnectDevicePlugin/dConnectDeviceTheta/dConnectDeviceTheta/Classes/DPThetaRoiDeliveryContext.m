@@ -36,7 +36,7 @@ static float currentGyro[3];
 @implementation DPThetaRoiDeliveryContext
 
 
-- (instancetype)initWithSource:(DPThetaOmnidirectionalImage *)source callback:(void(^)())callback
+- (instancetype)initWithSource:(DPThetaOmnidirectionalImage *)source callback:(void(^)(void))callback
 {
     CMMotionManager *motionMgr = [CMMotionManager new];
 

@@ -91,41 +91,41 @@
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:@"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
                    self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+    __block NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSString *expectedJson = @"{\"result\":0,\"mimeType\":\"image/png\"}";
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
-    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
-                                      [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
-                                                                     options:NSJSONReadingMutableContainers
-                                                                       error:nil];
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingMutableContainers
-                                                                     error:nil];
-    XCTAssertNotNil(actualResponse);
-    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
-                  "expected=%@, but actual=%@", expectedResponse, actualResponse);
-    
-    // uriのチェック
-    NSString *paramUri = actualResponse[@"uri"];
-    XCTAssertNotNil(paramUri);
-    XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
-    request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
-    data = [NSURLConnection sendSynchronousRequest:request
-                                 returningResponse:&response
-                                             error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
+    __block NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        XCTAssertNotNil(data);
+        XCTAssertNil(error);
+        NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
+                                          [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
+                                                                         options:NSJSONReadingMutableContainers
+                                                                           error:nil];
+        NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingMutableContainers
+                                                                         error:nil];
+        XCTAssertNotNil(actualResponse);
+        XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
+                      "expected=%@, but actual=%@", expectedResponse, actualResponse);
+        
+        // uriのチェック
+        NSString *paramUri = actualResponse[@"uri"];
+        XCTAssertNotNil(paramUri);
+        XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
+        [request setHTTPMethod:@"GET"];
+        [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
+        [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+            XCTAssertNotNil(data);
+            XCTAssertNil(error);
+            dispatch_semaphore_signal(semaphore);
+        }] resume];
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 }
 
 /*!
@@ -148,43 +148,43 @@
                   [NSString stringWithFormat:
                     @"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
                    self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+    __block NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSString *expectedJson = @"{\"result\":0}";
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
-    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
-                                      [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
-                                                                     options:NSJSONReadingMutableContainers
-                                                                       error:nil];
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingMutableContainers
-                                                                     error:nil];
-    XCTAssertNotNil(actualResponse);
-    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
-                  "expected=%@, but actual=%@", expectedResponse, actualResponse);
-    
-    // uriのチェック
-    NSString *paramUri = actualResponse[@"uri"];
-    XCTAssertNotNil(paramUri);
-    XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
-    request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
-    data = [NSURLConnection sendSynchronousRequest:request
-                                 returningResponse:&response
-                                             error:&error];
-    
-    XCTAssertNotNil(data);
-    XCTAssertEqual(0, data.length);
-    XCTAssertNil(error);
+    __block NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        XCTAssertNotNil(data);
+        XCTAssertNil(error);
+        NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
+                                          [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
+                                                                         options:NSJSONReadingMutableContainers
+                                                                           error:nil];
+        NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingMutableContainers
+                                                                         error:nil];
+        XCTAssertNotNil(actualResponse);
+        XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
+                      "expected=%@, but actual=%@", expectedResponse, actualResponse);
+        
+        // uriのチェック
+        NSString *paramUri = actualResponse[@"uri"];
+        XCTAssertNotNil(paramUri);
+        XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
+        [request setHTTPMethod:@"GET"];
+        [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
+         [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+             XCTAssertNotNil(data);
+             XCTAssertEqual(0, data.length);
+             XCTAssertNil(error);
+             dispatch_semaphore_signal(semaphore);
+         }] resume];
+        
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 }
 
 /*!

@@ -8,7 +8,6 @@
 //
 
 #import "GHDeviceUtil.h"
-static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 @interface GHDeviceUtil()
 {

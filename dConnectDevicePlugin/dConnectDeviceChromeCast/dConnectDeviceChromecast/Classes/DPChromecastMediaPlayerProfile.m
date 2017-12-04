@@ -12,12 +12,12 @@
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastMediaContext.h"
 #import <GoogleCast/GoogleCast.h>
+#import <Photos/Photos.h>
 
-
+static NSString *const DPChromeCastDefaultVideoURL = @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV";
 @interface DPChromecastMediaPlayerProfile()
 /// アセットライブラリ検索用のロック
 @property NSObject *lockAssetsLibraryQuerying;
-@property ALAssetsLibrary *library;
 @end
 
 @implementation DPChromecastMediaPlayerProfile
@@ -27,7 +27,6 @@
     self = [super init];
     if (self) {
 
-        _library = [ALAssetsLibrary new];
         __weak DPChromecastMediaPlayerProfile *weakSelf = self;
         
         // API登録(didReceiveGetPlayStatusRequest相当)
@@ -62,19 +61,18 @@
                              return YES;
                          }
                          
-                         if ([mediaId isEqualToString:
-                              @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV"]) {
+                         if ([mediaId isEqualToString:DPChromeCastDefaultVideoURL]) {
                              [response setResult:DConnectMessageResultTypeOk];
                              [DConnectMediaPlayerProfile setMIMEType:@"video/quicktime" target:response];
                              [DConnectMediaPlayerProfile setTitle:@"Title: Sample" target:response];
                              [DConnectMediaPlayerProfile setLanguage:@"ja" target:response];
                              [DConnectMediaPlayerProfile setDescription:@"Sample Movie" target:response];
-                             [DConnectMediaPlayerProfile setDuration:9999 target:response];
+                             [DConnectMediaPlayerProfile setDuration:600 target:response];
                              
                          } else {
                              NSURL *url = [NSURL URLWithString:mediaId];
                              DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithURL:url];
-                             if (ctx.media) {
+                             if (ctx.mediaId) {
                                  [ctx setVariousMetadataToMessage:response omitMediaId:YES];
                                  [response setResult:DConnectMessageResultTypeOk];
                              } else {
@@ -138,7 +136,7 @@
                          if (!limit || (limit && limit.integerValue > 0)) {
                              //サンプルムービの追加
                              DPChromecastMediaContext *sampleCtx = [DPChromecastMediaContext new];
-                             sampleCtx.mediaId = @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV";
+                             sampleCtx.mediaId = DPChromeCastDefaultVideoURL;
                              sampleCtx.mimeType = @"video/quicktime";
                              sampleCtx.title = @"Title: Sample";
                              sampleCtx.duration = @(9999);
@@ -146,7 +144,7 @@
                              sampleCtx.desc = @"Sample Movie";
                              NSMutableArray *ctxArr = [NSMutableArray array];
                              [ctxArr addObject:sampleCtx];
-                             [ctxArr addObjectsFromArray:[weakSelf contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
+                             [ctxArr addObjectsFromArray:[weakSelf contextsBySearchingPhotoLibraryWithQuery:query mimeType:mimeType]];
                              if (offset && offset.integerValue >= ctxArr.count) {
                                  [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
                                  return YES;
@@ -248,8 +246,7 @@
                              [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
                              return YES;
                          }
-                         if ([mediaId isEqualToString:
-                              @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV"]) {
+                         if ([mediaId isEqualToString:DPChromeCastDefaultVideoURL]) {
                              return [weakSelf handleRequest:request
                                                    response:response
                                                   serviceId:serviceId
@@ -271,7 +268,7 @@
                              
                              DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithURL:
                                                               [NSURL URLWithString:mediaId]];
-                             if (!ctx.media) {
+                             if (!ctx.mediaId) {
                                  [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
                                  return YES;
                              }
@@ -513,103 +510,75 @@
 }
 
 
-- (NSArray *)contextsBySearchingAssetsLibraryWithQuery:(NSString *)query
-                                              mimeType:(NSString *)mimeType
+- (NSArray *)contextsBySearchingPhotoLibraryWithQuery:(NSString *)query
+                                             mimeType:(NSString *)mimeType
 {
-    NSAssert(![NSThread isMainThread],
-             @"%s can not be invoked from the main queue; please invoke it from the other.", __PRETTY_FUNCTION__);
-    
-    __block BOOL failed = NO;
     __block NSMutableArray *ctxArr = [NSMutableArray new];
+    NSString *mimeTypeLowercase = mimeType.lowercaseString;
     
-    @synchronized(_lockAssetsLibraryQuerying) {
-        // アセットライブラリへのクエリ処理を排他にする。
-        
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
-        
-        NSUInteger groupTypes = ALAssetsGroupAll;
-//        NSString *mimeTypeLowercase = mimeType.lowercaseString;
-        id mainLoopBlock = ^(ALAssetsGroup *group, BOOL *stop1)
-        {
-            if (failed) {
-                // 失敗状態になっているのなら、処理を切り上げる。
-                *stop1 = YES;
+    PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:[self getAlbum] options:nil];
+    if (assets.count == 0) {
+        return ctxArr;
+    }
+    [assets enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+        if (asset) {
+            DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithPHAsset:asset];
+            if (!ctx) {
+                // コンテキスト作成失敗；スキップ
                 return;
             }
             
-            if(group != nil) {
-                [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop2)
-                 {
-                     if (failed) {
-                         // 失敗状態になっているのなら、処理を切り上げる。
-                         *stop2 = YES;
-                         return;
-                     }
-                     
-                     if (result) {
-                         DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithAsset:result];
-                         if (!ctx) {
-                             // コンテキスト作成失敗；スキップ
-                             return;
-                         }
-                         
-                         // クエリー検索
-                         if (query) {
-                             // クエリーのマッチングはファイル名に対して行う。
-                             NSRange result = [ctx.title rangeOfString:query];
-                             if (result.location == NSNotFound && result.length == 0) {
-                                 // クエリーにマッチせず；スキップ。
-                                 return;
-                             }
-                         }
-                         // MIMEタイプ検索
-//                         if (mimeType) {
-//                             NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
-//                             if (result.location == NSNotFound && result.length == 0) {
-//                                 // MIMEタイプにマッチせず；スキップ。
-//                                 return;
-//                             }
-//                         }
-                         
-                         @synchronized(ctxArr) {
-                             [ctxArr addObject:ctx];
-                         }
-                     }
-                 }];
-            } else {
-                // group == nil ⇒ イテレーション終了
-                dispatch_semaphore_signal(semaphore);
+            // クエリー検索
+            if (query) {
+                // クエリーのマッチングはファイル名に対して行う。
+                NSRange result = [ctx.title rangeOfString:query];
+                if (result.location == NSNotFound && result.length == 0) {
+                    // クエリーにマッチせず；スキップ。
+                    return;
+                }
             }
-        };
-        id failBlock = ^(NSError *error)
-        {
-            failed = YES;
-            return;
-        };
-        
-        [_library enumerateGroupsWithTypes:groupTypes
-                               usingBlock:mainLoopBlock
-                             failureBlock:failBlock];
-        
-        // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
-        long result = dispatch_semaphore_wait(semaphore, timeout);
-        if (result != 0) {
-            // タイムアウト
-            failed = YES;
+            // MIMEタイプ検索
+            if (mimeType) {
+                NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
+                if (result.location == NSNotFound && result.length == 0) {
+                    // MIMEタイプにマッチせず；スキップ。
+                    return;
+                }
+            }
+            
+            @synchronized(ctxArr) {
+                [ctxArr addObject:ctx];
+            }
         }
-    }
+    }];
     
-    return failed ? nil : ctxArr;
+    return ctxArr;
 }
 
+- (PHAssetCollection *)getAlbum {
+    PHFetchResult *assetCollections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumVideos
+                                                                               options:nil];
+    if (assetCollections.count == 0) {
+        return nil;
+    }
+    __block PHAssetCollection * myAlbum;
+    [assetCollections enumerateObjectsUsingBlock:^(PHAssetCollection *album, NSUInteger idx, BOOL *stop) {
+        if ([album.localizedTitle isEqualToString:@"Videos"]) {
+            myAlbum = album;
+            *stop = YES;
+        }
+    }];
+    
+    return myAlbum;
+}
 
 
 // 共通リクエスト処理
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
              serviceId:(NSString *)serviceId
-             callback:(void(^)())callback
+             callback:(void(^)(void))callback
 {
     // パラメータチェック
     if (serviceId == nil) {
@@ -654,42 +623,48 @@
     __block NSString* url = [@"http://" stringByAppendingFormat:@"%@/%@",
                                  [[DPChromecastManager sharedManager] getIPString],
                                  fileName];
-
-    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:ctx.media
-                                                               presetName:AVAssetExportPresetLowQuality];
-    exportSession.outputURL = [NSURL fileURLWithPath:dataPath];
-    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
-    [exportSession exportAsynchronouslyWithCompletionHandler:^{
-        switch ([exportSession status]) {
-            case AVAssetExportSessionStatusCompleted:
-            {
-                NSData *compressedData = [NSData dataWithContentsOfURL:exportSession.outputURL];
-                BOOL success = [fileManager fileExistsAtPath:dataPath];
-                if (success) {
-                    compressedData = [NSData dataWithContentsOfFile:dataPath];
-                } else {
-                    [compressedData writeToFile:dataPath atomically:YES];
-                }
-                callback(url);
-                return;
-            }
-            case AVAssetExportSessionStatusFailed:
-            {
-                break;
-            }
-            case AVAssetExportSessionStatusCancelled:
-            {
-                break;
-            }
-            default:
-            {
-                break;
-            }
-            callback(nil);
-        }
-        
+    PHFetchResult *fetch = [PHAsset fetchAssetsWithLocalIdentifiers:@[ctx.mediaId] options:nil];
+    if (fetch.count == 0) {
+        callback(nil);
+        return;
+    }
+    __block NSMutableArray *assets = [NSMutableArray array];
+    [fetch enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+        [assets addObject:asset];
     }];
-    
+    PHVideoRequestOptions *options = [PHVideoRequestOptions new];
+    [[PHImageManager defaultManager] requestExportSessionForVideo:assets.firstObject
+                                                          options:options exportPreset:AVAssetExportPresetLowQuality
+                                                    resultHandler:^(AVAssetExportSession * exportSession, NSDictionary * info) {
+                                                        exportSession.outputURL = [NSURL fileURLWithPath:dataPath];
+                                                        exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+                                                        [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                                                            switch ([exportSession status]) {
+                                                                case AVAssetExportSessionStatusCompleted: {
+                                                                    NSData *compressedData = [NSData dataWithContentsOfURL:exportSession.outputURL];
+                                                                    BOOL success = [fileManager fileExistsAtPath:dataPath];
+                                                                    if (success) {
+                                                                        compressedData = [NSData dataWithContentsOfFile:dataPath];
+                                                                    } else {
+                                                                        [compressedData writeToFile:dataPath atomically:YES];
+                                                                    }
+                                                                    callback(url);
+                                                                    return;
+                                                                }
+                                                                case AVAssetExportSessionStatusFailed: {
+                                                                    break;
+                                                                }
+                                                                case AVAssetExportSessionStatusCancelled: {
+                                                                    break;
+                                                                }
+                                                                default: {
+                                                                }
+                                                                    callback(nil);
+                                                            }
+                                                            
+                                                        }];
+                                                        
+    }];
 }
 
 
@@ -812,7 +787,7 @@
 - (void)handleEventRequest:(DConnectRequestMessage *)request
 				  response:(DConnectResponseMessage *)response
 				  isRemove:(BOOL)isRemove
-				  callback:(void(^)())callback
+				  callback:(void(^)(void))callback
 {
 	DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
 	DConnectEventError error;

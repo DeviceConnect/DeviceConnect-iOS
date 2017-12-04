@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DconnectSDK/DConnectSDK.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface DConnectEventSession : NSObject
 

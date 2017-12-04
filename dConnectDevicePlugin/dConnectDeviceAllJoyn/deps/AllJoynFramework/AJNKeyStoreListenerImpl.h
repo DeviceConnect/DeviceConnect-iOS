@@ -14,7 +14,7 @@
 //    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////
 
-#import <alljoyn/KeystoreListener.h>
+#import <alljoyn/KeyStoreListener.h>
 #import "AJNKeyStoreListener.h"
 
 class AJNKeyStoreListenerImpl : public ajn::KeyStoreListener {

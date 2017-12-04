@@ -84,13 +84,21 @@ static DPHueItemBridge *mSelectedItemBridge;
 
 - (void)showAleart:(NSString*)msg
 {
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"hue"
-                          message:msg delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:@"hue"
+                                 message:msg
+                                 preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert show];
+    
+    
+    UIAlertAction* okButton = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:nil];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (BOOL)ipad

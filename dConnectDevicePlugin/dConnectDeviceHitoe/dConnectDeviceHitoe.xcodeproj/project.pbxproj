@@ -137,7 +137,7 @@
 		ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */; };
 		ABDDDF821D485153002EFF57 /* DPHitoeService.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF811D485153002EFF57 /* DPHitoeService.m */; };
 		ABDDDF871D487799002EFF57 /* DPHitoeEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */; };
-		ABDDDF8A1D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */; };
+		ABDDDF8A1D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF891D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.m */; };
 		ABDDDF8D1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */; };
 		ABDDDF901D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF8F1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m */; };
 		ABDDDF931D488399002EFF57 /* DPHitoeEventDispatcherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF921D488399002EFF57 /* DPHitoeEventDispatcherManager.m */; };
@@ -308,8 +308,8 @@
 		ABDDDF811D485153002EFF57 /* DPHitoeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeService.m; sourceTree = "<group>"; };
 		ABDDDF851D487799002EFF57 /* DPHitoeEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeEventDispatcher.h; sourceTree = "<group>"; };
 		ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeEventDispatcher.m; sourceTree = "<group>"; };
-		ABDDDF881D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHItoeImmediateEventDispatcher.h; sourceTree = "<group>"; };
-		ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHItoeImmediateEventDispatcher.m; sourceTree = "<group>"; };
+		ABDDDF881D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeImmediateEventDispatcher.h; sourceTree = "<group>"; };
+		ABDDDF891D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeImmediateEventDispatcher.m; sourceTree = "<group>"; };
 		ABDDDF8B1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeIntervalEventDispatcher.h; sourceTree = "<group>"; };
 		ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeIntervalEventDispatcher.m; sourceTree = "<group>"; };
 		ABDDDF8E1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeEventDispatcherFactory.h; sourceTree = "<group>"; };
@@ -527,8 +527,8 @@
 			children = (
 				ABDDDF851D487799002EFF57 /* DPHitoeEventDispatcher.h */,
 				ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */,
-				ABDDDF881D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.h */,
-				ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */,
+				ABDDDF881D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.h */,
+				ABDDDF891D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.m */,
 				ABDDDF8B1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.h */,
 				ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */,
 				ABDDDF8E1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.h */,
@@ -909,7 +909,7 @@
 				AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */,
 				ABDDDF8D1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m in Sources */,
 				ABDDDF901D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m in Sources */,
-				ABDDDF8A1D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m in Sources */,
+				ABDDDF8A1D487A74002EFF57 /* DPHitoeImmediateEventDispatcher.m in Sources */,
 				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
 				ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */,
 				AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */,

@@ -325,12 +325,26 @@ static GHDataManager* mgr = nil;
             NSError *error = nil;
             if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error]) {
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"DBへの保存に失敗しました", nil)
-                                                               message:[error description]
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
-                [alert show];
+                UIAlertController * alert = [UIAlertController
+                                             alertControllerWithTitle:NSLocalizedString(@"DBへの保存に失敗しました", nil)
+                                             message:[error description]
+                                             preferredStyle:UIAlertControllerStyleAlert];
+                
+                
+                
+                UIAlertAction* okButton = [UIAlertAction
+                                            actionWithTitle:@"OK"
+                                            style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * action) {
+                                                //Handle your yes please button action here
+                                            }];
+                
+                [alert addAction:okButton];
+                UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
+                while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
+                    baseView = baseView.presentedViewController;
+                }
+                [baseView presentViewController:alert animated:YES completion:nil];
             }
         }];
     }
@@ -353,7 +367,7 @@ static GHDataManager* mgr = nil;
 - (NSEntityDescription *)createEntity:(NSManagedObjectContext *)moc withClassName:(NSString*)classname
 {
     Class class = NSClassFromString(classname);
-	return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([class class])
+	return (NSEntityDescription *) [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([class class])
                                          inManagedObjectContext:moc];
 }
 

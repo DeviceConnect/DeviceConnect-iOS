@@ -2277,7 +2277,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampGroupsDeleted(MsgArg* lampGroups
         // add the signals to the interface description
         //
     
-        status = [interfaceDescription addSignalWithName:@"ControllerServiceLightingReset" inputSignature:@"" argumentNames:[NSArray arrayWithObjects: nil]];
+        status = [interfaceDescription addSignalWithName:@"ControllerServiceLightingReset" inputSignature:@"" argumentNames:@[]];
         
         if (status != ER_OK && status != ER_BUS_MEMBER_ALREADY_EXISTS) {
             @throw [NSException exceptionWithName:@"BusObjectInitFailed" reason:@"Unable to add signal to interface:  ControllerServiceLightingReset" userInfo:nil];

@@ -26,7 +26,7 @@
     return [[DPHitoeIntervalEventDispatcher alloc] initWithDevicePlugin:devicePlugin firstPeriodTime:periodTime periodTime:periodTime];
 }
 + (DPHitoeEventDispatcher*)createImmediateEventDispatcherForDevicePlugin:(DConnectDevicePlugin*)devicePlugin {
-    return [[DPHItoeImmediateEventDispatcher alloc] initWithDevicePlugin:devicePlugin];
+    return [[DPHitoeImmediateEventDispatcher alloc] initWithDevicePlugin:devicePlugin];
 }
 
 + (int)getInterval:(DConnectRequestMessage*)request {

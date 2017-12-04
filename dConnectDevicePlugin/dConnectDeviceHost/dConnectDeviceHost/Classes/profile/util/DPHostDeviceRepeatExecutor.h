@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPHRepeateBlock)();
+typedef void (^DPHRepeateBlock)(void);
 
 @interface DPHostDeviceRepeatExecutor : NSObject
 

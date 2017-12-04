@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
     DPIRKitSelectionStateCheckingIRKit,
 };
 
-@interface DPIRKitWiFiSelectionGuideViewController ()<UIAlertViewDelegate>
+@interface DPIRKitWiFiSelectionGuideViewController ()
 {
     DPIRKitSelectionState _state;
 }
@@ -29,8 +29,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
 
 - (void) showAlertWithTileKey:(NSString *)titleKey
                   messsageKey:(NSString *)messageKey
-               closeButtonKey:(NSString *)closeButtonKey
-                     delegate:(id<UIAlertViewDelegate>)delegate;
+               closeButtonKey:(NSString *)closeButtonKey;
 
 - (void) createNewDeviceWithClientKey:(NSString *)clientKey;
 - (void) showNoNetworkError;
@@ -46,22 +45,37 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
 - (void) showAlertWithTileKey:(NSString *)titleKey
                   messsageKey:(NSString *)messageKey
                closeButtonKey:(NSString *)closeButtonKey
-                     delegate:(id<UIAlertViewDelegate>)delegate
 {
     
     __weak typeof(self) _self = self;
     NSBundle *bundle = DPIRBundle();
-    
-    UIAlertView *alert
-    = [[UIAlertView alloc] initWithTitle:DPIRLocalizedString(bundle, titleKey)
+
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:DPIRLocalizedString(bundle, titleKey)
                                  message:DPIRLocalizedString(bundle, messageKey)
-                                delegate:delegate
-                       cancelButtonTitle:nil
-                       otherButtonTitles:DPIRLocalizedString(bundle, closeButtonKey), nil];
+                                 preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction* closeButton = [UIAlertAction
+                                  actionWithTitle:DPIRLocalizedString(bundle, closeButtonKey)
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action) {
+                                      @synchronized (_self) {
+                                          if (_state == DPIRKitSelectionStateGotDeviceKey) {
+                                              _state = DPIRKitSelectionStateWaitingIRKitSSID;
+                                              [self setScrollEnable:NO closeBtn:YES];
+                                          } else if (_state == DPIRKitSelectionStateCheckingIRKit) {
+                                              _state = DPIRKitSelectionStateWaitingIRKitSSID;
+                                              [self setScrollEnable:NO closeBtn:YES];
+                                          } else {
+                                              [self dismissViewControllerAnimated:YES completion:nil];
+                                          }
+                                      }
+                                  }];
+    
+    [alert addAction:closeButton];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_self stopLoading];
-        [alert show];
+        [_self presentViewController:alert animated:YES completion:nil];
     });
     
 }
@@ -70,8 +84,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
     
     [self showAlertWithTileKey:@"AlertTitleError"
                    messsageKey:@"AlertMessageNoNetworkError"
-                closeButtonKey:@"AlertBtnClose"
-                      delegate:self];
+                closeButtonKey:@"AlertBtnClose"];
 }
 
 - (void) startLoading {
@@ -164,8 +177,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
              
              [_self showAlertWithTileKey:@"AlertTitlePrepared"
                              messsageKey:@"AlertMessagePrepared"
-                          closeButtonKey:@"AlertBtnClose"
-                                delegate:_self];
+                          closeButtonKey:@"AlertBtnClose"];
              
          } else {
              [_self showNoNetworkError];
@@ -196,34 +208,15 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
                      }
                      [_self showAlertWithTileKey:@"AlertTitlePrepared"
                                      messsageKey:@"AlertMessageIsIRKit"
-                                  closeButtonKey:@"AlertBtnClose"
-                                        delegate:nil];
+                                  closeButtonKey:@"AlertBtnClose"];
                      
                  } else {
                      [_self showAlertWithTileKey:@"AlertTitleError"
                                      messsageKey:@"AlertMessageIsNotIRKit"
-                                  closeButtonKey:@"AlertBtnClose"
-                                        delegate:_self];
+                                  closeButtonKey:@"AlertBtnClose"];
                  }
              }];
             
-        }
-    }
-}
-
-#pragma mark - UIAlertView Delegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    @synchronized (self) {
-        if (_state == DPIRKitSelectionStateGotDeviceKey) {
-            _state = DPIRKitSelectionStateWaitingIRKitSSID;
-            [self setScrollEnable:NO closeBtn:YES];
-        } else if (_state == DPIRKitSelectionStateCheckingIRKit) {
-            _state = DPIRKitSelectionStateWaitingIRKitSSID;
-            [self setScrollEnable:NO closeBtn:YES];
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
 }

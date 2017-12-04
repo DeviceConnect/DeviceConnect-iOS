@@ -15,7 +15,7 @@
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
-#import <DConnectSDk/DConnectSettings.h>
+#import <DConnectSDK/DConnectSettings.h>
 
 
 /*! @brief ドメイン名. */

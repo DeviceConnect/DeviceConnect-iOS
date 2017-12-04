@@ -91,16 +91,18 @@ textHeight;
     BOOL isValid = [self.docInterCon presentOpenInMenuFromRect:self.installButton.frame inView:self.view animated:NO];
     if (!isValid) {
         //pebble管理アプリが無い時のアラートを生成
-        UIAlertView *alert =
-        [[UIAlertView alloc]
-         initWithTitle:@"\"3.Pebble管理アプリの実行\"を行ってください"
-         message:nil
-         delegate:nil
-         cancelButtonTitle:nil
-         otherButtonTitles:@"Close", nil
-         ];
-        [alert show];
+        UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:@"\"3.Pebble管理アプリの実行\"を行ってください"
+                                     message:nil
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* closeButton = [UIAlertAction
+                                    actionWithTitle:@"Close"
+                                    style:UIAlertActionStyleDefault
+                                    handler:nil];
         
+        [alert addAction:closeButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     

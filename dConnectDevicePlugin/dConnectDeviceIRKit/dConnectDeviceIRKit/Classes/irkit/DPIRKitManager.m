@@ -240,15 +240,18 @@ struct DPIRKitCRCInfo
     DPIR_ASYNC_S
     
     NSURLRequest *req = [_self createGetRequestWithHost:hostName path:@"/messages"];
-    NSData *body = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:nil];
-    if (!body) {
-        DPIRLog(@"Get Message : no-body");
-        completion(nil);
-		return;
-    }
-    
-    completion([[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding]);
-    
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        // レスポンスが成功か失敗かを見てそれぞれ処理を行う
+        if (response && ! error) {
+            completion([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        } else {
+            DPIRLog(@"Get Message : no-body");
+            completion(nil);
+        }
+        
+    }] resume];
     DPIR_ASYNC_E
 }
 
@@ -260,16 +263,18 @@ struct DPIRKitCRCInfo
     DPIR_ASYNC_S
     
     NSURLRequest *req = [_self createPostRequestWithHost:hostName path:@"/messages" body:message];
-    NSURLResponse *res = nil;
-    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
-    if (!res || ((NSHTTPURLResponse *) res).statusCode != 200) {
-        DPIRLog(@"Post request failed.");
-        completion(NO);
-    } else {
-        DPIRLog(@"Message posted.");
-        completion(YES);
-    }
-    
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (!response || ((NSHTTPURLResponse *) response).statusCode != 200) {
+            DPIRLog(@"Post request failed.");
+            completion(NO);
+        } else {
+            DPIRLog(@"Message posted.");
+            completion(YES);
+        }
+        
+    }] resume];
     DPIR_ASYNC_E
 }
 
@@ -281,37 +286,39 @@ struct DPIRKitCRCInfo
     NSURLRequest *req = [self createPostRequestWithHost:DPIRKitInternetHost path:@"/1/clients" body:param];
     // DConnectのAPIから呼ばれず、設定画面から呼ぶことになるので長めに設定しておく。
     ((NSMutableURLRequest *)req).timeoutInterval = 30;
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    NSData *body = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-    NSString *clientKey = nil;
+    __block NSString *clientKey = nil;
     
-    if (error && (error.code == NSURLErrorTimedOut) && [error.domain isEqualToString: NSURLErrorDomain]) {
-        completion(nil, DPIRKitConnectionErrorCodeServerNotReachable);
-        return;
-    }
-    
-    if (body) {
-        @try {
-            id jsonObj = [NSJSONSerialization JSONObjectWithData:body
-                                                         options:NSJSONReadingAllowFragments
-                                                           error:nil];
-            if ([jsonObj isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *json = (NSDictionary *) jsonObj;
-                clientKey = json[@"clientkey"];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error && (error.code == NSURLErrorTimedOut) && [error.domain isEqualToString: NSURLErrorDomain]) {
+            completion(nil, DPIRKitConnectionErrorCodeServerNotReachable);
+            return;
+        }
+        
+        if (data) {
+            @try {
+                id jsonObj = [NSJSONSerialization JSONObjectWithData:data
+                                                             options:NSJSONReadingAllowFragments
+                                                               error:nil];
+                if ([jsonObj isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *json = (NSDictionary *) jsonObj;
+                    clientKey = json[@"clientkey"];
+                }
+            }
+            @catch (NSException *exception) {
+                clientKey = nil;
             }
         }
-        @catch (NSException *exception) {
-            clientKey = nil;
+        
+        if (clientKey) {
+            completion(clientKey, DPIRKitConnectionErrorCodeNone);
+        } else {
+            completion(nil, DPIRKitConnectionErrorCodeFailed);
         }
-    }
-    
-    if (clientKey) {
-        completion(clientKey, DPIRKitConnectionErrorCodeNone);
-    } else {
-        completion(nil, DPIRKitConnectionErrorCodeFailed);
-    }
-    
+        
+    }] resume];
     DPIR_ASYNC_E
     
 }
@@ -325,41 +332,42 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_S
     
-    NSString *serviceId = nil;
-    NSString *deviceKey = nil;
+    __block NSString *serviceId = nil;
+    __block NSString *deviceKey = nil;
     
     NSString *param = [NSString stringWithFormat:@"clientkey=%@", clientKey];
     NSURLRequest *req = [_self createPostRequestWithHost:DPIRKitInternetHost path:@"/1/devices" body:param];
     // DConnectのAPIから呼ばれず、設定画面から呼ぶことになるので長めに設定しておく。
     ((NSMutableURLRequest *)req).timeoutInterval = 30;
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    NSData *body = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-    
-    if (error && (error.code == NSURLErrorTimedOut) && [error.domain isEqualToString: NSURLErrorDomain]) {
-        completion(nil, nil, DPIRKitConnectionErrorCodeServerNotReachable);
-        return;
-    }
-    
-    @try {
-        id jsonObj = [NSJSONSerialization JSONObjectWithData:body options:NSJSONReadingAllowFragments error:nil];
-        if ([jsonObj isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *json = (NSDictionary *) jsonObj;
-            deviceKey = json[@"devicekey"];
-            serviceId = json[@"deviceid"];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error && (error.code == NSURLErrorTimedOut) && [error.domain isEqualToString: NSURLErrorDomain]) {
+            completion(nil, nil, DPIRKitConnectionErrorCodeServerNotReachable);
+            return;
         }
-    }
-    @catch (NSException *exception) {
-        deviceKey = nil;
-        serviceId = nil;
-    }
-    
-    if (!serviceId || !deviceKey) {
-        completion(nil, nil, DPIRKitConnectionErrorCodeFailed);
-    } else {
-        completion(serviceId, deviceKey, DPIRKitConnectionErrorCodeNone);
-    }
-    
+        
+        @try {
+            id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if ([jsonObj isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *json = (NSDictionary *) jsonObj;
+                deviceKey = json[@"devicekey"];
+                serviceId = json[@"deviceid"];
+            }
+        }
+        @catch (NSException *exception) {
+            deviceKey = nil;
+            serviceId = nil;
+        }
+        
+        if (!serviceId || !deviceKey) {
+            completion(nil, nil, DPIRKitConnectionErrorCodeFailed);
+        } else {
+            completion(serviceId, deviceKey, DPIRKitConnectionErrorCodeNone);
+        }
+        
+    }] resume];
     DPIR_ASYNC_E
 }
 
@@ -371,31 +379,33 @@ struct DPIRKitCRCInfo
     DPIR_ASYNC_S
     
     NSURLRequest *req = [_self createGetRequestWithHost:DPIRKitDeviceHost path:@"/"];
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-    
-    BOOL result = false;
-    do {
-        if (error) {
-            break;
-        }
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *) res;
-        DPIRLog(@"Headers : %@", httpRes.allHeaderFields);
-        NSString *value = httpRes.allHeaderFields[DPIRKitModuleKey];
-        NSArray *info = [value componentsSeparatedByString:@"/"];
+        BOOL result = false;
+        do {
+            if (error) {
+                break;
+            }
+            
+            NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *) response;
+            DPIRLog(@"Headers : %@", httpRes.allHeaderFields);
+            NSString *value = httpRes.allHeaderFields[DPIRKitModuleKey];
+            NSArray *info = [value componentsSeparatedByString:@"/"];
+            
+            if (info.count != 2) {
+                break;
+            }
+            
+            NSString *moduleName = info[0];
+            result = [moduleName isEqualToString:DPIRKitModuleValue];
+            
+        } while (false);
         
-        if (info.count != 2) {
-            break;
-        }
+        callback(result, error);
+
         
-        NSString *moduleName = info[0];
-        result = [moduleName isEqualToString:DPIRKitModuleValue];
-        
-    } while (false);
-    
-    callback(result, error);
+    }] resume];
     
     DPIR_ASYNC_E
 }
@@ -452,21 +462,23 @@ struct DPIRKitCRCInfo
     NSString *data = [[components componentsJoinedByString: @"/"] uppercaseString];
     DPIRLog(@"data : %@", data);
     NSURLRequest *req = [_self createPostRequestWithHost:DPIRKitDeviceHost path:@"/wifi" body:data];
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error) {
+            DPIRLog(@"error : %@", error);
+            completion(NO, DPIRKitConnectionErrorCodeDeviceNotReachable);
+            return;
+        }
+        
+        if (((NSHTTPURLResponse *) response).statusCode == 200) {
+            completion(YES, DPIRKitConnectionErrorCodeNone);
+        } else {
+            completion(NO, DPIRKitConnectionErrorCodeFailed);
+        }
+    }] resume];
     
-    if (error) {
-        DPIRLog(@"error : %@", error);
-        completion(NO, DPIRKitConnectionErrorCodeDeviceNotReachable);
-        return;
-    }
     
-    if (((NSHTTPURLResponse *)res).statusCode == 200) {
-        completion(YES, DPIRKitConnectionErrorCodeNone);
-    } else {
-        completion(NO, DPIRKitConnectionErrorCodeFailed);
-    }
     
     DPIR_ASYNC_E
 }
@@ -482,16 +494,17 @@ struct DPIRKitCRCInfo
     NSString *path = [NSString stringWithFormat:@"/1/messages?clientkey=%@&clear=1", clientKey];
     NSURLRequest *req = [_self createGetRequestWithHost:DPIRKitInternetHost path:path];
     ((NSMutableURLRequest *) req).timeoutInterval = 30;
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-    
-    if (error || !bodyData || bodyData.length == 0) {
-        DPIRLog(@"Device is not on internet.");
-        completion(NO);
-    } else {
-        completion(YES);
-    }
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error || !data || data.length == 0) {
+            DPIRLog(@"Device is not on internet.");
+            completion(NO);
+        } else {
+            completion(YES);
+        }
+    }] resume];
+
     
     DPIR_ASYNC_E
     
@@ -510,39 +523,39 @@ struct DPIRKitCRCInfo
     NSString *param = [NSString stringWithFormat:@"clientkey=%@&deviceid=%@", clientKey, serviceId];
     
     NSURLRequest *req = [_self createPostRequestWithHost:DPIRKitInternetHost path:@"/1/door" body:param];
-    NSURLResponse *res = nil;
-    NSError *error = nil;
-    
-    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-    
-    if (error) {
-        DPIRLog(@"error : %@", error);
-        completion(NO);
-        return;
-    }
-
-    NSString *hostName = nil;
-    @try {
-        id jsonObj = [NSJSONSerialization JSONObjectWithData:bodyData options:NSJSONReadingAllowFragments error:nil];
-        if (![jsonObj isKindOfClass:[NSDictionary class]]) {
-            DPIRLog(@"not json");
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error) {
+            DPIRLog(@"error : %@", error);
             completion(NO);
             return;
         }
         
-        NSDictionary *json = (NSDictionary *) jsonObj;
-        hostName = json[@"hostname"];
-    }
-    @catch (NSException *exception) {
-        hostName = nil;
-    }
+        NSString *hostName = nil;
+        @try {
+            id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if (![jsonObj isKindOfClass:[NSDictionary class]]) {
+                DPIRLog(@"not json");
+                completion(NO);
+                return;
+            }
+            
+            NSDictionary *json = (NSDictionary *) jsonObj;
+            hostName = json[@"hostname"];
+        }
+        @catch (NSException *exception) {
+            hostName = nil;
+        }
+        
+        DPIRLog(@"hostname : %@", hostName);
+        if (hostName) {
+            completion(YES);
+        } else {
+            completion(NO);
+        }
+    }] resume];
     
-    DPIRLog(@"hostname : %@", hostName);
-    if (hostName) {
-        completion(YES);
-    } else {
-        completion(NO);
-    }
     
     DPIR_ASYNC_E
 }
@@ -554,49 +567,51 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_S
     
-    NSString *serviceId = nil;
-    NSString *clientKey = nil;
-    
-    do {
+    __block NSString *serviceId = nil;
+    __block NSString *clientKey = nil;
+    __block NSURLRequest *req = [_self createPostRequestWithHost:host path:@"/keys" body:@""];
+
+    __block NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSURLRequest *req = [_self createPostRequestWithHost:host path:@"/keys" body:@""];
-        NSData *body = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:nil];
-        
-        if (!body) {
-            break;
-        }
-        
-        NSDictionary *json = [_self dictionaryWithJSONData:body];
-        if (!json) {
-            break;
-        }
-        
-        NSString *clientToken = json[@"clienttoken"];
-        if (!clientToken) {
-            break;
-        }
-        
-        req = [_self createPostRequestWithHost:DPIRKitInternetHost
-                                          path:@"/1/keys"
-                                          body:[NSString stringWithFormat:@"clienttoken=%@", clientToken]];
-        ((NSMutableURLRequest *) req).timeoutInterval = 30;
-        body = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:nil];
-        
-        if (!body) {
-            break;
-        }
-        
-        json = [_self dictionaryWithJSONData:body];
-        if (!json) {
-            break;
-        }
-        
-        serviceId = json[@"deviceid"];
-        clientKey = json[@"clientkey"];
-    } while (NO);
-    
-    completion(serviceId, clientKey);
-    
+        do {
+            if (!data) {
+                break;
+            }
+            
+            __block NSDictionary *json = [_self dictionaryWithJSONData:data];
+            if (!json) {
+                break;
+            }
+            
+            NSString *clientToken = json[@"clienttoken"];
+            if (!clientToken) {
+                break;
+            }
+            
+            req = [_self createPostRequestWithHost:DPIRKitInternetHost
+                                              path:@"/1/keys"
+                                              body:[NSString stringWithFormat:@"clienttoken=%@", clientToken]];
+            ((NSMutableURLRequest *) req).timeoutInterval = 30;
+            [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+                do {
+                    if (!data) {
+                        break;
+                    }
+                    
+                    json = [_self dictionaryWithJSONData:data];
+                    if (!json) {
+                        break;
+                    }
+                    
+                    serviceId = json[@"deviceid"];
+                    clientKey = json[@"clientkey"];
+                } while (NO);
+                completion(serviceId, clientKey);
+            }] resume];
+        } while (NO);
+    }] resume];
     DPIR_ASYNC_E
 }
 
@@ -654,7 +669,7 @@ struct DPIRKitCRCInfo
     }
 
     [_detectionDelegate manager:self didFindDevice:device];
-    [self netService:sender didNotResolve:nil];
+    [self netService:sender didNotResolve:@{}];
 }
 
 #pragma mark - get Devices

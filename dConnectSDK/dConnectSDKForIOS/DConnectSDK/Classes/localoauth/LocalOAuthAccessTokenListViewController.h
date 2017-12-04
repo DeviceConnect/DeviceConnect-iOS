@@ -27,7 +27,7 @@
 
 
 
-@interface LocalOAuthAccessTokenListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface LocalOAuthAccessTokenListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 
 /*!

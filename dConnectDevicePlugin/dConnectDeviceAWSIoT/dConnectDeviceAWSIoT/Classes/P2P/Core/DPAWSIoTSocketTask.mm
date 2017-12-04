@@ -8,7 +8,6 @@
 //
 
 #import "DPAWSIoTSocketTask.h"
-
 #define BUFFER_SIZE 512
 
 char const HEADER[4] = {
@@ -57,23 +56,18 @@ char const HEADER[4] = {
         NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
-    
     if (length == 0) {
         return;
     }
-
     [self intToByte:length to:_sendBuffer];
-    
     if (UDT::ERROR == UDT::send(_socket, HEADER, 4, 0)) {
         NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
-    
     if (UDT::ERROR == UDT::send(_socket, _sendBuffer, 4, 0)) {
         NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
-    
     int _offset = offset;
     int _length;
     while (_offset < offset + length) {
@@ -81,6 +75,7 @@ char const HEADER[4] = {
         if (_length > BUFFER_SIZE) {
             _length = BUFFER_SIZE;
         }
+
         if (UDT::ERROR == UDT::send(_socket, data + _offset, _length, 0)) {
             NSLog(@"DPAWSIoTSocketTask send error .");
             return;
@@ -96,18 +91,15 @@ char const HEADER[4] = {
     if ([_delegate respondsToSelector:@selector(didConnectedAddress:port:)]) {
         [_delegate didConnectedAddress:_address port:_port];
     }
-    
     while (!_closeFlag) {
         if (![self readHeader]) {
             NSLog(@"DPAWSIoTSocketTask header error.");
         }
-        
         int size = [self readSize];
         if (size == -1) {
             NSLog(@"DPAWSIoTSocketTask size error.");
             break;
         }
-
         while (size > 0 && !_closeFlag) {
             int rs = UDT::recv(_socket, data, BUFFER_SIZE, 0);
             if (_closeFlag || UDT::ERROR == rs) {
@@ -115,7 +107,6 @@ char const HEADER[4] = {
                 break;
             }
             size -= rs;
-
             if ([_delegate respondsToSelector:@selector(didReceivedData:length:)]) {
                 [_delegate didReceivedData:(const char *)data length:(int)rs];
             }

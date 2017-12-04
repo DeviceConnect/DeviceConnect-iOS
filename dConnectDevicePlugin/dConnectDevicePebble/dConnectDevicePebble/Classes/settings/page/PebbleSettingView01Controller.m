@@ -42,7 +42,7 @@ textHeight;
     return NO;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
 	//縦だけサポートする
     return UIInterfaceOrientationMaskPortrait;

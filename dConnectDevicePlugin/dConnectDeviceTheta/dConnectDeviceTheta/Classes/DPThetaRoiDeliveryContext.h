@@ -31,7 +31,7 @@
 @property (nonatomic) DPThetaParam *currentParam;
 
 
-- (instancetype)initWithSource:(DPThetaOmnidirectionalImage *)source callback:(void(^)())callback;
+- (instancetype)initWithSource:(DPThetaOmnidirectionalImage *)source callback:(void(^)(void))callback;
 
 - (void)render;
 - (void)draw;

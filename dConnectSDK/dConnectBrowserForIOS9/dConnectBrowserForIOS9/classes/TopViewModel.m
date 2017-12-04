@@ -217,7 +217,7 @@ static NSInteger maxIconCount = 8;
 
 - (void)setLatestURL:(NSString*)url
 {
-    AppDelegate* app = [UIApplication sharedApplication].delegate;
+    AppDelegate* app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     app.latestURL = [NSURL URLWithString: url];
 }
 

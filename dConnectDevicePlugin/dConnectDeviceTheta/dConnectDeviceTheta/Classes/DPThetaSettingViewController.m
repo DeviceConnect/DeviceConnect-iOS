@@ -32,7 +32,7 @@
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
     // 下のドットの色
-    UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self class], nil];
+    UIPageControl *pageControl = [UIPageControl appearanceWhenContainedInInstancesOfClasses:[NSArray arrayWithObject:[self class]]];
     pageControl.pageIndicatorTintColor = [UIColor grayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];

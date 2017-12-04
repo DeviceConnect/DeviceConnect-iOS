@@ -74,8 +74,8 @@ static SampleCameraEventObserver *_instance;
 
 - (void)parseMessage:(NSData *)response apiName:(NSString *)apiName
 {
-    NSString *responseText =
-        [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+//    NSString *responseText =
+//        [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
 //    NSLog(@"SampleCameraEventObserver parseMessage = %@, apiname=%@",
 //          responseText, apiName);
     if (_isStarted) {

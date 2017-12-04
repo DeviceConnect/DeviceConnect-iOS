@@ -12,6 +12,7 @@
 @implementation DConnectServiceListViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
 }
 

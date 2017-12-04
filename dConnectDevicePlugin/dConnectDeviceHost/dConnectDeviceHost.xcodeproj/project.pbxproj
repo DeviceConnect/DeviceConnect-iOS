@@ -37,8 +37,6 @@
 		252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 252F870219736DEB00142BAE /* DPHostPhoneProfile.m */; };
 		257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 257FC23619BAAF5200358536 /* DPHostReachability.m */; };
 		2585BB941980D89F00AAE43C /* DPHostSettingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2585BB931980D89F00AAE43C /* DPHostSettingProfile.m */; };
-		25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */; };
-		25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C710EA1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m */; };
 		25DAFD18196A61E50002734B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DAFD17196A61E50002734B /* CoreFoundation.framework */; };
 		25DAFD1E196A61E50002734B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 25DAFD1C196A61E50002734B /* InfoPlist.strings */; };
 		25DF80D6196CCD7D003F6FF3 /* DPHostBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DF80D5196CCD7D003F6FF3 /* DPHostBatteryProfile.m */; };
@@ -60,8 +58,35 @@
 		97FE1A05192B2FB500808FA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97FE1A03192B2FB500808FA5 /* InfoPlist.strings */; };
 		97FE1A07192B2FB500808FA5 /* dConnectDeviceHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */; };
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
+		AB1D29D41FB137D4000B0AA5 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1D29D31FB137D4000B0AA5 /* Photos.framework */; };
+		AB1D2A1E1FB550DD000B0AA5 /* DPHostRecorderUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A061FB550DC000B0AA5 /* DPHostRecorderUtils.m */; };
+		AB1D2A1F1FB550DD000B0AA5 /* DPHostMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A071FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.m */; };
+		AB1D2A201FB550DD000B0AA5 /* DPHostVideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A0B1FB550DC000B0AA5 /* DPHostVideoRecorder.m */; };
+		AB1D2A211FB550DD000B0AA5 /* DPHostStreamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A0D1FB550DC000B0AA5 /* DPHostStreamRecorder.m */; };
+		AB1D2A221FB550DD000B0AA5 /* DPHostPhotoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A101FB550DC000B0AA5 /* DPHostPhotoRecorder.m */; };
+		AB1D2A231FB550DD000B0AA5 /* DPHostAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A121FB550DC000B0AA5 /* DPHostAudioRecorder.m */; };
+		AB1D2A241FB550DD000B0AA5 /* DPHostRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A141FB550DC000B0AA5 /* DPHostRecorder.m */; };
+		AB1D2A251FB550DD000B0AA5 /* DPHostRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A161FB550DC000B0AA5 /* DPHostRecorderManager.m */; };
+		AB1D2A261FB550DD000B0AA5 /* DPHostSimpleHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A1A1FB550DC000B0AA5 /* DPHostSimpleHttpServer.m */; };
+		AB1D2A271FB550DD000B0AA5 /* DPHostCameraRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A1B1FB550DC000B0AA5 /* DPHostCameraRecorder.m */; };
+		AB1D2A281FB557FB000B0AA5 /* DPHostVideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A0B1FB550DC000B0AA5 /* DPHostVideoRecorder.m */; };
+		AB1D2A291FB557FB000B0AA5 /* DPHostAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A121FB550DC000B0AA5 /* DPHostAudioRecorder.m */; };
+		AB1D2A2A1FB557FB000B0AA5 /* DPHostSimpleHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A1A1FB550DC000B0AA5 /* DPHostSimpleHttpServer.m */; };
+		AB1D2A2B1FB557FB000B0AA5 /* DPHostCameraRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A1B1FB550DC000B0AA5 /* DPHostCameraRecorder.m */; };
+		AB1D2A2C1FB557FB000B0AA5 /* DPHostPhotoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A101FB550DC000B0AA5 /* DPHostPhotoRecorder.m */; };
+		AB1D2A2D1FB557FB000B0AA5 /* DPHostRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A141FB550DC000B0AA5 /* DPHostRecorder.m */; };
+		AB1D2A2E1FB557FB000B0AA5 /* DPHostStreamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A0D1FB550DC000B0AA5 /* DPHostStreamRecorder.m */; };
+		AB1D2A2F1FB557FB000B0AA5 /* DPHostRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A161FB550DC000B0AA5 /* DPHostRecorderManager.m */; };
+		AB1D2A301FB557FB000B0AA5 /* DPHostRecorderUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A061FB550DC000B0AA5 /* DPHostRecorderUtils.m */; };
+		AB1D2A311FB557FB000B0AA5 /* DPHostMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D2A071FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.m */; };
+		AB1D2A331FB55838000B0AA5 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1D2A321FB55838000B0AA5 /* DConnectSDK.framework */; };
 		AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */; };
 		AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C271BCF311000C5E3A2 /* AVKit.framework */; };
+		AB912A791F8F174B002ABE36 /* DPHostMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */; };
+		AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */; };
+		AB912A7F1F8F4092002ABE36 /* DPHostMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */; };
+		AB912A821F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */; };
+		AB9F67061FB94712003A8EA0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */; };
 		ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
@@ -107,10 +132,6 @@
 		257FC23619BAAF5200358536 /* DPHostReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostReachability.m; sourceTree = "<group>"; };
 		2585BB921980D89F00AAE43C /* DPHostSettingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSettingProfile.h; sourceTree = "<group>"; };
 		2585BB931980D89F00AAE43C /* DPHostSettingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSettingProfile.m; sourceTree = "<group>"; };
-		25B42C6319865F1000B65E83 /* DPHostRecorderContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostRecorderContext.h; sourceTree = "<group>"; };
-		25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorderContext.m; sourceTree = "<group>"; };
-		25C710E91981E578004C6484 /* DPHostMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DPHostMediaStreamRecordingProfile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		25C710EA1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DPHostMediaStreamRecordingProfile.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25DAFD16196A61E50002734B /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHost_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		25DAFD17196A61E50002734B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		25DAFD1B196A61E50002734B /* dConnectDeviceHost_resources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dConnectDeviceHost_resources-Info.plist"; sourceTree = "<group>"; };
@@ -149,8 +170,39 @@
 		97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceHostTests.m; sourceTree = "<group>"; };
 		97FE1A1F192B6DA400808FA5 /* DPHostSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSystemProfile.h; sourceTree = "<group>"; };
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
+		AB1D29D31FB137D4000B0AA5 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		AB1D2A061FB550DC000B0AA5 /* DPHostRecorderUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorderUtils.m; sourceTree = "<group>"; };
+		AB1D2A071FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
+		AB1D2A0A1FB550DC000B0AA5 /* DPHostVideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostVideoRecorder.h; sourceTree = "<group>"; };
+		AB1D2A0B1FB550DC000B0AA5 /* DPHostVideoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostVideoRecorder.m; sourceTree = "<group>"; };
+		AB1D2A0C1FB550DC000B0AA5 /* DPHostPhotoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostPhotoRecorder.h; sourceTree = "<group>"; };
+		AB1D2A0D1FB550DC000B0AA5 /* DPHostStreamRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostStreamRecorder.m; sourceTree = "<group>"; };
+		AB1D2A0E1FB550DC000B0AA5 /* DPHostRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostRecorder.h; sourceTree = "<group>"; };
+		AB1D2A0F1FB550DC000B0AA5 /* DPHostRecorderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostRecorderManager.h; sourceTree = "<group>"; };
+		AB1D2A101FB550DC000B0AA5 /* DPHostPhotoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostPhotoRecorder.m; sourceTree = "<group>"; };
+		AB1D2A121FB550DC000B0AA5 /* DPHostAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostAudioRecorder.m; sourceTree = "<group>"; };
+		AB1D2A131FB550DC000B0AA5 /* DPHostAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostAudioRecorder.h; sourceTree = "<group>"; };
+		AB1D2A141FB550DC000B0AA5 /* DPHostRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorder.m; sourceTree = "<group>"; };
+		AB1D2A151FB550DC000B0AA5 /* DPHostStreamRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostStreamRecorder.h; sourceTree = "<group>"; };
+		AB1D2A161FB550DC000B0AA5 /* DPHostRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorderManager.m; sourceTree = "<group>"; };
+		AB1D2A181FB550DC000B0AA5 /* DPHostSimpleHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSimpleHttpServer.h; sourceTree = "<group>"; };
+		AB1D2A191FB550DC000B0AA5 /* DPHostCameraRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCameraRecorder.h; sourceTree = "<group>"; };
+		AB1D2A1A1FB550DC000B0AA5 /* DPHostSimpleHttpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSimpleHttpServer.m; sourceTree = "<group>"; };
+		AB1D2A1B1FB550DC000B0AA5 /* DPHostCameraRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCameraRecorder.m; sourceTree = "<group>"; };
+		AB1D2A1C1FB550DC000B0AA5 /* DPHostRecorderUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostRecorderUtils.h; sourceTree = "<group>"; };
+		AB1D2A1D1FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostMediaStreamRecordingProfile.h; sourceTree = "<group>"; };
+		AB1D2A321FB55838000B0AA5 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB3B2C271BCF311000C5E3A2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		AB912A771F8F174B002ABE36 /* DPHostMediaPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMediaPlayer.h; sourceTree = "<group>"; };
+		AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaPlayer.m; sourceTree = "<group>"; };
+		AB912A7A1F8F3081002ABE36 /* DPHostIPodAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostIPodAudioPlayer.h; sourceTree = "<group>"; };
+		AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostIPodAudioPlayer.m; sourceTree = "<group>"; };
+		AB912A7D1F8F4092002ABE36 /* DPHostMoviePlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMoviePlayer.h; sourceTree = "<group>"; };
+		AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMoviePlayer.m; sourceTree = "<group>"; };
+		AB912A801F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMediaPlayerFactory.h; sourceTree = "<group>"; };
+		AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaPlayerFactory.m; sourceTree = "<group>"; };
+		AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
@@ -203,6 +255,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9F67061FB94712003A8EA0 /* MobileCoreServices.framework in Frameworks */,
+				AB1D2A331FB55838000B0AA5 /* DConnectSDK.framework in Frameworks */,
+				AB1D29D41FB137D4000B0AA5 /* Photos.framework in Frameworks */,
 				ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */,
 				EF19A24F1E446BDD00F00439 /* CoreLocation.framework in Frameworks */,
 				AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */,
@@ -227,17 +282,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25B42C6219865EC400B65E83 /* DPHostMediaStreamRecording */ = {
-			isa = PBXGroup;
-			children = (
-				25C710E91981E578004C6484 /* DPHostMediaStreamRecordingProfile.h */,
-				25C710EA1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m */,
-				25B42C6319865F1000B65E83 /* DPHostRecorderContext.h */,
-				25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */,
-			);
-			path = DPHostMediaStreamRecording;
-			sourceTree = "<group>";
-		};
 		25DAFD19196A61E50002734B /* dConnectDeviceHost_resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +305,7 @@
 		25F0BC31199310C10095C333 /* DPHostMediaPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				AB912A761F8F13A4002ABE36 /* Players */,
 				25F0BC3F199343600095C333 /* DPHostMediaContext.h */,
 				25F0BC40199343600095C333 /* DPHostMediaContext.m */,
 				25E0296F1991BD3400AFC171 /* DPHostMediaPlayerProfile.h */,
@@ -293,6 +338,9 @@
 		97FE19E9192B2FB400808FA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB9F67051FB94712003A8EA0 /* MobileCoreServices.framework */,
+				AB1D2A321FB55838000B0AA5 /* DConnectSDK.framework */,
+				AB1D29D31FB137D4000B0AA5 /* Photos.framework */,
 				ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */,
 				EF19A24E1E446BDD00F00439 /* CoreLocation.framework */,
 				AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */,
@@ -387,7 +435,7 @@
 				25FF1DAF196A89A700EA7F72 /* DPHostFileProfile.h */,
 				25FF1DB0196A89A700EA7F72 /* DPHostFileProfile.m */,
 				25F0BC31199310C10095C333 /* DPHostMediaPlayer */,
-				25B42C6219865EC400B65E83 /* DPHostMediaStreamRecording */,
+				AB1D2A051FB550DC000B0AA5 /* DPHostMediaStreamRecording */,
 				25FF1DB5196A9B8000EA7F72 /* DPHostNotificationProfile.h */,
 				25FF1DB6196A9B8000EA7F72 /* DPHostNotificationProfile.m */,
 				252F870119736DEB00142BAE /* DPHostPhoneProfile.h */,
@@ -405,6 +453,80 @@
 				25DF80D8196CE622003F6FF3 /* DPHostVibrationProfile.m */,
 			);
 			path = profile;
+			sourceTree = "<group>";
+		};
+		AB1D2A051FB550DC000B0AA5 /* DPHostMediaStreamRecording */ = {
+			isa = PBXGroup;
+			children = (
+				AB1D2A081FB550DC000B0AA5 /* Recorders */,
+				AB1D2A1C1FB550DC000B0AA5 /* DPHostRecorderUtils.h */,
+				AB1D2A061FB550DC000B0AA5 /* DPHostRecorderUtils.m */,
+				AB1D2A1D1FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.h */,
+				AB1D2A071FB550DC000B0AA5 /* DPHostMediaStreamRecordingProfile.m */,
+			);
+			path = DPHostMediaStreamRecording;
+			sourceTree = "<group>";
+		};
+		AB1D2A081FB550DC000B0AA5 /* Recorders */ = {
+			isa = PBXGroup;
+			children = (
+				AB1D2A091FB550DC000B0AA5 /* Video */,
+				AB1D2A111FB550DC000B0AA5 /* Audio */,
+				AB1D2A171FB550DC000B0AA5 /* Photo */,
+				AB1D2A0C1FB550DC000B0AA5 /* DPHostPhotoRecorder.h */,
+				AB1D2A101FB550DC000B0AA5 /* DPHostPhotoRecorder.m */,
+				AB1D2A0E1FB550DC000B0AA5 /* DPHostRecorder.h */,
+				AB1D2A141FB550DC000B0AA5 /* DPHostRecorder.m */,
+				AB1D2A151FB550DC000B0AA5 /* DPHostStreamRecorder.h */,
+				AB1D2A0D1FB550DC000B0AA5 /* DPHostStreamRecorder.m */,
+				AB1D2A0F1FB550DC000B0AA5 /* DPHostRecorderManager.h */,
+				AB1D2A161FB550DC000B0AA5 /* DPHostRecorderManager.m */,
+			);
+			path = Recorders;
+			sourceTree = "<group>";
+		};
+		AB1D2A091FB550DC000B0AA5 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				AB1D2A0A1FB550DC000B0AA5 /* DPHostVideoRecorder.h */,
+				AB1D2A0B1FB550DC000B0AA5 /* DPHostVideoRecorder.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		AB1D2A111FB550DC000B0AA5 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				AB1D2A121FB550DC000B0AA5 /* DPHostAudioRecorder.m */,
+				AB1D2A131FB550DC000B0AA5 /* DPHostAudioRecorder.h */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		AB1D2A171FB550DC000B0AA5 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				AB1D2A181FB550DC000B0AA5 /* DPHostSimpleHttpServer.h */,
+				AB1D2A1A1FB550DC000B0AA5 /* DPHostSimpleHttpServer.m */,
+				AB1D2A191FB550DC000B0AA5 /* DPHostCameraRecorder.h */,
+				AB1D2A1B1FB550DC000B0AA5 /* DPHostCameraRecorder.m */,
+			);
+			path = Photo;
+			sourceTree = "<group>";
+		};
+		AB912A761F8F13A4002ABE36 /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				AB912A771F8F174B002ABE36 /* DPHostMediaPlayer.h */,
+				AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */,
+				AB912A7A1F8F3081002ABE36 /* DPHostIPodAudioPlayer.h */,
+				AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */,
+				AB912A7D1F8F4092002ABE36 /* DPHostMoviePlayer.h */,
+				AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */,
+				AB912A801F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.h */,
+				AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */,
+			);
+			path = Players;
 			sourceTree = "<group>";
 		};
 		D6384EAA1A7625CF00384167 /* DPHostCanvas */ = {
@@ -629,10 +751,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB1D2A281FB557FB000B0AA5 /* DPHostVideoRecorder.m in Sources */,
+				AB1D2A291FB557FB000B0AA5 /* DPHostAudioRecorder.m in Sources */,
+				AB1D2A2A1FB557FB000B0AA5 /* DPHostSimpleHttpServer.m in Sources */,
+				AB1D2A2B1FB557FB000B0AA5 /* DPHostCameraRecorder.m in Sources */,
+				AB1D2A2C1FB557FB000B0AA5 /* DPHostPhotoRecorder.m in Sources */,
+				AB1D2A2D1FB557FB000B0AA5 /* DPHostRecorder.m in Sources */,
+				AB1D2A2E1FB557FB000B0AA5 /* DPHostStreamRecorder.m in Sources */,
+				AB1D2A2F1FB557FB000B0AA5 /* DPHostRecorderManager.m in Sources */,
+				AB1D2A301FB557FB000B0AA5 /* DPHostRecorderUtils.m in Sources */,
+				AB1D2A311FB557FB000B0AA5 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */,
 				EFA3EC4E1E45DD95007E559E /* DPHostGeolocationProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
 				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
+				AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */,
 				D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */,
 				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
 				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
@@ -640,11 +773,12 @@
 				25FF1DB7196A9B8000EA7F72 /* DPHostNotificationProfile.m in Sources */,
 				25F0BC41199343600095C333 /* DPHostMediaContext.m in Sources */,
 				25FF1DB1196A89A700EA7F72 /* DPHostFileProfile.m in Sources */,
+				AB912A821F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m in Sources */,
 				25DF80D6196CCD7D003F6FF3 /* DPHostBatteryProfile.m in Sources */,
 				25FF1DBA196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m in Sources */,
+				AB912A791F8F174B002ABE36 /* DPHostMediaPlayer.m in Sources */,
 				EFDD96A71AB805F70068E984 /* DPHostTouchUIViewController.m in Sources */,
 				EFDD96A11AB805980068E984 /* DPHostTouchProfile.m in Sources */,
-				25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */,
 				25FF1DB4196A89AD00EA7F72 /* DPHostUtils.m in Sources */,
 				25FF0C0E196FBECF00E8C7C3 /* DPHostProximityProfile.m in Sources */,
 				25DF80D9196CE622003F6FF3 /* DPHostVibrationProfile.m in Sources */,
@@ -654,10 +788,10 @@
 				EFF228D01E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */,
 				EFF228D31E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */,
 				EFF228D61E3A05DF0006F100 /* DPHostUtil.m in Sources */,
+				AB912A7F1F8F4092002ABE36 /* DPHostMoviePlayer.m in Sources */,
 				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
 				2585BB941980D89F00AAE43C /* DPHostSettingProfile.m in Sources */,
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */,
-				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */,
 				97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */,
 			);
@@ -667,9 +801,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB1D2A271FB550DD000B0AA5 /* DPHostCameraRecorder.m in Sources */,
 				97FE1A07192B2FB500808FA5 /* dConnectDeviceHostTests.m in Sources */,
+				AB1D2A261FB550DD000B0AA5 /* DPHostSimpleHttpServer.m in Sources */,
+				AB1D2A251FB550DD000B0AA5 /* DPHostRecorderManager.m in Sources */,
 				EFF228D11E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */,
+				AB1D2A1F1FB550DD000B0AA5 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				EFF228D41E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */,
+				AB1D2A1E1FB550DD000B0AA5 /* DPHostRecorderUtils.m in Sources */,
+				AB1D2A211FB550DD000B0AA5 /* DPHostStreamRecorder.m in Sources */,
+				AB1D2A241FB550DD000B0AA5 /* DPHostRecorder.m in Sources */,
+				AB1D2A231FB550DD000B0AA5 /* DPHostAudioRecorder.m in Sources */,
+				AB1D2A201FB550DD000B0AA5 /* DPHostVideoRecorder.m in Sources */,
+				AB1D2A221FB550DD000B0AA5 /* DPHostPhotoRecorder.m in Sources */,
 				EFF228D71E3A05DF0006F100 /* DPHostUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -848,6 +992,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Dependencies/CocoaAsyncSocket";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = dConnectDeviceHost;
 				SKIP_INSTALL = YES;
@@ -865,6 +1010,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Dependencies/CocoaAsyncSocket";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = dConnectDeviceHost;
 				SKIP_INSTALL = YES;

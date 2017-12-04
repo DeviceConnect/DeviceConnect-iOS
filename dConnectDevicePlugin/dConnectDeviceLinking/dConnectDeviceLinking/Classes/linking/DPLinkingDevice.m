@@ -7,10 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPlinkingDevice.h"
+#import "DPLinkingDevice.h"
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-static const NSInteger kButton = (1 << 3);
 
 static NSString *const kName = @"name";
 static NSString *const kId = @"id";

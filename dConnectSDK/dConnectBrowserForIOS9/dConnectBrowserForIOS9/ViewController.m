@@ -206,7 +206,7 @@
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
     // 
-    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    AppDelegate* delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (delegate.window.rootViewController.presentedViewController != nil) {
         [self dismissViewControllerAnimated:NO completion:nil];
     }

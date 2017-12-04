@@ -10,9 +10,9 @@
 
 #import "DPThetaOmnidirectionalImage.h"
 
-@interface DPThetaOmnidirectionalImage() {
-    NSMutableData *data;
-    NSURLConnection *conn;
+@interface DPThetaOmnidirectionalImage() <NSURLSessionDataDelegate, NSURLSessionTaskDelegate> {
+    NSMutableData *apData;
+    NSURLSession *session;
     DPOmniBlock omniCallback;
 }
 @end
@@ -23,38 +23,50 @@
     self = [super init];
     if (self) {
         omniCallback = callback;
-        _image = [[NSMutableData alloc] init];
-        data = [[NSMutableData alloc] init];
+        _image = [NSMutableData new];
+        apData = [NSMutableData new];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 
         [request addValue:origin forHTTPHeaderField:@"X-GotAPI-Origin"];
         [request setTimeoutInterval:1];
-        conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        sessionConfig.timeoutIntervalForRequest  =  10;
+        sessionConfig.timeoutIntervalForResource =  20;
+        session = [NSURLSession sessionWithConfiguration: sessionConfig
+                                      delegate: self
+                                 delegateQueue: nil];
+        [[session dataTaskWithRequest:request] resume];
     }
     return self;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    [data setLength:0];
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
+    completionHandler(NSURLSessionResponseAllow);
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)nsdata{
-    [data appendData:nsdata];
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data
+{
+    [apData appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    [self abort];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    _image = data;
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(nullable NSError *)error
+{
+    _image = apData;
     [self abort];
 }
 
 -(void)abort{
-    if(conn != nil){
-        [conn cancel];
-        conn = nil;
+    if(session != nil){
+        [session invalidateAndCancel];
+        session = nil;
     }
 
     if (omniCallback) {

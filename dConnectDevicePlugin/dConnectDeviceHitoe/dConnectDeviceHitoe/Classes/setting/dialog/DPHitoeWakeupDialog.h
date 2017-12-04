@@ -11,5 +11,5 @@
 
 @interface DPHitoeWakeupDialog : DPHitoeDialog
 extern NSString *const DPHitoeWakeUpNever;
-+ (void)showHitoeWakeupDialogWithComplition:(void(^)())completion;
++ (void)showHitoeWakeupDialogWithComplition:(void(^)(void))completion;
 @end

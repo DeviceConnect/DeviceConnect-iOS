@@ -41,7 +41,6 @@
 - (void) bindingRequest:(StunBindingRequestCallback)callback
 {
     _callback = callback;
-    
     if (_stunAddress) {
         [self doBindingRequest:_stunAddress];
     } else {
@@ -149,7 +148,7 @@
     _cancelBlock = nil;
     
     if (_callback) {
-        _callback(ip, [port integerValue]);
+        _callback(ip, (int)[port integerValue]);
     }
 }
 
@@ -174,8 +173,8 @@
     [request appendBytes:changeRequest length:sizeof(changeRequest)];
     [request appendBytes:attributeSize length:sizeof(attributeSize)];
     [request appendBytes:attributeBody length:sizeof(attributeBody)];
-    
-    [_server sendData:(const char *)[request bytes] length:[request length] to:_stunAddress port:_stunPort];
+
+    [_server sendData:(const char *)[request bytes] length:(int)[request length] to:_stunAddress port:_stunPort];
 }
 
 - (void) didNotConnect
