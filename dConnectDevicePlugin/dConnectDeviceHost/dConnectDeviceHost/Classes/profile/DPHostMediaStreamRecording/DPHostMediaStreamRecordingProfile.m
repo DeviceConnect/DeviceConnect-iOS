@@ -175,6 +175,7 @@
                              [recorder stopRecordingWithSuccessCompletion:^(DPHostStreamRecorder *recorder, NSString *fileName) {
                                  [response setResult:DConnectMessageResultTypeOk];
                                  [DConnectMediaStreamRecordingProfile setUri:fileName target:response];
+                                 [DConnectMediaStreamRecordingProfile setMIMEType:recorder.mimeType target:response];
                                  [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateStop
                                                                            path:fileName mimeType:recorder.mimeType errorMessage:nil];
                                  [[DConnectManager sharedManager] sendResponse:response];
