@@ -161,10 +161,10 @@
 - (NSString *) keyForMessage:(DConnectMessage *)message {
     
     NSMutableString *key = [NSMutableString string];
-    
+    NSCharacterSet *set = [NSCharacterSet URLHostAllowedCharacterSet];
     if (![self isEmptyString:[message stringForKey:DConnectMessageServiceId]]) {
         [key appendString:[[message stringForKey:DConnectMessageServiceId]
-                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                           stringByAddingPercentEncodingWithAllowedCharacters:set]];
     }
     
     [key appendString:@" "];
@@ -178,28 +178,28 @@
 //    
     if (![self isEmptyString:[message stringForKey:DConnectMessageOrigin]]) {
         [key appendString:[[message stringForKey:DConnectMessageOrigin]
-                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                           stringByAddingPercentEncodingWithAllowedCharacters:set]];
     }
     
     [key appendString:@" "];
     
     if (![self isEmptyString:[message stringForKey:DConnectMessageProfile]]) {
         [key appendString:[[message stringForKey:DConnectMessageProfile]
-                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                           stringByAddingPercentEncodingWithAllowedCharacters:set]];
     }
     
     [key appendString:@" "];
     
     if (![self isEmptyString:[message stringForKey:DConnectMessageInterface]]) {
         [key appendString:[[message stringForKey:DConnectMessageInterface]
-                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                           stringByAddingPercentEncodingWithAllowedCharacters:set]];
     }
     
     [key appendString:@" "];
     
     if (![self isEmptyString:[message stringForKey:DConnectMessageAttribute]]) {
         [key appendString:[[message stringForKey:DConnectMessageAttribute]
-                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                           stringByAddingPercentEncodingWithAllowedCharacters:set]];
     }
     
     return key;

@@ -29,10 +29,7 @@ extern int DConnectPort;
  */
 @property (nonatomic) NSString *clientId;
 
-- (NSArray*) createClient;
+- (void) createClientWithCompletion:(void (^)(NSArray* client))completion;
 
-- (AccessToken*) requestAccessTokenWithClientId:(NSString*)clientId
-                                         scopes:(NSArray*)scopes
-                                applicationName:(NSString*)applicationName;
 
 @end

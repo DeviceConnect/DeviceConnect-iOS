@@ -36,8 +36,9 @@
  */
 - (void) testHttpNormalCreateClient
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client[0], @"clientId must not be nil.");
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client[0], @"clientId must not be nil.");
+    }];
 }
 
 /*!
@@ -57,45 +58,14 @@
  */
 - (void) testHttpNormalCreateClientOverwrite
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client[0], @"clientId must not be nil.");
-    NSArray *newClient = [self createClient];
-    XCTAssertNotNil(newClient[0], @"clientId must not be nil.");
-    XCTAssertNotEqual(client[0], newClient[0]);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client[0], @"clientId must not be nil.");
+        __block NSArray *oldClient = client;
+         [self createClientWithCompletion:^(NSArray *client) {
+             XCTAssertNotNil(client[0], @"clientId must not be nil.");
+             XCTAssertNotEqual(oldClient[0], client[0]);
+         }];
+    }];
 }
-
-// MEMO: 以下のテストは手動で行う.
-//- (void) testHttpRequestAccessToken
-//{
-//    NSArray *client = [self createClient];
-//    XCTAssertNotNil(client[0], @"clientId must not be nil.");
-//    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
-//    
-//    AccessToken *accessToken = [self requestAccessTokenWithClientId:client[0]
-//                                                       clientSecret:client[1]
-//                                                             scopes:[NSArray arrayWithObjects:@"battery", nil]
-//                                                    applicationName:@"dConnectManagerTest"];
-//    XCTAssertNotNil(accessToken, @"accessToken must not be nil.");
-//    XCTAssertNotNil(accessToken.token, @"accessToken.token must not be nil.");
-//    XCTAssertNotNil(accessToken.expirePeriods, @"accessToken.expirePeriods must not be nil.");
-//    XCTAssertNotNil(accessToken.signature, @"accessToken.signatue must not be nil.");
-//}
-
-// MEMO: 以下のテストは手動で行う.
-//- (void) testHttpRequestAccessTokenMultiScope
-//{
-//    NSArray *client = [self createClient];
-//    XCTAssertNotNil(client[0], @"clientId must not be nil.");
-//    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
-//    
-//    AccessToken *accessToken = [self requestAccessTokenWithClientId:client[0]
-//                                                       clientSecret:client[1]
-//                                                             scopes:[NSArray arrayWithObjects:@"battery", @"connect", @"deviceorientation", nil]
-//                                                    applicationName:@"dConnectManagerTest"];
-//    XCTAssertNotNil(accessToken, @"accessToken must not be nil.");
-//    XCTAssertNotNil(accessToken.token, @"accessToken.token must not be nil.");
-//    XCTAssertNotNil(accessToken.expirePeriods, @"accessToken.expirePeriods must not be nil.");
-//    XCTAssertNotNil(accessToken.signature, @"accessToken.signatue must not be nil.");
-//}
 
 @end

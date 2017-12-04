@@ -22,7 +22,7 @@
 + (void)handleRequest:(DConnectRequestMessage *)request
 			 response:(DConnectResponseMessage *)response
 			 isRemove:(BOOL)isRemove
-			 callback:(void(^)())callback;
+			 callback:(void(^)(void))callback;
 
 // 共通イベントメッセージ送信
 + (void)sendMessageWithPlugin:(id)plugin
@@ -30,6 +30,6 @@
 					  attribute:(NSString *)attribute
 					   serviceID:(NSString*)serviceID
 				messageCallback:(void(^)(DConnectMessage *eventMsg))messageCallback
-				 deleteCallback:(void(^)())deleteCallback;
+				 deleteCallback:(void(^)(void))deleteCallback;
 
 @end

@@ -344,7 +344,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 
 //ライトグループの削除
 -(BOOL)removeLightGroupWithWithGroupId:(NSString*)groupId
-                            completion:(void(^)())completion
+                            completion:(void(^)(void))completion
 {
     //groupIdチェック
     if (![self checkParamGroupId:groupId]) {
@@ -446,7 +446,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 #pragma mark - private method
 
 //completionHandlerの共通処理
-- (void) setCompletionWithResponseCompletion:(void(^)())completion
+- (void) setCompletionWithResponseCompletion:(void(^)(void))completion
                         errors:(NSArray*)errors
                   errorState:(BridgeConnectState)errorState
 {
@@ -591,7 +591,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         } else {
             dBlightness = [brightness doubleValue];
         }
-        unsigned int redValue, greenValue, blueValue;
+        unsigned int redValue = 0, greenValue = 0, blueValue = 0;
 
         int myBlightness;
         NSString *uicolor;
@@ -624,7 +624,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 - (BOOL) changeLightStatusWithLightId:(NSString *)lightId
                            lightState:(PHLightState*)lightState
                              flashing:(NSArray*)flashing
-                           completion:(void(^)())completion
+                           completion:(void(^)(void))completion
 {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
 
@@ -664,9 +664,9 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                             color:(NSString *)color
                        brightness:(NSNumber *)brightness
                          flashing:(NSArray*)flashing
-                       completion:(void(^)())completion
+                       completion:(void(^)(void))completion
 {
-    unsigned int redValue, greenValue, blueValue;
+    unsigned int redValue = 0, greenValue = 0, blueValue = 0;
 
     // 省略時はMax値(1.0)を設定する
     double brightness_ = 1;
@@ -696,7 +696,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     [self changeLightStatusWithLightId:lightId
                             lightState:onState
                               flashing:flashing
-                            completion:^(NSArray *errors) {
+                            completion:^ {
 //                                [self setCompletionWithResponseCompletion:completion
 //                                                                   errors:errors
 //                                                               errorState:STATE_ERROR_CHANGE_FAIL_LIGHT_NAME];
@@ -725,7 +725,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 - (BOOL)changeGroupStatusWithGroupId:(NSString *)groupId
                           lightState:(PHLightState*)lightState
-                          completion:(void(^)())completion
+                          completion:(void(^)(void))completion
 {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
     
@@ -750,7 +750,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 - (BOOL) changeGroupNameWithGroupId:(NSString *)groupId
                                name:(NSString *)name
-                         completion:(void(^)())completion
+                         completion:(void(^)(void))completion
 {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];

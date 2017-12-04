@@ -13,4 +13,4 @@ extern NSString *const DConnectEventDaoClmId;
 extern NSString *const DConnectEventDaoClmCreateDate;
 extern NSString *const DConnectEventDaoClmUpdateDate;
 
-long long getCurrentTimeInMillis();
+long long getCurrentTimeInMillis(void);

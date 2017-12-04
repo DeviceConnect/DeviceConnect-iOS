@@ -41,104 +41,69 @@
     [super tearDown];
 }
 
-- (NSArray*) createClient
+- (void) createClientWithCompletion:(void (^)(NSArray *client))completion
 {
     NSURL *uri = [NSURL URLWithString:
                   @"http://localhost:4035/gotapi/authorization/grant"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     [request addValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
-    
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingMutableContainers
-                                                                     error:nil];
-    NSNumber *result = [actualResponse objectForKey:@"result"];
-    XCTAssertNotNil(result);
-    XCTAssertEqual(0, [result intValue]);
-    NSLog(@"********** actualResponse: %@", actualResponse);
-    NSMutableArray *client = [NSMutableArray array];
-    [client addObject:[actualResponse objectForKey:@"clientId"]];
-    return client;
-}
-
-- (AccessToken*) requestAccessTokenWithClientId:(NSString*)clientId
-                                   clientSecret:(NSString*)clientSecret
-                                         scopes:(NSArray*)scopes
-                                applicationName:(NSString*)applicationName
-{
-    NSMutableString *scopeParam = nil;
-    if (scopes) {
-        scopeParam = [NSMutableString string];
-        for (int i = 0; i < scopes.count; i++) {
-            if (i > 0) {
-                [scopeParam appendString:@","];
-            }
-            [scopeParam appendString:scopes[i]];
-        }
-    }
-
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/accesstoken?clientId=%@&scope=%@&applicationName=%@", clientId, scopeParam, applicationName]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingMutableContainers
-                                                                     error:nil];
-    NSNumber *result = [actualResponse objectForKey:@"result"];
-    XCTAssertNotNil(result);
-    XCTAssertEqual(0, [result intValue]);
-    return [[AccessToken alloc] initWithResponse:actualResponse];
+    NSURLSession *session = [NSURLSession sharedSession];
+    _semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        XCTAssertNotNil(data);
+        XCTAssertNil(error);
+        NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingMutableContainers
+                                                                         error:nil];
+        NSNumber *result = [actualResponse objectForKey:@"result"];
+        XCTAssertNotNil(result);
+        XCTAssertEqual(0, [result intValue]);
+        NSLog(@"********** actualResponse: %@", actualResponse);
+        NSMutableArray *client = [NSMutableArray array];
+        [client addObject:[actualResponse objectForKey:@"clientId"]];
+        dispatch_semaphore_signal(_semaphore);
+        completion(client);
+    }] resume];
+    dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 }
 
 - (void) searchTestDevicePlugin {
     NSURL *url = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    // 通信チェック
-    XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:nil];
-    
-    // resultのチェック
-    NSNumber *result = [dic objectForKey:DConnectMessageResult];
-    XCTAssert([result intValue] == DConnectMessageResultTypeOk);
-    if ([result intValue] == DConnectMessageResultTypeError) {
-        NSLog(@"errorMessage: %@", [dic objectForKey:DConnectMessageErrorMessage]);
-    }
-    
-    // デバイスのチェック
-    NSArray *services = [dic objectForKey:DConnectServiceDiscoveryProfileParamServices];
-    for (int i = 0; i < [services count]; i++) {
-        NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
-        NSString *name = [s objectForKey:DConnectServiceDiscoveryProfileParamName];
-        NSString *serviceId = [s objectForKey:DConnectServiceDiscoveryProfileParamId];
-        if ([@"Test Success Device" isEqualToString:name]) {
-            self.serviceId = serviceId;
+    NSURLSession *session = [NSURLSession sharedSession];
+    _semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        // 通信チェック
+        XCTAssertNotNil(data, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        XCTAssertNil(error, @"Failed to connect dConnectManager. \"%s\"", __PRETTY_FUNCTION__);
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:nil];
+        
+        // resultのチェック
+        NSNumber *result = [dic objectForKey:DConnectMessageResult];
+        XCTAssert([result intValue] == DConnectMessageResultTypeOk);
+        if ([result intValue] == DConnectMessageResultTypeError) {
+            NSLog(@"errorMessage: %@", [dic objectForKey:DConnectMessageErrorMessage]);
         }
-    }
-    XCTAssertNotNil(self.serviceId, @"Can't found serviceId.");
+        
+        // デバイスのチェック
+        NSArray *services = [dic objectForKey:DConnectServiceDiscoveryProfileParamServices];
+        for (int i = 0; i < [services count]; i++) {
+            NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
+            NSString *name = [s objectForKey:DConnectServiceDiscoveryProfileParamName];
+            NSString *serviceId = [s objectForKey:DConnectServiceDiscoveryProfileParamId];
+            if ([@"Test Success Device" isEqualToString:name]) {
+                self.serviceId = serviceId;
+            }
+        }
+        XCTAssertNotNil(self.serviceId, @"Can't found serviceId.");
+        dispatch_semaphore_signal(_semaphore);
+    }] resume];
+    dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 }
 
 - (NSDictionary *) waitForEvent {

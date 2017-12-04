@@ -3,7 +3,7 @@ var main = (function(parent, global) {
     function init() {
         var mimeType = decodeURIComponent(util.getMimeType());
         var uri = util.getResourceUri();
-        if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') == -1) {
+        if (mimeType.indexOf('image') != -1) {
             var elem;
             if (uri.indexOf(':4035/') != -1) {
                elem = document.getElementById('image');
@@ -18,7 +18,7 @@ var main = (function(parent, global) {
             elem.onload = function() {
                 console.log("onload: " + decodeURIComponent(util.getResourceUri()));
             }
-        } else  if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') != -1) {
+        } else  if (mimeType.indexOf('video') != -1) {
            var mediaId = uri.replace("http://localhost:4035/gotapi/files?uri=", "");
            util.doMediaPlayerMediaPut(util.getServiceId(), util.getAccessTokenQuery(), decodeURIComponent(mediaId),null);
         } else {

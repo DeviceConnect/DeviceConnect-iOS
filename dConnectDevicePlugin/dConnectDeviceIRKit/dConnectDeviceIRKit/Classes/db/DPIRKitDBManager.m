@@ -110,7 +110,7 @@ NSUInteger const DPIRKitTVProfileCount = 21;
     
     NSPersistentStoreCoordinator *aCoodinator = [self coordinator];
     if (aCoodinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:aCoodinator];
     }
 }

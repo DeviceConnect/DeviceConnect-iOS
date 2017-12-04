@@ -29,16 +29,11 @@
     });
 }
 
-- (NSArray*) createClient
+- (void) createClientWithCompletion:(void (^)(NSArray *client))completion
 {
-    return nil;
+    // Implement override
 }
 
-- (AccessToken*) requestAccessTokenWithClientId:(NSString*)clientId
-                                         scopes:(NSArray*)scopes
-                                applicationName:(NSString*)applicationName
-{
-    return nil;
-}
+
 
 @end

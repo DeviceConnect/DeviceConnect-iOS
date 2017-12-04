@@ -46,7 +46,7 @@
 + (void)handleRequest:(DConnectRequestMessage *)request
 			 response:(DConnectResponseMessage *)response
 			 isRemove:(BOOL)isRemove
-			 callback:(void(^)())callback
+			 callback:(void(^)(void))callback
 {
 	DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPPebbleDevicePlugin class]];
 	DConnectEventError error;
@@ -71,7 +71,7 @@
 					  attribute:(NSString *)attribute
 					   serviceID:(NSString*)serviceID
 				messageCallback:(void(^)(DConnectMessage *eventMsg))messageCallback
-				 deleteCallback:(void(^)())deleteCallback
+				 deleteCallback:(void(^)(void))deleteCallback
 {
 	DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPPebbleDevicePlugin class]];
 	NSArray *events  = [mgr eventListForServiceId:serviceID

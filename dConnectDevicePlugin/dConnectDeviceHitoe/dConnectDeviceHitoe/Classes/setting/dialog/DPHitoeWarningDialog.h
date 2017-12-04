@@ -11,6 +11,6 @@
 
 @interface DPHitoeWarningDialog : DPHitoeDialog
 extern NSString *const DPHitoeWarningNever;
-+ (void)showHitoeWarningDialogWithComplition:(void(^)())completion;
++ (void)showHitoeWarningDialogWithComplition:(void(^)(void))completion;
 
 @end

@@ -45,7 +45,7 @@
     connect[DConnectServiceInformationProfileParamBLE] = [NSNumber numberWithBool:NO];
     NSMutableString *paramConnect = [NSMutableString string];
     [paramConnect appendString:@"{"];
-    int i = connect.count;
+    int i = (int) connect.count;
     for (NSString *key in connect) {
         [paramConnect appendString:[NSString stringWithFormat:@"\"%@\"", key]];
         [paramConnect appendString:@": "];

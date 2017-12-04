@@ -24,11 +24,37 @@
         
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaSystemProfile new]];
-    
+        __weak typeof(self) _self = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            [notificationCenter addObserver:_self selector:@selector(applicationWillEnterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
+            [notificationCenter addObserver:_self selector:@selector(applicationDidEnterBackground)
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:application];
+        });
     }
     
     return self;
 }
+- (void) dealloc {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+}
+
+- (void) applicationWillEnterForeground {
+    [[DPThetaManager sharedManager] applicationWillEnterForeground];
+}
+
+- (void) applicationDidEnterBackground {
+    [[DPThetaManager sharedManager] applicationDidEnterBackground];
+}
+
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {

@@ -12,7 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import <DConnectSDK/DConnectSDK.h>
-
+#import <Photos/Photos.h>
 extern NSString *DPChromecastMediaIdSchemeIPodAudio; ///< iPodライブラリの音声メディアのmediaIdに使用されるスキーム
 extern NSString *DPChromecastMediaIdSchemeIPodMovie; ///< iPodライブラリの動画メディアのmediaIdに使用されるスキーム
 extern NSString *DPChromecastMediaIdSchemeAssetsLibrary;
@@ -65,17 +65,15 @@ extern const MPMediaType TargetDPChromecastMPMediaType;
  @return メディアコンテキスト
  */
 + (instancetype)contextWithURL:(NSURL *)url;
-
 /**
- @brief カメラロール等のアセットのメディアコンテキストを返却する
+ @brief カメラロール等のPHアセットのメディアコンテキストを返却する
  
  動画以外のアセットはメディアコンテキストとして生成
  
  @param asset アセット
  @return メディアコンテキスト
  */
-+ (instancetype)contextWithAsset:(ALAsset *)asset;
-
++ (instancetype)contextWithPHAsset:(PHAsset *)asset;
 /**
  @brief iTunesライブラリ項目のメディアコンテキストを返却する
  @param mediaItem iTunesライブラリ項目

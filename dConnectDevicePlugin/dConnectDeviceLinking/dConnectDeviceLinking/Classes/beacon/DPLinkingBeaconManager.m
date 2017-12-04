@@ -133,8 +133,8 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
         return;
     }
     
-    DPLinkingBeacon *beacon = [self.beacons objectAtIndex:index];
-    DCLogInfo(@"removeBeacon %@", beacon.displayName);
+//    DPLinkingBeacon *beacon = [self.beacons objectAtIndex:index];
+//    DCLogInfo(@"removeBeacon %@", beacon.displayName);
 
     [self.beacons removeObjectAtIndex:index];
     [self saveDPLinkingBeacon];

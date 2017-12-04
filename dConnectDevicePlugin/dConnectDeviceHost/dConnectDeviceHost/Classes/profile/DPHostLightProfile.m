@@ -11,6 +11,7 @@
 #import "DPHostDevicePlugin.h"
 #import "DPHostLightProfile.h"
 #import "DPHostDeviceRepeatExecutor.h"
+#import "DPHostRecorderUtils.h"
 
 @implementation DPHostLightProfile {
     DPHostDeviceRepeatExecutor *_flashingExecutor;
@@ -83,7 +84,7 @@
 
         int myBlightness;
         NSString *uicolor;
-        unsigned int redValue, greenValue, blueValue;
+        unsigned int redValue = 0, greenValue = 0, blueValue = 0;
         [weakSelf checkColor:[brightness doubleValue] blueValue:blueValue greenValue:greenValue
                     redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
 
@@ -95,14 +96,14 @@
         if (flashing.count > 0) {
             // 点滅処理
             _flashingExecutor = [[DPHostDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
-                [weakSelf setLightOnOff:true];
+                [DPHostRecorderUtils setLightOnOff:YES];
             } off:^{
-                [weakSelf setLightOnOff:false];
+                [DPHostRecorderUtils setLightOnOff:NO];
             }];
             [response setResult:DConnectMessageResultTypeOk];
         } else {
             // 点灯処理
-            [weakSelf setLightOnOff:true];
+            [DPHostRecorderUtils setLightOnOff:YES];
             [response setResult:DConnectMessageResultTypeOk];
         }
 
@@ -125,7 +126,7 @@
         }
 
         // 消灯処理
-        [weakSelf setLightOnOff:false];
+        [DPHostRecorderUtils setLightOnOff:NO];
         [response setResult:DConnectMessageResultTypeOk];
 
         return YES;
@@ -176,17 +177,4 @@
     *myBlightnessPointer = MAX(*myBlightnessPointer, blueValue);
     *uicolorPointer = [NSString stringWithFormat:@"%02X%02X%02X",redValue, greenValue, blueValue];
 }
-
-- (void)setLightOnOff:(Boolean)bSwitch
-{
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    [captureDevice lockForConfiguration:NULL];
-    if (bSwitch) {
-        captureDevice.torchMode = AVCaptureTorchModeOn;
-    } else {
-        captureDevice.torchMode = AVCaptureTorchModeOff;
-    }
-    [captureDevice unlockForConfiguration];
-}
-
 @end

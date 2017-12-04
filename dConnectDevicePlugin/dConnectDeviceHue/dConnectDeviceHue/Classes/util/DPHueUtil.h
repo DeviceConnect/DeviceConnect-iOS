@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPHueUtilTimerBlock)();
-typedef void (^DPHueUtilTimerCancelBlock)();
+typedef void (^DPHueUtilTimerBlock)(void);
+typedef void (^DPHueUtilTimerCancelBlock)(void);
 
 @interface DPHueUtil : NSObject
 

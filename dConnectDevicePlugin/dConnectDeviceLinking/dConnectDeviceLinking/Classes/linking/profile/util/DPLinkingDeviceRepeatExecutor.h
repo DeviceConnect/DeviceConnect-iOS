@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPLRepeateBlock)();
+typedef void (^DPLRepeateBlock)(void);
 
 @interface DPLinkingDeviceRepeatExecutor : NSObject
 

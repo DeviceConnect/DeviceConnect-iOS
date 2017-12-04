@@ -104,7 +104,7 @@
                           }
                           
                           // brightフォーマットチェック
-                          if ([self checkBrightness:[request stringForKey:DConnectLightProfileParamBrightness]]) {
+                          if ([weakSelf checkBrightness:[request stringForKey:DConnectLightProfileParamBrightness]]) {
                               [weakSelf setErrRespose:response];
                               return YES;
                           }
@@ -159,7 +159,7 @@
                          }
                          
                          // brightフォーマットチェック
-                         if ([self checkBrightness:[request stringForKey:DConnectLightProfileParamBrightness]]) {
+                         if ([weakSelf checkBrightness:[request stringForKey:DConnectLightProfileParamBrightness]]) {
                              [weakSelf setErrRespose:response];
                              return YES;
                          }

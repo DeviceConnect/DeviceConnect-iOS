@@ -18,5 +18,5 @@ typedef void (^RecieveDeviceList)(DConnectArray *deviceList);
 + (GHDeviceUtil*)shareManager;
 - (void)updateDeviceList;
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion;
-- (void)callRequestAccessTokenAPI;
+
 @end

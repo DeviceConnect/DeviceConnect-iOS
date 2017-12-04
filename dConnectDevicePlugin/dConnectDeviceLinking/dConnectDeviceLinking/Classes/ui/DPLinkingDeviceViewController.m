@@ -384,7 +384,7 @@
 #pragma mark - DPLinkingDeviceHumidityDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device humidity:(float)humidity {
-    self.humidityLabel.text = [NSString stringWithFormat:@"%@%", @(humidity)];
+    self.humidityLabel.text = [NSString stringWithFormat:@"%@%%", @(humidity)];
 }
 
 #pragma mark - DPLinkingDeviceAtmosphericPressureDelegate

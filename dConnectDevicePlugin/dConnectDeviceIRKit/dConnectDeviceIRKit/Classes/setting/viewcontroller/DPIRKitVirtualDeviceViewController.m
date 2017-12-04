@@ -268,7 +268,7 @@
 
 - (void)showConfirmAlertWithTitle:(NSString*)title
                           message:(NSString*)message
-                            completion:(void (^)())completion {
+                            completion:(void (^)(void))completion {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"削除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (completion) {

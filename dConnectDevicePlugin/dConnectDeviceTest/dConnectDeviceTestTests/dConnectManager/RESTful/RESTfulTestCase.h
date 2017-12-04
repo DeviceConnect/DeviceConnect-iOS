@@ -23,22 +23,24 @@
 
 #define CHECK_RESPONSE(expectedJson, req) {\
     [req setValue:@"http://localhost:4035/" forHTTPHeaderField:@"X-GotAPI-Origin"]; \
-    NSURLResponse *response = nil; \
-    NSError *error = nil; \
-    NSData *data = [NSURLConnection sendSynchronousRequest:req \
-                                         returningResponse:&response \
-                                                     error:&error]; \
-    XCTAssertNotNil(data); \
-    XCTAssertNil(error); \
-    NSMutableDictionary *expectedResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding] \
-                                                                     options:NSJSONReadingMutableContainers \
-                                                                       error:nil]]; \
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data \
-                                                               options:NSJSONReadingMutableContainers \
-                                                                 error:nil]; \
-    NSLog(@"********** actualResponse: %@", actualResponse); \
-    XCTAssertNotNil(actualResponse); \
-    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse); \
+    NSURLSession *session = [NSURLSession sharedSession]; \
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); \
+    [[session dataTaskWithRequest:req  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) { \
+        XCTAssertNotNil(data); \
+        XCTAssertNil(error); \
+        NSMutableDictionary *expectedResponse = [NSMutableDictionary dictionaryWithDictionary: \
+        [NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding] \
+                            options:NSJSONReadingMutableContainers \
+                                error:nil]]; \
+        NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data \
+                                            options:NSJSONReadingMutableContainers \
+                                            error:nil]; \
+        NSLog(@"********** actualResponse: %@", actualResponse); \
+        XCTAssertNotNil(actualResponse); \
+        XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse); \
+        dispatch_semaphore_signal(semaphore); \
+    }] resume]; \
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC)); \
 }
 
 #define CHECK_EVENT(expectedJson) {\

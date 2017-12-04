@@ -342,7 +342,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 #pragma mark - Notification Delegate
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
 didReceiveNotificationResponse:(UNNotificationResponse *)response
-         withCompletionHandler:(void (^)())completionHandler {
+         withCompletionHandler:(void (^)(void))completionHandler {
     completionHandler();
     [self sendOnClickEventWithNotificaitonId:response.notification.request.identifier];
 }

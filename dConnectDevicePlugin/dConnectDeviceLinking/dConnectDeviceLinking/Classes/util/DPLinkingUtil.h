@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPLinkingUtilTimerBlock)();
-typedef void (^DPLinkingUtilTimerCancelBlock)();
+typedef void (^DPLinkingUtilTimerBlock)(void);
+typedef void (^DPLinkingUtilTimerCancelBlock)(void);
 
 @interface DPLinkingUtil : NSObject
 

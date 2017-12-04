@@ -88,11 +88,16 @@
     
     //DBへ保存処理
     [GHURLManager addBookMark:self.titleField.text url:self.urlField.text parent:self.directory];
-    
-    [self.extensionContext cancelRequestWithError:nil];
+    NSError *unavailableError = [NSError errorWithDomain:NSItemProviderErrorDomain
+                                                    code:NSItemProviderItemUnavailableError
+                                                userInfo:nil];
+    [self.extensionContext cancelRequestWithError:unavailableError];
 }
 - (IBAction)cancel:(id)sender {
-    [self.extensionContext cancelRequestWithError:nil];
+    NSError *unavailableError = [NSError errorWithDomain:NSItemProviderErrorDomain
+                                                    code:NSItemProviderItemUnavailableError
+                                                userInfo:nil];
+    [self.extensionContext cancelRequestWithError:unavailableError];
 }
 
 #pragma mark - private method

@@ -195,6 +195,11 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 // 接続
 - (BOOL)connect
 {
+    if (!_ptpConnection) {
+        _ptpConnection = [PtpConnection new];
+        [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_ERROR];
+        [_ptpConnection setEventListener:self];
+    }
     if ([_ptpConnection connected]) {
         [self updateManageServices: YES];
         return YES;
@@ -231,6 +236,8 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
         dispatch_semaphore_signal(semaphore);
     }];
     dispatch_semaphore_wait(semaphore, timeout);
+    _session = nil;
+    _ptpConnection = nil;
     [self updateManageServices: NO];
 }
 
@@ -339,14 +346,13 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
              if (callback) {
                  callback(@"stop", nil);
              }
+             [_onStatusEventList removeObjectForKey:key];
              // デバイス管理情報更新
              [self updateManageServices: YES];
          }
          result = [_session terminateOpenCapture: _transactionId];
          _transactionId = DPThetaManagerInactive;
          [self disconnect];
-         _session = nil;
-
      } else {
          result = NO;
      }
@@ -425,8 +431,6 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
         return nil;
     }
 
-    NSFileManager *sysFileMgr = [NSFileManager defaultManager];
-    
     NSString *dstPath = [self pathByAppendingPathComponent:path];
     NSData *data = [self getDataWithPtpObject:ptpIp
                     session:session];

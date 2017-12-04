@@ -1,0 +1,6 @@
+module BookmarkDBFramework {
+    umbrella ""
+    explicit module * {
+        export *
+    }
+}

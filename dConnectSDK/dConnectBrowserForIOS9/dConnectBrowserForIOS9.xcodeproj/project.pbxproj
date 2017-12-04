@@ -419,6 +419,7 @@
 		ABAC40481D7E9E8700BBDD34 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		ABAC404A1D7E9E9000BBDD34 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		ABAC404C1D7E9E9700BBDD34 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		ABE6151E1FBAD8DB00D3DCB2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = BookmarkShare/module.modulemap; sourceTree = SOURCE_ROOT; };
 		ABE71E2A1C76D3F40061973C /* bookmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark@2x.png"; sourceTree = "<group>"; };
 		ABE71E2B1C76D3F40061973C /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
 		ABE71E2C1C76D3F40061973C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
@@ -956,6 +957,7 @@
 				AB94E86B1C75611700DAE749 /* Page.h */,
 				AB94E86C1C75611700DAE749 /* Page.m */,
 				AB94E85C1C755EB300DAE749 /* Info.plist */,
+				ABE6151E1FBAD8DB00D3DCB2 /* module.modulemap */,
 			);
 			path = BookmarkDBFramework;
 			sourceTree = "<group>";
@@ -1493,6 +1495,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D7Z93T4FG;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1544,6 +1547,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D7Z93T4FG;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1619,6 +1623,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = BookmarkShare/module.modulemap;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowserForIOS9.db.BookmarkDBFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1662,6 +1667,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = BookmarkShare/module.modulemap;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowserForIOS9.db.BookmarkDBFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1680,6 +1686,7 @@
 				CODE_SIGN_ENTITLEMENTS = BookmarkShare/BookmarkShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D7Z93T4FG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
@@ -1718,6 +1725,7 @@
 				CODE_SIGN_ENTITLEMENTS = BookmarkShare/BookmarkShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D7Z93T4FG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",

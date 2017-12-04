@@ -54,6 +54,19 @@
 		78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2BF1D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m */; };
 		AB77BC191DA63CE500959525 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC171DA63CE500959525 /* dconnect_icon_off.png */; };
 		AB77BC1A1DA63CE500959525 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC181DA63CE500959525 /* dconnect_icon.png */; };
+		ABCECE6E1FBF13F100B718D7 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABCECE6D1FBF13F100B718D7 /* common.cpp */; };
+		ABE6153F1FBD46E100D3DCB2 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615241FBD46E100D3DCB2 /* md5.cpp */; };
+		ABE615401FBD46E100D3DCB2 /* api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615251FBD46E100D3DCB2 /* api.cpp */; };
+		ABE615421FBD46E100D3DCB2 /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615291FBD46E100D3DCB2 /* core.cpp */; };
+		ABE615431FBD46E100D3DCB2 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE6152A1FBD46E100D3DCB2 /* window.cpp */; };
+		ABE615441FBD46E100D3DCB2 /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE6152B1FBD46E100D3DCB2 /* channel.cpp */; };
+		ABE615451FBD46E100D3DCB2 /* epoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615301FBD46E100D3DCB2 /* epoll.cpp */; };
+		ABE615461FBD46E100D3DCB2 /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615311FBD46E100D3DCB2 /* buffer.cpp */; };
+		ABE615471FBD46E100D3DCB2 /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615321FBD46E100D3DCB2 /* packet.cpp */; };
+		ABE615481FBD46E100D3DCB2 /* ccc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615331FBD46E100D3DCB2 /* ccc.cpp */; };
+		ABE615491FBD46E100D3DCB2 /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615371FBD46E100D3DCB2 /* cache.cpp */; };
+		ABE6154A1FBD46E100D3DCB2 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE615391FBD46E100D3DCB2 /* list.cpp */; };
+		ABE6154B1FBD46E100D3DCB2 /* queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE6153B1FBD46E100D3DCB2 /* queue.cpp */; };
 		BE2B6E331D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF21D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm */; };
 		BE2B6E341D88ED8C009A02CE /* DPAWSIoTP2PConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF41D88ED8C009A02CE /* DPAWSIoTP2PConnection.mm */; };
 		BE2B6E351D88ED8C009A02CE /* DPAWSIoTP2PUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF61D88ED8C009A02CE /* DPAWSIoTP2PUtil.m */; };
@@ -72,19 +85,6 @@
 		BE2B6E421D88ED8C009A02CE /* DPAWSIoTLocalServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E111D88ED8C009A02CE /* DPAWSIoTLocalServerManager.m */; };
 		BE2B6E431D88ED8C009A02CE /* DPAWSIoTRemoteClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E141D88ED8C009A02CE /* DPAWSIoTRemoteClientManager.m */; };
 		BE2B6E441D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E161D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.m */; };
-		BE2B6E451D88ED8C009A02CE /* api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E181D88ED8C009A02CE /* api.cpp */; };
-		BE2B6E461D88ED8C009A02CE /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E1A1D88ED8C009A02CE /* buffer.cpp */; };
-		BE2B6E471D88ED8C009A02CE /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E1C1D88ED8C009A02CE /* cache.cpp */; };
-		BE2B6E481D88ED8C009A02CE /* ccc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E1E1D88ED8C009A02CE /* ccc.cpp */; };
-		BE2B6E491D88ED8C009A02CE /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E201D88ED8C009A02CE /* channel.cpp */; };
-		BE2B6E4A1D88ED8C009A02CE /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E221D88ED8C009A02CE /* common.cpp */; };
-		BE2B6E4B1D88ED8C009A02CE /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E241D88ED8C009A02CE /* core.cpp */; };
-		BE2B6E4C1D88ED8C009A02CE /* epoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E261D88ED8C009A02CE /* epoll.cpp */; };
-		BE2B6E4D1D88ED8C009A02CE /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E281D88ED8C009A02CE /* list.cpp */; };
-		BE2B6E4E1D88ED8C009A02CE /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E2A1D88ED8C009A02CE /* md5.cpp */; };
-		BE2B6E4F1D88ED8C009A02CE /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E2C1D88ED8C009A02CE /* packet.cpp */; };
-		BE2B6E501D88ED8C009A02CE /* queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E2E1D88ED8C009A02CE /* queue.cpp */; };
-		BE2B6E511D88ED8C009A02CE /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6E311D88ED8C009A02CE /* window.cpp */; };
 		BE8B2D761D8A3F3200BDCFBE /* DPAWSIoTFileSocketAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8B2D751D8A3F3200BDCFBE /* DPAWSIoTFileSocketAdapter.m */; };
 		BE8B2D791D8A418300BDCFBE /* DPAWSIoTHttpSocketAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8B2D781D8A418300BDCFBE /* DPAWSIoTHttpSocketAdapter.m */; };
 /* End PBXBuildFile section */
@@ -180,6 +180,33 @@
 		9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-dConnectDeviceAWSIoT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB77BC171DA63CE500959525 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
 		AB77BC181DA63CE500959525 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
+		ABCECE6C1FBF13F100B718D7 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		ABCECE6D1FBF13F100B718D7 /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
+		ABE615241FBD46E100D3DCB2 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		ABE615251FBD46E100D3DCB2 /* api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = api.cpp; sourceTree = "<group>"; };
+		ABE615271FBD46E100D3DCB2 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
+		ABE615281FBD46E100D3DCB2 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		ABE615291FBD46E100D3DCB2 /* core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core.cpp; sourceTree = "<group>"; };
+		ABE6152A1FBD46E100D3DCB2 /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
+		ABE6152B1FBD46E100D3DCB2 /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cpp; sourceTree = "<group>"; };
+		ABE6152C1FBD46E100D3DCB2 /* epoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = epoll.h; sourceTree = "<group>"; };
+		ABE6152D1FBD46E100D3DCB2 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		ABE6152E1FBD46E100D3DCB2 /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cache.h; sourceTree = "<group>"; };
+		ABE6152F1FBD46E100D3DCB2 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
+		ABE615301FBD46E100D3DCB2 /* epoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = epoll.cpp; sourceTree = "<group>"; };
+		ABE615311FBD46E100D3DCB2 /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
+		ABE615321FBD46E100D3DCB2 /* packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packet.cpp; sourceTree = "<group>"; };
+		ABE615331FBD46E100D3DCB2 /* ccc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccc.cpp; sourceTree = "<group>"; };
+		ABE615341FBD46E100D3DCB2 /* api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = api.h; sourceTree = "<group>"; };
+		ABE615351FBD46E100D3DCB2 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		ABE615361FBD46E100D3DCB2 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		ABE615371FBD46E100D3DCB2 /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cache.cpp; sourceTree = "<group>"; };
+		ABE615391FBD46E100D3DCB2 /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = list.cpp; sourceTree = "<group>"; };
+		ABE6153A1FBD46E100D3DCB2 /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packet.h; sourceTree = "<group>"; };
+		ABE6153B1FBD46E100D3DCB2 /* queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = queue.cpp; sourceTree = "<group>"; };
+		ABE6153C1FBD46E100D3DCB2 /* ccc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccc.h; sourceTree = "<group>"; };
+		ABE6153D1FBD46E100D3DCB2 /* udt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udt.h; sourceTree = "<group>"; };
+		ABE6153E1FBD46E100D3DCB2 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		BE2B6DF11D88ED8C009A02CE /* DPAWSIoTDomainResolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTDomainResolution.h; sourceTree = "<group>"; };
 		BE2B6DF21D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAWSIoTDomainResolution.mm; sourceTree = "<group>"; };
 		BE2B6DF31D88ED8C009A02CE /* DPAWSIoTP2PConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTP2PConnection.h; sourceTree = "<group>"; };
@@ -216,33 +243,6 @@
 		BE2B6E141D88ED8C009A02CE /* DPAWSIoTRemoteClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTRemoteClientManager.m; sourceTree = "<group>"; };
 		BE2B6E151D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTRemoteServerManager.h; sourceTree = "<group>"; };
 		BE2B6E161D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTRemoteServerManager.m; sourceTree = "<group>"; };
-		BE2B6E181D88ED8C009A02CE /* api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = api.cpp; sourceTree = "<group>"; };
-		BE2B6E191D88ED8C009A02CE /* api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = api.h; sourceTree = "<group>"; };
-		BE2B6E1A1D88ED8C009A02CE /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
-		BE2B6E1B1D88ED8C009A02CE /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
-		BE2B6E1C1D88ED8C009A02CE /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cache.cpp; sourceTree = "<group>"; };
-		BE2B6E1D1D88ED8C009A02CE /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cache.h; sourceTree = "<group>"; };
-		BE2B6E1E1D88ED8C009A02CE /* ccc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccc.cpp; sourceTree = "<group>"; };
-		BE2B6E1F1D88ED8C009A02CE /* ccc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccc.h; sourceTree = "<group>"; };
-		BE2B6E201D88ED8C009A02CE /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cpp; sourceTree = "<group>"; };
-		BE2B6E211D88ED8C009A02CE /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
-		BE2B6E221D88ED8C009A02CE /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
-		BE2B6E231D88ED8C009A02CE /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		BE2B6E241D88ED8C009A02CE /* core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core.cpp; sourceTree = "<group>"; };
-		BE2B6E251D88ED8C009A02CE /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
-		BE2B6E261D88ED8C009A02CE /* epoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = epoll.cpp; sourceTree = "<group>"; };
-		BE2B6E271D88ED8C009A02CE /* epoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = epoll.h; sourceTree = "<group>"; };
-		BE2B6E281D88ED8C009A02CE /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = list.cpp; sourceTree = "<group>"; };
-		BE2B6E291D88ED8C009A02CE /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
-		BE2B6E2A1D88ED8C009A02CE /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
-		BE2B6E2B1D88ED8C009A02CE /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
-		BE2B6E2C1D88ED8C009A02CE /* packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packet.cpp; sourceTree = "<group>"; };
-		BE2B6E2D1D88ED8C009A02CE /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packet.h; sourceTree = "<group>"; };
-		BE2B6E2E1D88ED8C009A02CE /* queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = queue.cpp; sourceTree = "<group>"; };
-		BE2B6E2F1D88ED8C009A02CE /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
-		BE2B6E301D88ED8C009A02CE /* udt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udt.h; sourceTree = "<group>"; };
-		BE2B6E311D88ED8C009A02CE /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
-		BE2B6E321D88ED8C009A02CE /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		BE2B6E541D88F2B6009A02CE /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		BE8B2D741D8A3F3200BDCFBE /* DPAWSIoTFileSocketAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTFileSocketAdapter.h; sourceTree = "<group>"; };
 		BE8B2D751D8A3F3200BDCFBE /* DPAWSIoTFileSocketAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTFileSocketAdapter.m; sourceTree = "<group>"; };
@@ -319,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				BE2B6DEF1D88ED8C009A02CE /* P2P */,
-				BE2B6E171D88ED8C009A02CE /* UDT */,
 				78430F481D7802C200B20FDA /* PocketSocket */,
 				78298A1C1D53351A00E9B90B /* DPAWSIoTDevicePlugin.h */,
 				78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */,
@@ -462,6 +461,41 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		ABE615231FBD46E100D3DCB2 /* UDT */ = {
+			isa = PBXGroup;
+			children = (
+				ABCECE6D1FBF13F100B718D7 /* common.cpp */,
+				ABCECE6C1FBF13F100B718D7 /* common.h */,
+				ABE615241FBD46E100D3DCB2 /* md5.cpp */,
+				ABE615251FBD46E100D3DCB2 /* api.cpp */,
+				ABE615271FBD46E100D3DCB2 /* channel.h */,
+				ABE615281FBD46E100D3DCB2 /* core.h */,
+				ABE615291FBD46E100D3DCB2 /* core.cpp */,
+				ABE6152A1FBD46E100D3DCB2 /* window.cpp */,
+				ABE6152B1FBD46E100D3DCB2 /* channel.cpp */,
+				ABE6152C1FBD46E100D3DCB2 /* epoll.h */,
+				ABE6152D1FBD46E100D3DCB2 /* md5.h */,
+				ABE6152E1FBD46E100D3DCB2 /* cache.h */,
+				ABE6152F1FBD46E100D3DCB2 /* window.h */,
+				ABE615301FBD46E100D3DCB2 /* epoll.cpp */,
+				ABE615311FBD46E100D3DCB2 /* buffer.cpp */,
+				ABE615321FBD46E100D3DCB2 /* packet.cpp */,
+				ABE615331FBD46E100D3DCB2 /* ccc.cpp */,
+				ABE615341FBD46E100D3DCB2 /* api.h */,
+				ABE615351FBD46E100D3DCB2 /* list.h */,
+				ABE615361FBD46E100D3DCB2 /* buffer.h */,
+				ABE615371FBD46E100D3DCB2 /* cache.cpp */,
+				ABE615391FBD46E100D3DCB2 /* list.cpp */,
+				ABE6153A1FBD46E100D3DCB2 /* packet.h */,
+				ABE6153B1FBD46E100D3DCB2 /* queue.cpp */,
+				ABE6153C1FBD46E100D3DCB2 /* ccc.h */,
+				ABE6153D1FBD46E100D3DCB2 /* udt.h */,
+				ABE6153E1FBD46E100D3DCB2 /* queue.h */,
+			);
+			name = UDT;
+			path = dConnectDeviceAWSIoT/Classes/UDT;
+			sourceTree = SOURCE_ROOT;
+		};
 		BCA6B25A08249B8A21B87253 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +508,7 @@
 		BE2B6DEF1D88ED8C009A02CE /* P2P */ = {
 			isa = PBXGroup;
 			children = (
+				ABE615231FBD46E100D3DCB2 /* UDT */,
 				BE2B6E0D1D88ED8C009A02CE /* Local */,
 				BE2B6E121D88ED8C009A02CE /* Remote */,
 				BE2B6DF01D88ED8C009A02CE /* Core */,
@@ -540,40 +575,6 @@
 				BE2B6E161D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.m */,
 			);
 			path = Remote;
-			sourceTree = "<group>";
-		};
-		BE2B6E171D88ED8C009A02CE /* UDT */ = {
-			isa = PBXGroup;
-			children = (
-				BE2B6E181D88ED8C009A02CE /* api.cpp */,
-				BE2B6E191D88ED8C009A02CE /* api.h */,
-				BE2B6E1A1D88ED8C009A02CE /* buffer.cpp */,
-				BE2B6E1B1D88ED8C009A02CE /* buffer.h */,
-				BE2B6E1C1D88ED8C009A02CE /* cache.cpp */,
-				BE2B6E1D1D88ED8C009A02CE /* cache.h */,
-				BE2B6E1E1D88ED8C009A02CE /* ccc.cpp */,
-				BE2B6E1F1D88ED8C009A02CE /* ccc.h */,
-				BE2B6E201D88ED8C009A02CE /* channel.cpp */,
-				BE2B6E211D88ED8C009A02CE /* channel.h */,
-				BE2B6E221D88ED8C009A02CE /* common.cpp */,
-				BE2B6E231D88ED8C009A02CE /* common.h */,
-				BE2B6E241D88ED8C009A02CE /* core.cpp */,
-				BE2B6E251D88ED8C009A02CE /* core.h */,
-				BE2B6E261D88ED8C009A02CE /* epoll.cpp */,
-				BE2B6E271D88ED8C009A02CE /* epoll.h */,
-				BE2B6E281D88ED8C009A02CE /* list.cpp */,
-				BE2B6E291D88ED8C009A02CE /* list.h */,
-				BE2B6E2A1D88ED8C009A02CE /* md5.cpp */,
-				BE2B6E2B1D88ED8C009A02CE /* md5.h */,
-				BE2B6E2C1D88ED8C009A02CE /* packet.cpp */,
-				BE2B6E2D1D88ED8C009A02CE /* packet.h */,
-				BE2B6E2E1D88ED8C009A02CE /* queue.cpp */,
-				BE2B6E2F1D88ED8C009A02CE /* queue.h */,
-				BE2B6E301D88ED8C009A02CE /* udt.h */,
-				BE2B6E311D88ED8C009A02CE /* window.cpp */,
-				BE2B6E321D88ED8C009A02CE /* window.h */,
-			);
-			path = UDT;
 			sourceTree = "<group>";
 		};
 		BE2B6E521D88F2B6009A02CE /* Dependencies */ = {
@@ -655,7 +656,7 @@
 		782989F01D532AF900E9B90B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
 				TargetAttributes = {
 					782989F71D532AF900E9B90B = {
@@ -733,13 +734,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-dConnectDeviceAWSIoT-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C84F4F1213E40DDAF3635B65 /* [CP] Copy Pods Resources */ = {
@@ -764,59 +768,59 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE6153F1FBD46E100D3DCB2 /* md5.cpp in Sources */,
+				ABE6154B1FBD46E100D3DCB2 /* queue.cpp in Sources */,
+				ABE615481FBD46E100D3DCB2 /* ccc.cpp in Sources */,
 				BE2B6E421D88ED8C009A02CE /* DPAWSIoTLocalServerManager.m in Sources */,
+				ABCECE6E1FBF13F100B718D7 /* common.cpp in Sources */,
 				BE2B6E3C1D88ED8C009A02CE /* DPAWSIoTP2PManager.m in Sources */,
-				BE2B6E4B1D88ED8C009A02CE /* core.cpp in Sources */,
 				BE8B2D791D8A418300BDCFBE /* DPAWSIoTHttpSocketAdapter.m in Sources */,
+				ABE615421FBD46E100D3DCB2 /* core.cpp in Sources */,
 				78430F601D7802C200B20FDA /* PSWebSocketInflater.m in Sources */,
 				BE2B6E341D88ED8C009A02CE /* DPAWSIoTP2PConnection.mm in Sources */,
-				BE2B6E461D88ED8C009A02CE /* buffer.cpp in Sources */,
 				78430F741D79802F00B20FDA /* DPAWSIoTAuthListCell.m in Sources */,
-				BE2B6E471D88ED8C009A02CE /* cache.cpp in Sources */,
 				78430F611D7802C200B20FDA /* PSWebSocketNetworkThread.m in Sources */,
 				78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */,
-				BE2B6E4A1D88ED8C009A02CE /* common.cpp in Sources */,
 				BE2B6E3F1D88ED8C009A02CE /* DPAWSIoTWebClient.m in Sources */,
-				BE2B6E501D88ED8C009A02CE /* queue.cpp in Sources */,
 				78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */,
 				78430F5D1D7802C200B20FDA /* PSWebSocketBuffer.m in Sources */,
 				78430F5F1D7802C200B20FDA /* PSWebSocketDriver.m in Sources */,
-				BE2B6E4E1D88ED8C009A02CE /* md5.cpp in Sources */,
 				78A2DE031D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m in Sources */,
+				ABE615401FBD46E100D3DCB2 /* api.cpp in Sources */,
 				782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */,
 				78430F621D7802C200B20FDA /* PSWebSocketServer.m in Sources */,
 				BE2B6E351D88ED8C009A02CE /* DPAWSIoTP2PUtil.m in Sources */,
 				BE2B6E331D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm in Sources */,
+				ABE615441FBD46E100D3DCB2 /* channel.cpp in Sources */,
 				BE2B6E361D88ED8C009A02CE /* DPAWSIoTRelayClient.mm in Sources */,
 				BE2B6E381D88ED8C009A02CE /* DPAWSIoTSocketTask.mm in Sources */,
-				BE2B6E451D88ED8C009A02CE /* api.cpp in Sources */,
 				78430F631D7802C200B20FDA /* PSWebSocketUTF8Decoder.m in Sources */,
 				789AC4B01D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.m in Sources */,
 				BE2B6E3B1D88ED8C009A02CE /* DPAWSIoTNetworkInfo.m in Sources */,
-				BE2B6E491D88ED8C009A02CE /* channel.cpp in Sources */,
 				BE2B6E3E1D88ED8C009A02CE /* DPAWSIoTSocketAdapter.m in Sources */,
+				ABE6154A1FBD46E100D3DCB2 /* list.cpp in Sources */,
 				78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */,
 				789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */,
 				BE2B6E431D88ED8C009A02CE /* DPAWSIoTRemoteClientManager.m in Sources */,
 				BE2B6E3D1D88ED8C009A02CE /* DPAWSIoTServerRunnable.m in Sources */,
 				789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */,
 				78430F6D1D795DC900B20FDA /* DPAWSIoTAuthViewController.m in Sources */,
+				ABE615431FBD46E100D3DCB2 /* window.cpp in Sources */,
 				BE2B6E411D88ED8C009A02CE /* DPAWSIoTLocalClientManager.m in Sources */,
+				ABE615471FBD46E100D3DCB2 /* packet.cpp in Sources */,
 				BE2B6E3A1D88ED8C009A02CE /* DPAWSIoTUDPConnection.mm in Sources */,
+				ABE615461FBD46E100D3DCB2 /* buffer.cpp in Sources */,
 				BE8B2D761D8A3F3200BDCFBE /* DPAWSIoTFileSocketAdapter.m in Sources */,
 				78430F5E1D7802C200B20FDA /* PSWebSocketDeflater.m in Sources */,
+				ABE615491FBD46E100D3DCB2 /* cache.cpp in Sources */,
 				78430F431D77E20600B20FDA /* DPAWSIoTWebSocket.m in Sources */,
 				78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */,
 				BE2B6E391D88ED8C009A02CE /* DPAWSIoTStunClient.mm in Sources */,
 				BE2B6E441D88ED8C009A02CE /* DPAWSIoTRemoteServerManager.m in Sources */,
 				789AC4B91D5D8DFF00F12F45 /* DPAWSIoTUtils.m in Sources */,
-				BE2B6E4D1D88ED8C009A02CE /* list.cpp in Sources */,
 				BE2B6E371D88ED8C009A02CE /* DPAWSIoTRelayServer.mm in Sources */,
 				78430F5C1D7802C200B20FDA /* PSWebSocket.m in Sources */,
-				BE2B6E4F1D88ED8C009A02CE /* packet.cpp in Sources */,
-				BE2B6E481D88ED8C009A02CE /* ccc.cpp in Sources */,
-				BE2B6E4C1D88ED8C009A02CE /* epoll.cpp in Sources */,
-				BE2B6E511D88ED8C009A02CE /* window.cpp in Sources */,
+				ABE615451FBD46E100D3DCB2 /* epoll.cpp in Sources */,
 				BE2B6E401D88ED8C009A02CE /* DPAWSIoTWebServer.m in Sources */,
 				789AC4B31D5D7D4A00F12F45 /* DPAWSIoTKeychain.m in Sources */,
 			);
@@ -857,13 +861,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -905,13 +917,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

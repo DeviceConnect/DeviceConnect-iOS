@@ -39,6 +39,7 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     UILongPressGestureRecognizer *longGest = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                           action:@selector(longpressBack:)];
     

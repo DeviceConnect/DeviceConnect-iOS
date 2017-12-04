@@ -39,7 +39,7 @@
                                     sessionID:(AJNSessionId)sessionID;
 - (NSDictionary *)discoveredAllJoynServices;
 
-- (void)postBlock:(void(^)())block
+- (void)postBlock:(void(^)(void))block
         withDelay:(int64_t)delayMillis;
 
 @end
