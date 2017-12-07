@@ -111,6 +111,7 @@
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
 		AB24217F1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */; };
+		AB29AF681FD7C8FF005A3479 /* DConnectRFC3339DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB29AF671FD7C8FF005A3479 /* DConnectRFC3339DateUtils.m */; };
 		AB67AAE61C642A7900B4C62C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */; };
 		AB67AB0E1C642AB200B4C62C /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAEB1C642AB200B4C62C /* DDData.m */; };
 		AB67AB0F1C642AB200B4C62C /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAED1C642AB200B4C62C /* DDNumber.m */; };
@@ -428,6 +429,8 @@
 		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		AB24217D1E67CBF0005887C8 /* DConnectFileDescriptorProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectFileDescriptorProfile.h; sourceTree = "<group>"; };
 		AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileDescriptorProfile.m; sourceTree = "<group>"; };
+		AB29AF671FD7C8FF005A3479 /* DConnectRFC3339DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectRFC3339DateUtils.m; path = utils/DConnectRFC3339DateUtils.m; sourceTree = "<group>"; };
+		AB29AF691FD7C91A005A3479 /* DConnectRFC3339DateUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectRFC3339DateUtils.h; sourceTree = "<group>"; };
 		AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectLightProfile.h; sourceTree = "<group>"; };
 		AB67AAE41C642A7900B4C62C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = CocoaAsyncSocket/GCDAsyncSocket.h; sourceTree = "<group>"; };
 		AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = CocoaAsyncSocket/GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -2155,6 +2158,7 @@
 		2592D498195A54B600812872 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				AB29AF671FD7C8FF005A3479 /* DConnectRFC3339DateUtils.m */,
 				309CD50D198A3B45002A5684 /* DConnectEventHelper.m */,
 				309CD48419877C9E002A5684 /* DConnectMessageFactory.m */,
 				309CD48519877C9E002A5684 /* DConnectURIBuilder.m */,
@@ -3941,6 +3945,7 @@
 				BE6F93371A70DB0400BFA51F /* DConnectURIBuilder.h */,
 				BE6F93381A70DB0400BFA51F /* DConnectUtil.h */,
 				BE6F93391A70DB0400BFA51F /* DConnectVibrationProfile.h */,
+				AB29AF691FD7C91A005A3479 /* DConnectRFC3339DateUtils.h */,
 			);
 			path = DConnectSDK;
 			sourceTree = "<group>";
@@ -4806,6 +4811,7 @@
 				D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */,
 				30318AF519AAE908008A42C3 /* DConnectDevicePlugin+Private.m in Sources */,
 				D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */,
+				AB29AF681FD7C8FF005A3479 /* DConnectRFC3339DateUtils.m in Sources */,
 				D6FD01F4199943D9000DB674 /* LocalOAuthScope.m in Sources */,
 				AB67AB2F1C642AC500B4C62C /* RouteResponse.m in Sources */,
 				BE71FDF91DA3B25B00B5E209 /* DConnectHttpConnection.m in Sources */,

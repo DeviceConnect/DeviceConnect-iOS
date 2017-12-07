@@ -67,7 +67,6 @@
 		AB9F67771FB989D5003A8EA0 /* img02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9F67551FB9898B003A8EA0 /* img02.png */; };
 		AB9F67781FB989D5003A8EA0 /* Chromecast_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB9F67561FB9898B003A8EA0 /* Chromecast_iPad.storyboard */; };
 		AB9F67791FB989D5003A8EA0 /* img01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9F67571FB9898B003A8EA0 /* img01.png */; };
-		AB9F677A1FB989D5003A8EA0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB9F67581FB9898B003A8EA0 /* Info.plist */; };
 		AB9F677C1FB98CCD003A8EA0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9F677B1FB98CCD003A8EA0 /* Photos.framework */; };
 		AB9F677D1FB99843003A8EA0 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA303FD1D7FC84A00B1CEEB /* GoogleCast.framework */; };
 		AB9F677F1FB99889003A8EA0 /* CastFrameworkAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB9F677E1FB99888003A8EA0 /* CastFrameworkAssets.xcassets */; };
@@ -419,7 +418,7 @@
 		FF65A96919B709B500DE9EF8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
 				TargetAttributes = {
 					ABC5E4091A973B5B003D2634 = {
@@ -464,7 +463,6 @@
 				AB9F67771FB989D5003A8EA0 /* img02.png in Resources */,
 				AB9F67781FB989D5003A8EA0 /* Chromecast_iPad.storyboard in Resources */,
 				AB9F67791FB989D5003A8EA0 /* img01.png in Resources */,
-				AB9F677A1FB989D5003A8EA0 /* Info.plist in Resources */,
 				8E69A6C31D49C98B00326F42 /* dconnect_icon_off.png in Resources */,
 				8E69A6C41D49C98B00326F42 /* dconnect_icon.png in Resources */,
 				ABA304001D7FC84F00B1CEEB /* GoogleCastResources.bundle in Resources */,

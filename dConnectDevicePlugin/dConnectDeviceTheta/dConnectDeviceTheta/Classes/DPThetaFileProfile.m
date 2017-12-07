@@ -162,12 +162,7 @@
         [DConnectFileProfile setFileName:ptp.filename target:file];
         [DConnectFileProfile setFileType:0 target:file];
         [DConnectFileProfile setMIMEType:@"image/jpeg" target:file];
-        //Date
-        NSDateFormatter *rfc3339DateFormatter = [[NSDateFormatter alloc] init];
-        [rfc3339DateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-        [rfc3339DateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"];
-        [rfc3339DateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-        [DConnectFileProfile setUpdateDate:[rfc3339DateFormatter stringFromDate:ptp.capture_date]
+        [DConnectFileProfile setUpdateDate:[DConnectRFC3339DateUtils stringWithDate:ptp.capture_date]
                                    tareget:file];
         [DConnectFileProfile setFileSize:ptp.object_compressed_size target:file];
         [fileArr addObject:file];
