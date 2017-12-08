@@ -153,9 +153,13 @@ extern NSString *const DPSpheroProfileParamImpactPower;
  */
 extern NSString *const DPSpheroProfileParamImpactSpeed;
 /*!
+ @brief パラメータ: impactTimeStamp。
+ */
+extern NSString *const DPSpheroProfileParamImpactTimeStamp;
+/*!
  @brief パラメータ: impactTimestamp。
  */
-extern NSString *const DPSpheroProfileParamImpactTimestamp;
+extern NSString *const DPSpheroProfileParamImpactTimeStampString;
 
 /*!
  @class DPSpheroProfile
