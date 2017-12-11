@@ -24,10 +24,8 @@ var demoVibration = (function(parent, global) {
         builder.setAttribute('vibrate');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
-//         builder.addParameter('pattern', getVibrationPattern());
         var uri = builder.build();
         dConnect.put(uri, null, null, function(json) {
-            console.log(json);
         }, function(errorCode, errorMessage) {
             util.showAlert("バイブレーションの開始に失敗しました。", errorCode, errorMessage);
         });
