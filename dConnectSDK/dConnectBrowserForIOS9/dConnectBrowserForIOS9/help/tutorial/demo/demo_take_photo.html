@@ -1,30 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="../../css/main.css" type="text/css" />
+    <link rel="stylesheet" href="./css/demo_take_photo.css" type="text/css" />
     <script type="text/javascript" src="js/dconnectsdk-2.2.0.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/demo_take_photo.js"></script>
     <title>写真を撮影する</title>
 </head>
 <body onLoad="demoTakePhoto.init()">
-<div class="title" align="left" style="float:left;">
-    <a class="back" href="javascript:history.back();">＜</a>
-</div>
-<div class="title" align="center">写真を撮影する</div>
+    <div class="heading" align="left" style="float:left;color=#FFFFFF;">
+        <a class="back" href="javascript:demoTakePhoto.backLink();">＜</a>
+    </div>
+    <div class="heading">写真を撮影する</div>
     <div class="photo">
         <form name="recorder">
-            <select name="target" onchange="demoTakePhoto.onChangeTarget()"></select>
-            <select name="imageSize" onchange="demoTakePhoto.onChangeOption()"></select>
-            <select name="previewSize" onchange="demoTakePhoto.onChangeOption()"></select>
+            <table class="settings">
+                <tr>
+                    <td class="name"><span class="label">ターゲット:</span></td>
+                    <td class="value"><select class="select-box" name="target" onchange="demoTakePhoto.onChangeTarget()"></select></td>
+                </tr>
+                <tr>
+                    <td class="name"><span class="label">撮影サイズ:</span></td>
+                    <td class="value"><select class="select-box" name="imageSize" onchange="demoTakePhoto.onChangeOption()"></select></td>
+                </tr>
+                <tr>
+                    <td class="name"><span class="label">プレビューサイズ:</span></td>
+                    <td class="value"><select class="select-box" name="previewSize" onchange="demoTakePhoto.onChangeOption()"></select></td>
+                </tr>
+            </table>
         </form>
-        <div style="margin:12px;">
-            <img id="preview" crossOrigin="anonymous">
-        </div>
-        <button onclick="demoTakePhoto.onTakePhoto()">撮影</button>
+        <div id="thumbnails"></div>
     </div>
-    <div id="photos" style="margin:12px;"></div>
+    <div class="menu">
+        <img class="camera" src="./images/take_photo_1.png" onclick="demoTakePhoto.onTakePhoto()">
+    </div>
+    <div id="photos">
+        <div class="back"></div>
+        <img id="photo" crossorigin="anonymous">
+    </div>
 </body>
 </html>

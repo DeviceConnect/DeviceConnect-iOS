@@ -2,9 +2,11 @@
 //  DPOmnidirectionalImageProfile.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/23.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPOmnidirectionalImageProfile.h"
 
