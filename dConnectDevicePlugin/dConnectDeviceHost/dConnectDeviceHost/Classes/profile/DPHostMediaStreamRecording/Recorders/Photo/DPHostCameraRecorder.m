@@ -6,14 +6,16 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-
+#import <UserNotifications/UserNotifications.h>
 #import <Photos/Photos.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "DPHostCameraRecorder.h"
 #import "DPHostRecorder.h"
 #import "DPHostUtils.h"
 #import "DPHostRecorderUtils.h"
-@interface DPHostCameraRecorder()
+
+static NSString *const kDPHostStartPreviewNotificationId = @"kDPHostStartPreviewNotificationId";
+@interface DPHostCameraRecorder()<UNUserNotificationCenterDelegate>
 @property (nonatomic) DPHostSimpleHttpServer *httpServer;
 /// Preview APIでプレビュー画像URIの配送を行うかどうか。
 @property (nonatomic) BOOL sendPreview;
@@ -117,7 +119,7 @@
          }
          [weakSelf saveFileWithCompletionHandler:^(NSURL *assetURL, NSError *error) {
              
-             if ([weakSelf.session isRunning]) {
+             if ([weakSelf.session isRunning] && !weakSelf.sendPreview) {
                  [weakSelf.session stopRunning];
              }
              if (error) {
@@ -125,6 +127,7 @@
              } else {
                  successCompletion(assetURL);
              }
+
          }];
      }];
 }
@@ -179,6 +182,7 @@
         failCompletion(@"MJPEG Server cannot running.");
         return;
     }
+    [self showPreviewNotification];
     successCompletion(url);
 }
 
@@ -193,7 +197,7 @@
     self.sendPreview = NO;
     // 次回プレビュー開始時に影響を与えない為に、初期値（無効値）を設定する。
     self.lastPreviewTimestamp = kCMTimeInvalid;
-    
+    [self hidePreviewNotification];
 }
 
 #pragma mark - Private Method
@@ -420,4 +424,60 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     
 }
+
+#pragma mark - Notification Control
+- (void)showPreviewNotification
+{
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title    = @"カメラ撮影中(iOS Host Camera Preview)";
+    content.body     = @"タップして撮影を停止します。";
+    // Deliver the notification in five seconds.
+    UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger
+                                                  triggerWithTimeInterval:1
+                                                  repeats:NO];
+    UNNotificationRequest* nRequest = [UNNotificationRequest
+                                       requestWithIdentifier:kDPHostStartPreviewNotificationId
+                                                     content:content
+                                                     trigger:trigger];
+    
+    // Schedule the notification.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center addNotificationRequest:nRequest
+                 withCompletionHandler:^(NSError * _Nullable error) {
+                 }];
+
+    });
+}
+
+- (void)hidePreviewNotification
+{
+    UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+    [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
+        for (UNNotification *notification in notifications) {
+            NSString *currentId = notification.request.identifier;
+            if ([currentId isEqualToString:kDPHostStartPreviewNotificationId]) {
+                [center removeDeliveredNotificationsWithIdentifiers:@[kDPHostStartPreviewNotificationId]];
+                return;
+            }
+        }
+    }];
+    
+}
+#pragma mark - Notification Delegate
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler {
+    completionHandler();
+    [self stopWebServer];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    completionHandler(UNNotificationPresentationOptionBadge |
+                      UNNotificationPresentationOptionSound |
+                      UNNotificationPresentationOptionAlert);
+};
 @end

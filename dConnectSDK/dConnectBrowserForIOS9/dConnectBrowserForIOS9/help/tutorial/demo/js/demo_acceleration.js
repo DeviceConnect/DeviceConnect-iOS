@@ -7,7 +7,7 @@ var demoAcceleration = (function(parent, global) {
     var mTimerId;
 
     var mContext;
-    var mWidth =  window.parent.screen.width / 1.5;
+    var mWidth = 380;
     var mHeight = 200;
 
     var mDataSize = mWidth / 4;
@@ -21,7 +21,6 @@ var demoAcceleration = (function(parent, global) {
         if (!canvas || !canvas.getContext) {
             return false;
         }
-        document.getElementById("graph").width = mWidth;
         mContext = canvas.getContext('2d');
         mContext.lineWidth = 1;
         drawGraph();

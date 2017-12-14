@@ -1,10 +1,13 @@
 
 var main = (function(parent, global) {
 
+    var delay = 0;
+
     function init() {
         util.init(function(name, json) {
             createSupportApis(json);
         });
+            
     }
     parent.init = init;
 
@@ -12,7 +15,6 @@ var main = (function(parent, global) {
             location.href = "./index.html?serviceId=" + util.getServiceId();
     }
     parent.back = back;
-
     function onChangeValue(nav, name) {
         var elem = document.forms[nav];
         elem['t_' + name].value = elem[name].value;
@@ -124,7 +126,7 @@ var main = (function(parent, global) {
             setRequestText(nav, createRequest(method + " " + path));
 
             if (method == 'PUT') {
-                dConnect.addEventListener(uri, function(json) {
+                util.addEventListener(uri, function(json) {
                     setEventText(nav, createEvent(util.formatJSON(json)));
                 }, function(json) {
                     setResponseText(nav, createResponse(util.formatJSON(JSON.stringify(json))));
@@ -132,7 +134,7 @@ var main = (function(parent, global) {
                     setResponseText(nav, createResponse("errorCode=" + errorCode + " errorMessage=" + errorMessage));
                 });
             } else {
-                dConnect.removeEventListener(uri, function(json) {
+                util.removeEventListener(uri, function(json) {
                     setResponseText(nav, createResponse(util.formatJSON(JSON.stringify(json))));
                 }, function(errorCode, errorMessage) {
                     setResponseText(nav, createResponse("errorCode=" + errorCode + " errorMessage=" + errorMessage));
@@ -246,7 +248,6 @@ var main = (function(parent, global) {
         };
         return util.createTemplate('param_slider', data);
     }
-
     function createBooleanParam(name, value, on) {
         var data = {
             'name' : name,
@@ -256,6 +257,7 @@ var main = (function(parent, global) {
         };
         return util.createTemplate('param_boolean', data);
     }
+            
 
     function createRequest(body) {
         var data = {
@@ -346,8 +348,10 @@ var main = (function(parent, global) {
         var data = {
             'title': method.toUpperCase() + ' ' + createDConnectPath(basePath, path),
             'nav' : method + '_' + path,
-            'content' : createParameter(method, basePath, path, param['x-type'], param.parameters)
+            'content' : createParameter(method, basePath, path, param['x-type'], param.parameters),
+            'delay' : delay
         };
+        delay += 0.1;
         return util.createTemplate('command', data);
     }
 

@@ -4,6 +4,7 @@ var demoTakePhoto = (function(parent, global) {
     var mMediaRecorders;
     var mImageSizes;
     var mPreviewSizes;
+    var mPreviewTarget;
 
     function init() {
         util.init(function(service) {
@@ -13,11 +14,8 @@ var demoTakePhoto = (function(parent, global) {
     }
     parent.init = init;
 
-    function refreshImg(uri, id) {
-        var img = document.getElementById(id);
-        if (img) {
-            img.src = uri + '?' + Date.now();
-        }
+    function refreshImg(uri) {
+        document.body.style.backgroundImage = 'url(' + uri + ')';
     }
 
     function getCameraTarget() {
@@ -31,7 +29,7 @@ var demoTakePhoto = (function(parent, global) {
             mMediaRecorders = json.recorders;
             createMediaRecorders();
         }, function(errorCode, errorMessage) {
-            util.showAlert("カメラ情報の取得に失敗しました。。", errorCode, errorMessage);
+            util.showAlert('カメラ情報の取得に失敗しました。。', errorCode, errorMessage);
         });
     }
 
@@ -49,18 +47,10 @@ var demoTakePhoto = (function(parent, global) {
             mImageSizes = json.imageSizes;
             mPreviewSizes = json.previewSizes;
             createOptions();
+            onStartPreview();
         }, function(errorCode, errorMessage) {
-             var imageSizes = document.recorder.imageSize;
-             var iOption = document.createElement('option');
-             iOption.setAttribute('value', '0');
-             iOption.innerHTML = 'Unsupported size';
-             imageSizes.appendChild(iOption);
-             var previewSizes = document.recorder.previewSize;
-             var pOption = document.createElement('option');
-             pOption.setAttribute('value', '0');
-             pOption.innerHTML = 'Unsupported size';
-             previewSizes.appendChild(pOption);
-             util.showAlert("カメラ情報の取得に失敗しました。。", errorCode, errorMessage);
+            util.showAlert('カメラ情報の取得に失敗しました。。', errorCode, errorMessage);
+             onStartPreview();
         });
     }
 
@@ -80,10 +70,10 @@ var demoTakePhoto = (function(parent, global) {
     function createOptions() {
         var minWidth = 10000000;
         var imageSizes = document.recorder.imageSize;
-        for (var i = 0; i < mMediaRecorders.length; i++) {
+        for (var i = 0; i < mImageSizes.length; i++) {
             var option = document.createElement('option');
             option.setAttribute('value', i);
-            option.innerHTML = mImageSizes[i].width + "x" + mImageSizes[i].height;
+            option.innerHTML = mImageSizes[i].width + 'x' + mImageSizes[i].height;
 
             if (mImageSizes[i].width < minWidth) {
                 option.selected = true;
@@ -98,22 +88,15 @@ var demoTakePhoto = (function(parent, global) {
         for (var i = 0; i < mPreviewSizes.length; i++) {
             var option = document.createElement('option');
             option.setAttribute('value', i);
-            option.innerHTML = mPreviewSizes[i].width + "x" + mPreviewSizes[i].height;
+            option.innerHTML = mPreviewSizes[i].width + 'x' + mPreviewSizes[i].height;
 
             if (mPreviewSizes[i].width < minWidth) {
                 option.selected = true;
-                minWidth = mImageSizes[i].width
+                minWidth = mPreviewSizes[i].width
             }
 
             previewSizes.appendChild(option);
         }
-        if (mMediaRecorders.length == 0) {
-            var option = document.createElement('option');
-            option.setAttribute('value', 'Unsupported size');
-            previewSizes.appendChild(option);
-        }
-
-        startPreview();
     }
 
     function startPreview() {
@@ -129,14 +112,14 @@ var demoTakePhoto = (function(parent, global) {
         }
         var uri = builder.build();
         dConnect.put(uri, null, null, function(json) {
-            refreshImg(json.uri, 'preview');
+            refreshImg(json.uri);
         }, function(errorCode, errorMessage) {
-            util.showAlert("プレビュー開始に失敗しました。", errorCode, errorMessage);
+            util.showAlert('プレビュー開始に失敗しました。', errorCode, errorMessage);
         });
     }
 
     function stopPreview(callback) {
-        var target = document.recorder.target.value;
+        var target = mPreviewTarget;
 
         var builder = new dConnect.URIBuilder();
         builder.setProfile('mediastreamrecording');
@@ -152,23 +135,42 @@ var demoTakePhoto = (function(parent, global) {
                 setTimeout(callback, 2000);
             }
         }, function(errorCode, errorMessage) {
-            util.showAlert("プレビュー停止に失敗しました。", errorCode, errorMessage);
+            console.log('プレビュー停止に失敗しました。' + errorCode + ":" + errorMessage);
         });
     }
 
-    function addPhoto(uri) {
-        var elem = document.createElement("img");
-        elem.setAttribute("src", uri);
-        elem.setAttribute("class", "photo")
-        elem.setAttribute("crossorigin", "anonymous")
-        elem.setAttribute("alt", "写真");
+    function showPhoto(uri) {
+        var elem = document.getElementById('photos');
+        elem.style.display = 'block';
+        elem.onclick = function() {
+            elem.style.display = 'none';
+        };
 
-        var tag = document.getElementById('photos');
+        var image = document.getElementById('photo');
+        image.setAttribute('src', uri);
+    }
+
+    function onClickPhoto(elem) {
+        var uri = elem.getAttribute("src")
+        showPhoto(uri);
+    }
+
+    function addPhoto(uri) {
+        var elem = document.createElement('img');
+        elem.setAttribute('src', uri);
+        elem.setAttribute('class', 'thumbnail')
+        elem.setAttribute('crossorigin', 'anonymous')
+        elem.setAttribute('alt', '写真');
+        elem.onclick = function() {
+            showPhoto(uri);
+        };
+
+        var tag = document.getElementById('thumbnails');
         tag.appendChild(elem);
     }
 
     function onTakePhoto() {
-        var target = document.recorder.target.value;
+        var target = mPreviewTarget;
 
         var builder = new dConnect.URIBuilder();
         builder.setProfile('mediastreamrecording');
@@ -180,12 +182,31 @@ var demoTakePhoto = (function(parent, global) {
         }
         var uri = builder.build();
         dConnect.post(uri, null, null, function(json) {
-            refreshImg(json.uri, 'preview');
+            addPhoto(json.uri);
         }, function(errorCode, errorMessage) {
-            util.showAlert("撮影に失敗しました。", errorCode, errorMessage);
+            util.showAlert('撮影に失敗しました。', errorCode, errorMessage);
         });
     }
     parent.onTakePhoto = onTakePhoto;
+
+    function onStartPreview() {
+        if (mPreviewTarget) {
+            stopPreview(function() {
+                mPreviewTarget = document.recorder.target.value;
+                startPreview();
+            });
+        } else {
+            mPreviewTarget = document.recorder.target.value;
+            startPreview();
+        }
+    }
+    parent.onStartPreview = onStartPreview;
+
+    function onStopPreview() {
+        stopPreview(null);
+        mPreviewTarget = undefined;
+    }
+    parent.onStopPreview = onStopPreview;
 
     function onChangeTarget() {
         var target = document.recorder.target.value;
@@ -218,16 +239,31 @@ var demoTakePhoto = (function(parent, global) {
             builder.addParameter('imageHeight', imageHeight);
             builder.addParameter('previewWidth', previewWidth);
             builder.addParameter('previewHeight', previewHeight);
-            builder.addParameter('mimeType', "image/png");
+            builder.addParameter('mimeType', 'image/png');
             var uri = builder.build();
             dConnect.put(uri, null, null, function(json) {
-                startPreview();
+                if (mPreviewTarget) {
+                    startPreview();
+                }
             }, function(errorCode, errorMessage) {
-                util.showAlert("設定に失敗しました。", errorCode, errorMessage);
+                util.showAlert('設定に失敗しました。', errorCode, errorMessage);
             });
         });
     }
     parent.onChangeOption = onChangeOption;
+
+    
+     function backLink() {
+        stopPreview(function() {
+            history.back();
+        });
+     }
+    parent.backLink = backLink;
+
+    window.onbeforeunload = function(e) {
+        onStopPreview();
+        return;
+    };
 
     return parent;
 })(demoTakePhoto || {}, this.self || global);

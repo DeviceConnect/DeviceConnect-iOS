@@ -3,6 +3,15 @@ body {
     margin: 0px;
     padding: 0px;
 }
+div.title {
+    background-color: #5B9CFC;
+    padding: 10px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+a.back{
+    color:#FFFFFF;
+}
 
 div.request_param {
     padding: 12px 8px 8px 8px;
@@ -200,12 +209,31 @@ div.test {
 input, select {
     vertical-align: middle;
 }
-div.title {
-    background-color: #5B9CFC;
-    padding: 10px;
-    font-weight: bold;
-    color: #FFFFFF;
+
+label {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
 }
-a.back{
-    color:#FFFFFF;
+
+.ac_menu div.ac_content {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
+}
+
+@keyframes fadeIn {
+    from {
+        transform:translateY(300px);
+        opacity: 0.0;
+    }
+
+    to {
+        transform:translateY(0px);
+        opacity: 1.0;
+    }
 }

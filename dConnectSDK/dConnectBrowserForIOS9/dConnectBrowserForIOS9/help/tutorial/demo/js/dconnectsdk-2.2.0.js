@@ -991,14 +991,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Settingプロファイルの定数
+     * Settingsプロファイルの定数
      * @namespace
      * @type {Object.<String, (String|Number)>}
      */
-    setting: {
+    settings: {
       // Profile name
       /** プロファイル名。 */
-      PROFILE_NAME: 'setting',
+      PROFILE_NAME: 'settings',
 
       // Interface
       /** インターフェース: sound */
@@ -1011,8 +1011,8 @@ var dConnect = (function(parent, global) {
       ATTR_VOLUME: 'volume',
       /** アトリビュート: date */
       ATTR_DATE: 'date',
-      /** アトリビュート: brightness */
-      ATTR_BRIGHTNESS: 'brightness',
+      /** アトリビュート: light */
+      ATTR_LIGHT: 'light',
       /** アトリビュート: sleep */
       ATTR_SLEEP: 'sleep',
 
@@ -1170,47 +1170,6 @@ var dConnect = (function(parent, global) {
 
       /** モードフラグ：フィルモード */
       MODE_FILLS: 'fills'
-    },
-
-    /**
-     * Geolocationプロファイルの定数
-     * @namespace
-     * @type {Object.<String, String>}
-     */
-    geolocation: {
-      // Profile name
-      /** プロファイル名。 */
-      PROFILE_NAME: 'geolocation',
-
-      // Attribute
-      /** アトリビュート: currentposition */
-      ATTR_CURRENT_POSITION: 'currentposition',
-      /** アトリビュート: onwatchposition */
-      ATTR_ON_WATCH_POSITION: 'onwatchposition',
-
-      // Parameter
-      /** パラメータ: position */
-      PARAM_POSITION: 'position',
-      /** パラメータ: coordinates */
-      PARAM_COORDINATES: 'coordinates',
-      /** パラメータ: latitude */
-      PARAM_LATITUDE: 'latitude',
-      /** パラメータ: longitude */
-      PARAM_LONGNITUDE: 'longitude',
-      /** パラメータ: altitude */
-      PARAM_ALTITUDE: 'altitude',
-      /** パラメータ: accuracy */
-      PARAM_ACCURACY: 'accuracy',
-      /** パラメータ: altitudeAccuracy */
-      PARAM_ALTITUDE_ACCURACY: 'altitudeAccuracy',
-      /** パラメータ: heading */
-      PARAM_HEADING: 'heading',
-      /** パラメータ: speed */
-      PARAM_SPEED: 'speed',
-      /** パラメータ: timeStamp */
-      PARAM_TIME_STAMP: 'timeStamp',
-      /** パラメータ: timeStampString */
-      PARAM_TIME_STAMP_STRING: 'timeStampString'
     }
   };
   parent.constants = constants;

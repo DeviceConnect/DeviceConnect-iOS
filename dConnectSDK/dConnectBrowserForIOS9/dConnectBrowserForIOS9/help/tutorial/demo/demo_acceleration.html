@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="../../css/main.css" type="text/css" />
     <script type="text/javascript" src="js/dconnectsdk-2.2.0.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
@@ -11,12 +11,12 @@
     <title>加速度センサー</title>
 </head>
 <body onload="demoAcceleration.init()">
-    <div class="title" align="left" style="float:left;">
-    <a class="back" href="javascript:history.back();">＜</a>
-</div>
-<div class="title" align="center">加速度センサー</div>
+    <div class="heading" align="left" style="float:left;color=#FFFFFF;">
+        <a class="back" href="javascript:history.back();">＜</a>
+    </div>
+    <div class="heading">加速度センサー</div>
     <div style="text-align:center;margin:12px;">
-        <canvas id="graph" width="200" height="200" style="border: solid 1px #000000;"></canvas>
+        <canvas id="graph" width="380" height="200" style="border: solid 1px #000000;"></canvas>
     </div>
     <div style="text-align:center;">
         <button onclick="demoAcceleration.registerEvent()">開始</button>

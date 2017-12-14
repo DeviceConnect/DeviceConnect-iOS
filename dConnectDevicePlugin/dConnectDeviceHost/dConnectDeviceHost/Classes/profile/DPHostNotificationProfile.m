@@ -52,9 +52,10 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
         _notificationInfoDict = @{}.mutableCopy;
         
         [self setNotificationIdLength: 3];
-
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        center.delegate = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            center.delegate = self;
+        });
 
         // API登録(didReceivePostNotifyRequest相当)
         NSString *postNotifyRequestApiPath = [self apiPath: nil
