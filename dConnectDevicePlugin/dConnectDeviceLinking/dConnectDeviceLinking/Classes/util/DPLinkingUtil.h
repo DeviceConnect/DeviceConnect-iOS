@@ -22,6 +22,5 @@ typedef void (^DPLinkingUtilTimerCancelBlock)(void);
 + (int) floatToInt:(float)value fraction:(int)fraction exponent:(int) exponent sign:(BOOL)sign;
 + (float) intToFloat:(int)value fraction:(int)fraction exponent:(int) exponent sign:(BOOL)sign;
 
-+ (NSString *) timeStampToString:(long)timeStamp;
 
 @end

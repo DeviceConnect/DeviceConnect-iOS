@@ -217,12 +217,4 @@ static dispatch_time_t getDispatchTimeByDate(NSDate *date) {
     return integer + decimal;
 }
 
-+ (NSString *) timeStampToString:(long)timeStamp
-{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
-    return [formatter stringFromDate:date];
-}
-
 @end
