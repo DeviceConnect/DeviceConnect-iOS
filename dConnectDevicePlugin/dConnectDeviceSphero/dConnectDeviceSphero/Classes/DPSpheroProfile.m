@@ -63,7 +63,8 @@ NSString *const DPSpheroProfileParamZ = @"z";
 NSString *const DPSpheroProfileParamImpactAxis = @"impactAxis";
 NSString *const DPSpheroProfileParamImpactPower = @"impactPower";
 NSString *const DPSpheroProfileParamImpactSpeed = @"impactSpeed";
-NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
+NSString *const DPSpheroProfileParamImpactTimeStamp = @"impactTimeStamp";
+NSString *const DPSpheroProfileParamImpactTimeStampString = @"impactTimeStampString";
 
 
 @implementation DPSpheroProfile

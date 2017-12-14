@@ -30,7 +30,7 @@ NSString *const DConnectAtmoshpericPressureProfileParamTimeStampString = @"timeS
 + (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message
 {
     [message setLong:timeStamp forKey:DConnectAtmoshpericPressureProfileParamTimeStamp];
-    [message setString:[DPLinkingUtil timeStampToString:timeStamp] forKey:DConnectAtmoshpericPressureProfileParamTimeStampString];
+    [message setString:[DConnectRFC3339DateUtils stringWithTimeStamp:timeStamp] forKey:DConnectAtmoshpericPressureProfileParamTimeStampString];
 }
 
 @end

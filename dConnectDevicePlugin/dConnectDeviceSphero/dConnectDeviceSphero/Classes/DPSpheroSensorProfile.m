@@ -424,8 +424,9 @@ typedef void (^CollisionBlock)(NSString* serviceId, DConnectMessage *);
     [impactPower setDouble:power.y forKey:DPSpheroProfileParamY];
     [msg setMessage:impactPower forKey:DPSpheroProfileParamImpactPower];
     [msg setDouble:speed forKey:DPSpheroProfileParamImpactSpeed];
-    [msg setDouble:time forKey:DPSpheroProfileParamImpactTimestamp];
-    
+    [msg setLong:(long) time forKey:DPSpheroProfileParamImpactTimeStamp];
+    [msg setString:[DConnectRFC3339DateUtils stringWithTimeStamp :(long) time] forKey:DPSpheroProfileParamImpactTimeStampString];
+
     if (self.collisionBlock) {
         CollisionBlock block = self.collisionBlock;
         block(serviceId, msg);

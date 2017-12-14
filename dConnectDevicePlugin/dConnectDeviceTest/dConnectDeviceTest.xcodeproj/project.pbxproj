@@ -121,41 +121,6 @@
 			remoteGlobalIDString = 309CD517198B2CCE002A5684;
 			remoteInfo = dConnectDeviceTest;
 		};
-		AB67AAD91C637A6400B4C62C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CCDA4CB9D0D41D7A5488A99FD001C01;
-			remoteInfo = CocoaAsyncSocket;
-		};
-		AB67AADB1C637A6400B4C62C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1D836CA67E62E2968DFDA7A8B31809F4;
-			remoteInfo = CocoaHTTPServer;
-		};
-		AB67AADD1C637A6400B4C62C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 298527C2706C7CA6801499E0B6074D77;
-			remoteInfo = CocoaLumberjack;
-		};
-		AB67AADF1C637A6400B4C62C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B77A6F9A4799391882E99F8B72311AC2;
-			remoteInfo = Pods;
-		};
-		AB67AAE11C637A6400B4C62C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BAE1AD3FBABE4969DA2A1829177AAA94;
-			remoteInfo = RoutingHTTPServer;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -270,7 +235,6 @@
 		AB043C8F1BDF6A3500B35D96 /* RESTfulNormalLightProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalLightProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalLightProfileTest.m; sourceTree = "<group>"; };
 		AB043C911BDF6B3F00B35D96 /* TestLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLightProfile.h; sourceTree = "<group>"; };
 		AB043C921BDF6B3F00B35D96 /* TestLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestLightProfile.m; sourceTree = "<group>"; };
-		AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../../../../../sample/SFSafariViewController/pod/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailLightProfileTest.m; path = dConnectManager/RESTful/RESTfulFailLightProfileTest.m; sourceTree = "<group>"; };
 		ABF1B0991E3CD8B30033B059 /* TestAllGetControlProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAllGetControlProfile.h; sourceTree = "<group>"; };
 		ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAllGetControlProfile.m; sourceTree = "<group>"; };
@@ -326,7 +290,6 @@
 		309CD50F198B2CCE002A5684 = {
 			isa = PBXGroup;
 			children = (
-				AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */,
 				309CD51D198B2CCE002A5684 /* dConnectDeviceTest */,
 				309CD531198B2CCF002A5684 /* dConnectDeviceTestTests */,
 				6BBFF63F1D24F9AD00BB3DC6 /* dConnectDeviceTest_resources */,
@@ -563,18 +526,6 @@
 			name = dConnectManager;
 			sourceTree = "<group>";
 		};
-		AB67AAD21C637A6400B4C62C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB67AADA1C637A6400B4C62C /* libCocoaAsyncSocket.a */,
-				AB67AADC1C637A6400B4C62C /* libCocoaHTTPServer.a */,
-				AB67AADE1C637A6400B4C62C /* libCocoaLumberjack.a */,
-				AB67AAE01C637A6400B4C62C /* libPods.a */,
-				AB67AAE21C637A6400B4C62C /* libRoutingHTTPServer.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -657,12 +608,6 @@
 			mainGroup = 309CD50F198B2CCE002A5684;
 			productRefGroup = 309CD519198B2CCE002A5684 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = AB67AAD21C637A6400B4C62C /* Products */;
-					ProjectRef = AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				309CD517198B2CCE002A5684 /* dConnectDeviceTest */,
@@ -673,44 +618,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		AB67AADA1C637A6400B4C62C /* libCocoaAsyncSocket.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaAsyncSocket.a;
-			remoteRef = AB67AAD91C637A6400B4C62C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB67AADC1C637A6400B4C62C /* libCocoaHTTPServer.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaHTTPServer.a;
-			remoteRef = AB67AADB1C637A6400B4C62C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB67AADE1C637A6400B4C62C /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = AB67AADD1C637A6400B4C62C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB67AAE01C637A6400B4C62C /* libPods.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPods.a;
-			remoteRef = AB67AADF1C637A6400B4C62C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB67AAE21C637A6400B4C62C /* libRoutingHTTPServer.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRoutingHTTPServer.a;
-			remoteRef = AB67AAE11C637A6400B4C62C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		309CD526198B2CCF002A5684 /* Resources */ = {
