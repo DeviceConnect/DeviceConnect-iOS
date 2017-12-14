@@ -40,7 +40,7 @@
                                          || [rfc3339String characterAtIndex:date.length - 5] == '-') {
                                          //ISO8601形式で日付データがくるので、「:」を入れRFC3339形式にする
                                          rfc3339String = [NSString stringWithFormat:@"%@:%@",
-                                                          [rfc3339String substringWithRange:NSMakeRange(1, rfc3339String.length - 3)],
+                                                          [rfc3339String substringWithRange:NSMakeRange(0, rfc3339String.length - 2)],
                                                           [rfc3339String substringWithRange:NSMakeRange(rfc3339String.length - 2, 2)]];
                                      }
                                      [DConnectSettingProfile setDate:rfc3339String target:response];

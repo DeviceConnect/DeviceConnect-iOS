@@ -288,18 +288,22 @@ NSMutableDictionary *deviceList;
         
     } else if ([message isKindOfClass:[RKCollisionDetectedAsyncData class]]) {
         // Collision
+        
         RKCollisionDetectedAsyncData *collisionData = (RKCollisionDetectedAsyncData *)message;
         if (collisionData
             && [_sensorDelegate respondsToSelector:
                 @selector(spheroManagerStreamingCollisionForServiceId:impactAcceleration:axis:power:speed:time:)]) {
-            DPPoint3D accel;
-            accel.x = collisionData.impactAcceleration.x;
-            accel.y = collisionData.impactAcceleration.y;
-            accel.z = collisionData.impactAcceleration.z;
-            CGPoint axis = CGPointMake(collisionData.impactAxis.x, collisionData.impactAxis.y);
-            CGPoint power = CGPointMake(collisionData.impactPower.x, collisionData.impactPower.y);
-            float speed = collisionData.impactSpeed;
-            NSTimeInterval time = collisionData.timeStamp;
+                DPPoint3D accel;
+                accel.x = collisionData.impactAcceleration.x;
+                accel.y = collisionData.impactAcceleration.y;
+                accel.z = collisionData.impactAcceleration.z;
+                CGPoint axis = CGPointMake(collisionData.impactAxis.x, collisionData.impactAxis.y);
+                CGPoint power = CGPointMake(collisionData.impactPower.x, collisionData.impactPower.y);
+                float speed = collisionData.impactSpeed;
+                //collisionData.timeStamp; SDK側のデータを元に日付文字列を生成すると31年ずれる。
+                //collisionData.impactTimeStampは0
+                //Sphero側とスマートフォン側との差異が少ないためスマートフォン側の値を使用する。
+                NSTimeInterval time = [NSDate date].timeIntervalSince1970;
                 [_sensorDelegate spheroManagerStreamingCollisionForServiceId:robot.identifier
                                                             impactAcceleration:accel
                                                                           axis:axis
