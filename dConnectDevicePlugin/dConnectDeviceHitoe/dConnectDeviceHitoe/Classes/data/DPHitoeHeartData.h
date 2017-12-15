@@ -27,7 +27,7 @@ typedef enum DPHitoeHeart : NSUInteger
 @property (nonatomic, assign) int typeCode;
 @property (nonatomic, strong) NSString *unit;
 @property (nonatomic, assign) int unitCode;
-@property (nonatomic, assign) long long timeStamp;
+@property (nonatomic, assign) long timeStamp;
 @property (nonatomic, strong) NSString *timeStampString;
 
 - (DConnectMessage*)toDConnectMessage;

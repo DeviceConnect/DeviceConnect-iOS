@@ -22,17 +22,8 @@
                                           attributeName: DConnectSettingProfileAttrDate];
         [self addGetPath: getDateRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                          
-                          NSDateFormatter *rfc3339DateFormatter = [[NSDateFormatter alloc] init];
-                          NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-                          
-                          [rfc3339DateFormatter setLocale:enUSPOSIXLocale];
-                          [rfc3339DateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"];
-                          [rfc3339DateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-                          
-                          [DConnectSettingProfile setDate:[rfc3339DateFormatter stringFromDate:[NSDate date]] target:response];
+                          [DConnectSettingProfile setDate:[DConnectRFC3339DateUtils nowTimeStampString] target:response];
                           [response setResult:DConnectMessageResultTypeOk];
-                          
                           return YES;
                       }];
 

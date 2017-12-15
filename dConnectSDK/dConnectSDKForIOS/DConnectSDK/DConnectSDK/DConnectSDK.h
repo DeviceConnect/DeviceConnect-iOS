@@ -79,3 +79,4 @@
 #import <DConnectSDK/DConnectURIBuilder.h>
 #import <DConnectSDK/DConnectMessageFactory.h>
 #import <DConnectSDK/DConnectEventHelper.h>
+#import <DConnectSDK/DConnectRFC3339DateUtils.h>

@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "DCMHumidityProfile.h"
-#import "DCMUtil.h"
 
 NSString *const DCMHumidityProfileName = @"humidity";
 
@@ -31,7 +31,7 @@ NSString *const DCMHumidityProfileParamTimeStampString = @"timeStampString";
 + (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message
 {
     [message setLong:timeStamp forKey:DCMHumidityProfileParamTimeStamp];
-    [message setString:[DCMUtil timeStampToString:timeStamp] forKey:DCMHumidityProfileParamTimeStampString];
+    [message setString:[DConnectRFC3339DateUtils stringWithTimeStamp:timeStamp] forKey:DCMHumidityProfileParamTimeStampString];
 }
 
 @end

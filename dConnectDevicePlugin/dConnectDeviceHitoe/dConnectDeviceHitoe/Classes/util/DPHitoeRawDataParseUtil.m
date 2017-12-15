@@ -7,6 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
+
 #import "DPHitoeRawDataParseUtil.h"
 #import "DPHitoeMDERFloatConvertUtil.h"
 
@@ -74,9 +76,9 @@
             continue;
         }
         NSArray *list = [val componentsSeparatedByString:DPHitoeComma];
-        long long timestamp = [((NSString*) list[0]) longLongValue];
+        long timestamp = (long) [((NSString*) list[0]) longLongValue];
         NSArray *ecgList = [list[1] componentsSeparatedByString:DPHitoeColon];
-        NSString *date = [self getTimeStampStringForLong:timestamp];
+        NSString *date = [DConnectRFC3339DateUtils stringWithTimeStamp:timestamp];
         ecg.value = [ecgList[0] floatValue];
         ecg.timeStamp = timestamp;
         ecg.timeStampString = date;
@@ -101,11 +103,11 @@
     if (!stressList[0] || !stressList[1]) {
         return stress;
     }
-    long long timestamp = [((NSString*) stressList[0]) longLongValue];
+    long timestamp = (long) [((NSString*) stressList[0]) longLongValue];
     double lfhf = [stressList[1] doubleValue];
     stress.lfhf = lfhf;
     stress.timeStamp = timestamp;
-    stress.timeStampString = [self getTimeStampStringForLong:timestamp];
+    stress.timeStampString = [DConnectRFC3339DateUtils stringWithTimeStamp:timestamp];
     return stress;
 }
 
@@ -117,9 +119,9 @@
     }
     NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
     NSArray *poseList = [lineList[0] componentsSeparatedByString:DPHitoeComma];
-    long long timestamp  = [((NSString*) poseList[0]) longLongValue];
+    long timestamp = (long) [((NSString*) poseList[0]) longLongValue];
     pose.timeStamp = timestamp;
-    pose.timeStampString = [self getTimeStampStringForLong:timestamp];
+    pose.timeStampString = [DConnectRFC3339DateUtils stringWithTimeStamp:timestamp];
     
     NSString *type = poseList[1];
     
@@ -155,9 +157,10 @@
                                             raw:(NSString*)raw {
     NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
     NSArray *walkList = [lineList[0] componentsSeparatedByString:DPHitoeComma];
-    long long timestamp = [((NSString*) walkList[0]) longLongValue];
+    long timestamp = (long) [((NSString*) walkList[0]) longLongValue];
     data.timeStamp = timestamp;
-    data.timeStampString = [self getTimeStampStringForLong:timestamp];
+
+    data.timeStampString = [DConnectRFC3339DateUtils stringWithTimeStamp:timestamp];
     data.step = [walkList[1] intValue];
     if ([walkList[4] isEqualToString:@"Walking"]) {
         data.state = DCMWalkStateProfileStateWalking;
@@ -204,8 +207,8 @@
     heart.typeCode = typeCode;
     heart.unit = unit;
     heart.unitCode = unitCode;
-    heart.timeStamp = [((NSString*) hrValue[0]) longLongValue];
-    heart.timeStampString = [self getTimeStampStringForLong:heart.timeStamp];
+    heart.timeStamp = (long) [((NSString*) hrValue[0]) longLongValue];
+    heart.timeStampString = [DConnectRFC3339DateUtils stringWithTimeStamp:heart.timeStamp];
     
     return heart;
 }
@@ -214,14 +217,5 @@
 
 + (NSArray*)splitCommaWithString:(NSString*)value {
     return [value componentsSeparatedByString:@","];
-}
-
-
-+ (NSString*)getTimeStampStringForLong:(long long)timeStamp {
-    NSTimeInterval seconds = timeStamp / 1000;
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmdss.SSSZZZ"];
-    return [dateFormatter stringFromDate:date];
 }
 @end

@@ -7,8 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "DCMTemperatureProfile.h"
-#import "DCMUtil.h"
+
 
 NSString *const DCMTemperatureProfileName = @"temperature";
 NSString *const DCMTemperatureProfileParamTemperature = @"temperature";
@@ -28,7 +29,7 @@ NSString *const DCMTemperatureProfileParamTimeStampString = @"timeStampString";
 
 + (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message {
     [message setLong:timeStamp forKey:DCMTemperatureProfileParamTimeStamp];
-    [message setString:[DCMUtil timeStampToString:timeStamp] forKey:DCMTemperatureProfileParamTimeStampString];
+    [message setString:[DConnectRFC3339DateUtils stringWithTimeStamp:timeStamp] forKey:DCMTemperatureProfileParamTimeStampString];
 }
 
 + (void) setType:(DCMTemperatureType)type target:(DConnectMessage *)message {
