@@ -384,7 +384,7 @@
     __block typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *tmpMovement = movement;
+        NSString *tmpMovement = [movement stringByReplacingOccurrencesOfString:@"in-" withString:@""];
         if ([movement isEqualToString:@"max"]) {
             tmpMovement = @"start";
         }
