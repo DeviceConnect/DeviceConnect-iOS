@@ -166,9 +166,9 @@
     switch (data.type) {
         case DPLinkingSensorTypeGyroscope: {
             DConnectMessage *gyro = [DConnectMessage new];
-            [gyro setFloat:data.x forKey:DConnectDeviceOrientationProfileParamX];
-            [gyro setFloat:data.y forKey:DConnectDeviceOrientationProfileParamY];
-            [gyro setFloat:data.z forKey:DConnectDeviceOrientationProfileParamZ];
+            [gyro setFloat:data.x forKey:@"beta"];
+            [gyro setFloat:data.y forKey:@"gamma"];
+            [gyro setFloat:data.z forKey:@"alpha"];
             [message setMessage:gyro forKey:DConnectDeviceOrientationProfileParamRotationRate];
         }   break;
         case DPLinkingSensorTypeAccelerometer: {
