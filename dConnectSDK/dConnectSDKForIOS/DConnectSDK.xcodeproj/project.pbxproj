@@ -65,6 +65,8 @@
 		6B4EEF611AAFF06700A92E0D /* DConnectOriginDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */; };
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
+		6B5E55501F96072900A5B272 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5E554F1F96072900A5B272 /* Security.framework */; };
+		6B5E55931F96EE7A00A5B272 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E55921F96EE6800A5B272 /* certificate.p12 */; };
 		6B7A29B81E711E060071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29931E711E060071160E /* airconditioner.json */; };
 		6B7A29B91E711E060071160E /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29941E711E060071160E /* authorization.json */; };
 		6B7A29BA1E711E060071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29951E711E060071160E /* battery.json */; };
@@ -367,6 +369,8 @@
 		6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginParser.m; path = policy/DConnectOriginParser.m; sourceTree = "<group>"; };
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
+		6B5E554F1F96072900A5B272 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6B5E55921F96EE6800A5B272 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		6B7A29931E711E060071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
 		6B7A29941E711E060071160E /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = authorization.json; path = api/authorization.json; sourceTree = "<group>"; };
 		6B7A29951E711E060071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
@@ -2128,6 +2132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB9F67081FB94988003A8EA0 /* Photos.framework in Frameworks */,
+				6B5E55501F96072900A5B272 /* Security.framework in Frameworks */,
 				C29D32EC191B202A001015CC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4121,6 +4126,7 @@
 			isa = PBXGroup;
 			children = (
 				AB9F67071FB94988003A8EA0 /* Photos.framework */,
+				6B5E554F1F96072900A5B272 /* Security.framework */,
 				BE21B72D197E108900BAF018 /* DConnectSDK.build */,
 				BE24744B197914940035E83B /* DConnectSDK.framework */,
 				300564B0196FB68600A4E708 /* libsqlite3.0.dylib */,
@@ -4221,6 +4227,7 @@
 		C29D3336191B2685001015CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6B5E55921F96EE6800A5B272 /* certificate.p12 */,
 				3056BF1319BC3425003B62E1 /* DConnectSDK-iPad.storyboard */,
 				3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */,
 				C29D3337191B2685001015CC /* Info.plist */,
@@ -4583,6 +4590,7 @@
 				6B7A29DA1E711E060071160E /* touch.json in Resources */,
 				6B7A29BD1E711E060071160E /* connection.json in Resources */,
 				6B7A29CD1E711E060071160E /* notification.json in Resources */,
+				6B5E55931F96EE7A00A5B272 /* certificate.p12 in Resources */,
 				6B7A29CC1E711E060071160E /* mediastreamrecording.json in Resources */,
 				6B7A29C81E711E060071160E /* illuminance.json in Resources */,
 				6B7A29CF1E711E060071160E /* poseestimation.json in Resources */,
