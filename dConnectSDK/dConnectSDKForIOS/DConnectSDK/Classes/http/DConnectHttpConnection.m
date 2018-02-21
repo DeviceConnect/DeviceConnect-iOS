@@ -9,6 +9,7 @@
 
 #import "DConnectHttpConnection.h"
 #import "DConnectWebSocket.h"
+#import "DConnectManager.h"
 
 @implementation DConnectHttpConnection {
     NSArray *_sslIdentityAndCertificates;
@@ -70,8 +71,7 @@
 
 - (BOOL)isSecureServer
 {
-    // TODO: 設定画面でYES/NOを切り替えられるようにする
-    return YES;
+    return [DConnectManager sharedManager].settings.useSSL;
 }
 
 /**

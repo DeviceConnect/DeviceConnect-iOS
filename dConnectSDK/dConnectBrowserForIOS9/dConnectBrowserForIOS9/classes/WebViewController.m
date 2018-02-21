@@ -8,6 +8,7 @@
 //
 
 #import "WebViewController.h"
+#import <DConnectSDK/DConnectSDK.h>
 #import <objc/runtime.h>
 
 static const char kAssocKey_Window;
@@ -113,6 +114,42 @@ static const char kAssocKey_Window;
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     self.title = webView.title;
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSURLRequest *request = navigationAction.request;
+    NSURL *url = request.URL;
+    NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
+    if ([url.scheme isEqualToString:@"file"]) {
+        // SSL通信フラグの存在確認
+        NSArray<NSURLQueryItem *> *items = components.queryItems;
+        for (NSURLQueryItem *item in items) {
+            // すでに設定されている場合はここで終了. (コールバックの無限ループ回避)
+            if ([item.name isEqualToString:@"ssl"]) {
+                decisionHandler(WKNavigationActionPolicyAllow);
+                return;
+            }
+        }
+        
+        // SSL通信フラグをHTMLアプリ側へ共有.
+        BOOL useSSL = [DConnectManager sharedManager].settings.useSSL;
+        NSURL *newURL = [[self components:components appendSSL:useSSL] URL];
+        [webView loadRequest:[NSURLRequest requestWithURL:newURL]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+}
+
+- (NSURLComponents *)components:(NSURLComponents *)components appendSSL:(BOOL)useSSL
+{
+    // URLにsslパラメータを追加
+    NSMutableArray<NSURLQueryItem *> *items = [NSMutableArray arrayWithArray:components.queryItems];
+    NSURLQueryItem *ssl = [NSURLQueryItem queryItemWithName:@"ssl" value:(useSSL ? @"on" : @"off")];
+    [items addObject:ssl];
+    components.queryItems = items;
+    return components;
 }
 
 //--------------------------------------------------------------//

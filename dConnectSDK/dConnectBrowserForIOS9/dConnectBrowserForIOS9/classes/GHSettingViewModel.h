@@ -41,6 +41,7 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
     SecurityCellTypeLocalOAuth,
     SecurityCellTypeOrigin,
     SecurityCellTypeExternIP,
+    SecurityCellTypeSSL,
 };
 
 @property (nonatomic, strong) NSArray* datasource;

@@ -30,7 +30,8 @@
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
-                              @(SecurityCellTypeExternIP)]
+                              @(SecurityCellTypeExternIP),
+                              @(SecurityCellTypeSSL)]
                             ];
     }
 
@@ -117,6 +118,8 @@
                     return @"Origin (有効/無効)";
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
+                case SecurityCellTypeSSL:
+                    return @"SSL";
             }
             break;
     }
@@ -152,6 +155,11 @@
         case SecurityCellTypeExternIP:
             [DConnectManager sharedManager].settings.useExternalIP = isOn;
             break;
+        case SecurityCellTypeSSL:
+            [DConnectManager sharedManager].settings.useSSL = isOn;
+            [[DConnectManager sharedManager] stop];
+            [[DConnectManager sharedManager] start];
+            break;
         default:
             break;
     }
@@ -168,6 +176,7 @@
     [def setBool:settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
     [def setBool:settings.useExternalIP forKey:IS_EXTERNAL_IP];
     [def setBool:settings.useManagerName forKey:IS_AVAILABILITY];
+    [def setBool:settings.useSSL forKey:IS_SSL];
     [def synchronize];
 }
 
@@ -221,6 +230,10 @@
             [DConnectManager sharedManager].settings.useManagerName
             = [[NSUserDefaults standardUserDefaults] boolForKey:IS_AVAILABILITY];
             return [DConnectManager sharedManager].settings.useManagerName;
+        case SecurityCellTypeSSL:
+            [DConnectManager sharedManager].settings.useSSL
+            = [[NSUserDefaults standardUserDefaults] boolForKey:IS_SSL];
+            return [DConnectManager sharedManager].settings.useSSL;
 
         default:
             break;

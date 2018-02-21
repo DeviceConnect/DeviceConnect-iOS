@@ -88,4 +88,11 @@
  デフォルトではOFF。
  */
 @property (nonatomic) BOOL useManagerName;
+
+/*!
+ @brief SSL通信のON/OFF。
+ 
+ デフォルトではOFF。
+ */
+@property (nonatomic) BOOL useSSL;
 @end
