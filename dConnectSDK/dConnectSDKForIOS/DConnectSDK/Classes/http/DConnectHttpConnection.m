@@ -40,7 +40,7 @@
     NSData *data = [NSData dataWithContentsOfURL:p12URL];
     
     // 証明書をiOSのSecurity Frameworkにインポート
-    NSString* password = @"password";
+    NSString* password = @"0000";
     NSDictionary* options = @{
                               (id)kSecImportExportPassphrase : password
                               };
