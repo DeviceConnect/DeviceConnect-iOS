@@ -31,7 +31,8 @@
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
                               @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeSSL)]
+                              @(SecurityCellTypeSSL),
+                              @(SecurityCellTypeRootCertInstall)]
                             ];
     }
 
@@ -119,7 +120,9 @@
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
                 case SecurityCellTypeSSL:
-                    return @"SSL";
+                    return @"SSL (ON/OFF)";
+                case SecurityCellTypeRootCertInstall:
+                    return @"証明書インストール";
             }
             break;
     }
@@ -159,7 +162,6 @@
             [DConnectManager sharedManager].settings.useSSL = isOn;
             [[DConnectManager sharedManager] stop];
             [[DConnectManager sharedManager] start];
-            break;
         default:
             break;
     }
@@ -200,6 +202,9 @@
                     break;
                 case SecurityCellTypeOriginWhitelist:
                     [DConnectUtil showOriginWhitelist];
+                    break;
+                case SecurityCellTypeRootCertInstall:
+                    [self showRootCertInstallDialog];
                     break;
             }
             break;
@@ -359,6 +364,50 @@
                                }
                            }];
 
+    [alertController addAction:createAction];
+    
+    [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
+}
+
+/*!
+ @brief 証明書の取得先を入力するためのダイアログを表示する。
+ */
+- (void)showRootCertInstallDialog
+{
+    NSString *prompt = @"Safari経由で証明書をインストールします。証明書のURLを入力してください。";
+    if (@available(iOS 10.3, *)) {
+        prompt = [NSString stringWithFormat:@"%@\n\nインストール後、以下の設定で証明書を有効にすると、SSL通信が可能になります。\n\n一般 > 情報 > 証明書信頼設定", prompt];
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"証明書インストール"
+                                                                              message:prompt
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+        textField.placeholder = @"URL";
+        textField.text = @""; // TODO Fix certificate URL.
+    }];
+    UIAlertAction * cancelAction =
+    [UIAlertAction actionWithTitle:@"キャンセル"
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+    [alertController addAction:cancelAction];
+    
+    UIAlertAction * createAction =
+    [UIAlertAction actionWithTitle:@"Safariを起動"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               UITextField * textField = alertController.textFields[0];
+                               if (textField.text.length > 0) {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       NSURL *url = [NSURL URLWithString:textField.text];
+                                       if (@available(iOS 10, *)) {
+                                           [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+                                       } else {
+                                           [[UIApplication sharedApplication] openURL:url];
+                                       }
+                                   });
+                               }
+                           }];
+    
     [alertController addAction:createAction];
     
     [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
