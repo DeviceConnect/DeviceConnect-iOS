@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         // 証明書 (PKCS#12形式) へのパス
-        NSURL *p12URL = [DCBundle() URLForResource:@"certificate" withExtension:@"p12"];
+        NSURL *p12URL = [DCBundle() URLForResource:@"dconnect-ios" withExtension:@"p12"];
         NSLog(@"Certificate URL: %@", p12URL);
         
         _identity = [self importPKCS12:p12URL];
