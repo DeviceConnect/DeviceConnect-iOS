@@ -66,7 +66,6 @@
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
 		6B5E55501F96072900A5B272 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5E554F1F96072900A5B272 /* Security.framework */; };
-		6B5E55931F96EE7A00A5B272 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E55921F96EE6800A5B272 /* certificate.p12 */; };
 		6B7A29B81E711E060071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29931E711E060071160E /* airconditioner.json */; };
 		6B7A29B91E711E060071160E /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29941E711E060071160E /* authorization.json */; };
 		6B7A29BA1E711E060071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29951E711E060071160E /* battery.json */; };
@@ -106,6 +105,7 @@
 		6B7A29DC1E711E060071160E /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B71E711E060071160E /* walkstate.json */; };
 		6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */; };
 		6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */; };
+		6BCBFE1D2047F77000E5541E /* dconnect-ios.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */; };
 		6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */; };
 		6BD8C45C1AA8060900198676 /* DConnectManagerAuthorizationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */; };
 		6BE9915C203E9A9D00B69D1C /* DConnectIdentityStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9915B203E9A9D00B69D1C /* DConnectIdentityStore.m */; };
@@ -371,7 +371,6 @@
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
 		6B5E554F1F96072900A5B272 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		6B5E55921F96EE6800A5B272 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		6B7A29931E711E060071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
 		6B7A29941E711E060071160E /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = authorization.json; path = api/authorization.json; sourceTree = "<group>"; };
 		6B7A29951E711E060071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
@@ -413,6 +412,7 @@
 		6B9B12C01AB302FD00CC99E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/DConnectSDK-iPhone.storyboard"; sourceTree = "<group>"; };
 		6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistUtil.h; path = policy/DConnectWhitelistUtil.h; sourceTree = "<group>"; };
 		6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistUtil.m; path = policy/DConnectWhitelistUtil.m; sourceTree = "<group>"; };
+		6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dconnect-ios.p12"; sourceTree = "<group>"; };
 		6BD474891AAF060E0014FB15 /* DConnectOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectOrigin.h; path = policy/DConnectOrigin.h; sourceTree = "<group>"; };
 		6BD4748E1AAF0AD40014FB15 /* DConnectWebAppOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWebAppOrigin.h; path = policy/DConnectWebAppOrigin.h; sourceTree = "<group>"; };
 		6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWebAppOrigin.m; path = policy/DConnectWebAppOrigin.m; sourceTree = "<group>"; };
@@ -4232,7 +4232,7 @@
 		C29D3336191B2685001015CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6B5E55921F96EE6800A5B272 /* certificate.p12 */,
+				6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */,
 				3056BF1319BC3425003B62E1 /* DConnectSDK-iPad.storyboard */,
 				3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */,
 				C29D3337191B2685001015CC /* Info.plist */,
@@ -4595,9 +4595,9 @@
 				6B7A29DA1E711E060071160E /* touch.json in Resources */,
 				6B7A29BD1E711E060071160E /* connection.json in Resources */,
 				6B7A29CD1E711E060071160E /* notification.json in Resources */,
-				6B5E55931F96EE7A00A5B272 /* certificate.p12 in Resources */,
 				6B7A29CC1E711E060071160E /* mediastreamrecording.json in Resources */,
 				6B7A29C81E711E060071160E /* illuminance.json in Resources */,
+				6BCBFE1D2047F77000E5541E /* dconnect-ios.p12 in Resources */,
 				6B7A29CF1E711E060071160E /* poseestimation.json in Resources */,
 				6B7A29D41E711E060071160E /* serviceinformation.json in Resources */,
 				6B7A29BB1E711E060071160E /* camera.json in Resources */,
