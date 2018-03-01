@@ -118,6 +118,8 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
                 // http, https以外の場合はuriパラメータ値を
                 // DeviceConnectManager Files API向けURLに置き換える。
                 DConnectURIBuilder *builder = [DConnectURIBuilder new];
+                BOOL useSSL = [DConnectManager sharedManager].settings.useSSL;
+                [builder setScheme:(useSSL ? @"https" : @"http")];
                 [builder setProfile:DConnectFilesProfileName];
                 [builder addParameter:uri forName:DConnectFilesProfileParamUri];
                 [response setString:[[builder build] absoluteString] forKey:@"uri"];
