@@ -87,22 +87,14 @@
 
 - (SecTrustRef) setupTrust:(SecTrustRef)trust
 {
-    OSStatus status = -1;
     CFMutableArrayRef newAnchorArray = CFArrayCreateMutable (kCFAllocatorDefault,
                                                              0,
                                                              &kCFTypeArrayCallBacks);
     SecCertificateRef cert = NULL;
-    status = SecIdentityCopyCertificate(_identity, &cert);
-    NSLog(@"SecIdentityCopyCertificate: status = %d", status);
-    NSLog(@"Self-signed certificate: %@", cert);
+    SecIdentityCopyCertificate(_identity, &cert);
     CFArrayAppendValue(newAnchorArray, cert);
-    
-    status = SecTrustSetAnchorCertificates(trust, newAnchorArray);
-    NSLog(@"SecTrustSetAnchorCertificates: status = %d", status);
-    
-    status = SecTrustSetAnchorCertificatesOnly(trust, false);
-    NSLog(@"SecTrustSetAnchorCertificatesOnly: status = %d", status);
-    
+    SecTrustSetAnchorCertificates(trust, newAnchorArray);
+    SecTrustSetAnchorCertificatesOnly(trust, false);
     if (cert) {
         CFRelease(cert);
     }
