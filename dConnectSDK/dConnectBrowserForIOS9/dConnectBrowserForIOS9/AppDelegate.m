@@ -40,6 +40,7 @@
         [def setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
         [def setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
         [def setBool:mgr.settings.useManagerName forKey:IS_AVAILABILITY];
+        [def setBool:mgr.settings.useSSL forKey:IS_SSL];
         [def synchronize];
     
     }

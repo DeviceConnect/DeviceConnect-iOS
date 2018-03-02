@@ -44,6 +44,7 @@
 #import <DConnectSDK/DConnectDevicePlugin.h>
 #import <DConnectSDK/DConnectFileManager.h>
 #import <DConnectSDK/DConnectSettings.h>
+#import <DConnectSDK/DConnectIdentityStore.h>
 #import <DConnectSDK/DConnectCanvasProfile.h>
 
 #import <DConnectSDK/DConnectVibrationProfile.h>

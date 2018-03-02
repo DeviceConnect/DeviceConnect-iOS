@@ -65,6 +65,7 @@
 		6B4EEF611AAFF06700A92E0D /* DConnectOriginDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */; };
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
+		6B5E55501F96072900A5B272 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5E554F1F96072900A5B272 /* Security.framework */; };
 		6B7A29B81E711E060071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29931E711E060071160E /* airconditioner.json */; };
 		6B7A29B91E711E060071160E /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29941E711E060071160E /* authorization.json */; };
 		6B7A29BA1E711E060071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29951E711E060071160E /* battery.json */; };
@@ -104,8 +105,10 @@
 		6B7A29DC1E711E060071160E /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B71E711E060071160E /* walkstate.json */; };
 		6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */; };
 		6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */; };
+		6BCBFE1D2047F77000E5541E /* dconnect-ios.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */; };
 		6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */; };
 		6BD8C45C1AA8060900198676 /* DConnectManagerAuthorizationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */; };
+		6BE9915C203E9A9D00B69D1C /* DConnectIdentityStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9915B203E9A9D00B69D1C /* DConnectIdentityStore.m */; };
 		6BF7458C1AB1B423001D8FBF /* DConnectEditOriginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BF7458B1AB1B423001D8FBF /* DConnectEditOriginViewController.m */; };
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
@@ -367,6 +370,7 @@
 		6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginParser.m; path = policy/DConnectOriginParser.m; sourceTree = "<group>"; };
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
+		6B5E554F1F96072900A5B272 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6B7A29931E711E060071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
 		6B7A29941E711E060071160E /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = authorization.json; path = api/authorization.json; sourceTree = "<group>"; };
 		6B7A29951E711E060071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
@@ -408,11 +412,14 @@
 		6B9B12C01AB302FD00CC99E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/DConnectSDK-iPhone.storyboard"; sourceTree = "<group>"; };
 		6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistUtil.h; path = policy/DConnectWhitelistUtil.h; sourceTree = "<group>"; };
 		6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistUtil.m; path = policy/DConnectWhitelistUtil.m; sourceTree = "<group>"; };
+		6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dconnect-ios.p12"; sourceTree = "<group>"; };
 		6BD474891AAF060E0014FB15 /* DConnectOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectOrigin.h; path = policy/DConnectOrigin.h; sourceTree = "<group>"; };
 		6BD4748E1AAF0AD40014FB15 /* DConnectWebAppOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWebAppOrigin.h; path = policy/DConnectWebAppOrigin.h; sourceTree = "<group>"; };
 		6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWebAppOrigin.m; path = policy/DConnectWebAppOrigin.m; sourceTree = "<group>"; };
 		6BD8C45A1AA8050700198676 /* DConnectManagerAuthorizationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectManagerAuthorizationProfile.h; sourceTree = "<group>"; };
 		6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerAuthorizationProfile.m; sourceTree = "<group>"; };
+		6BE9915A203E9A2C00B69D1C /* DConnectIdentityStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectIdentityStore.h; sourceTree = "<group>"; };
+		6BE9915B203E9A9D00B69D1C /* DConnectIdentityStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DConnectIdentityStore.m; sourceTree = "<group>"; };
 		6BF7458A1AB1B423001D8FBF /* DConnectEditOriginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectEditOriginViewController.h; path = policy/DConnectEditOriginViewController.h; sourceTree = "<group>"; };
 		6BF7458B1AB1B423001D8FBF /* DConnectEditOriginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectEditOriginViewController.m; path = policy/DConnectEditOriginViewController.m; sourceTree = "<group>"; };
 		971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfileTest.m; sourceTree = "<group>"; };
@@ -2128,6 +2135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB9F67081FB94988003A8EA0 /* Photos.framework in Frameworks */,
+				6B5E55501F96072900A5B272 /* Security.framework in Frameworks */,
 				C29D32EC191B202A001015CC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3924,6 +3932,7 @@
 				BE6F93211A70DB0400BFA51F /* DConnectFileCacheController.h */,
 				BE6F93231A70DB0400BFA51F /* DConnectFileManager.h */,
 				BE6F93241A70DB0400BFA51F /* DConnectFileProfile.h */,
+				6BE9915A203E9A2C00B69D1C /* DConnectIdentityStore.h */,
 				BE6F93251A70DB0400BFA51F /* DConnectManager.h */,
 				BE6F93261A70DB0400BFA51F /* DConnectMediaPlayerProfile.h */,
 				BE6F93271A70DB0400BFA51F /* DConnectMediaStreamRecordingProfile.h */,
@@ -3957,6 +3966,7 @@
 				BE71FD8B1DA3B25B00B5E209 /* DConnectHttpConnection.m */,
 				BE71FD8C1DA3B25B00B5E209 /* DConnectHttpServer.h */,
 				BE71FD8D1DA3B25B00B5E209 /* DConnectHttpServer.m */,
+				6BE9915B203E9A9D00B69D1C /* DConnectIdentityStore.m */,
 				BE71FD8E1DA3B25B00B5E209 /* DConnectMultipartParser.h */,
 				BE71FD8F1DA3B25B00B5E209 /* DConnectMultipartParser.m */,
 				BE71FD901DA3B25B00B5E209 /* DConnectServerManager.h */,
@@ -4121,6 +4131,7 @@
 			isa = PBXGroup;
 			children = (
 				AB9F67071FB94988003A8EA0 /* Photos.framework */,
+				6B5E554F1F96072900A5B272 /* Security.framework */,
 				BE21B72D197E108900BAF018 /* DConnectSDK.build */,
 				BE24744B197914940035E83B /* DConnectSDK.framework */,
 				300564B0196FB68600A4E708 /* libsqlite3.0.dylib */,
@@ -4221,6 +4232,7 @@
 		C29D3336191B2685001015CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6BCBFE1C2047F63F00E5541E /* dconnect-ios.p12 */,
 				3056BF1319BC3425003B62E1 /* DConnectSDK-iPad.storyboard */,
 				3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */,
 				C29D3337191B2685001015CC /* Info.plist */,
@@ -4585,6 +4597,7 @@
 				6B7A29CD1E711E060071160E /* notification.json in Resources */,
 				6B7A29CC1E711E060071160E /* mediastreamrecording.json in Resources */,
 				6B7A29C81E711E060071160E /* illuminance.json in Resources */,
+				6BCBFE1D2047F77000E5541E /* dconnect-ios.p12 in Resources */,
 				6B7A29CF1E711E060071160E /* poseestimation.json in Resources */,
 				6B7A29D41E711E060071160E /* serviceinformation.json in Resources */,
 				6B7A29BB1E711E060071160E /* camera.json in Resources */,
@@ -4622,7 +4635,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Download Device Connect Profile Specifications\nif [ ! -e ./DConnectSDK_resources/api ]; then\n    echo \"Downloading Device Connect Specifications...\"\n    ./download-spec.sh\nelse\n    echo \"Already downloaded Device Connect Specifications.\"\nfi\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Download Device Connect Profile Specifications\nif [ ! -e ./DConnectSDK_resources/api ]; then\n    echo \"Downloading Device Connect Specifications...\"\n    ./download-spec.sh\nelse\n    echo \"Already downloaded Device Connect Specifications.\"\nfi\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\ncp \"${SRCROOT}/${PROJECT_NAME}/Dependencies/RoutingHTTPServer/\"*.h ${FRAMEWORK_DIR}/Headers/\ncp \"${SRCROOT}/${PROJECT_NAME}/Dependencies/CocoaHTTPServer/\"*.h ${FRAMEWORK_DIR}/Headers/\ncp \"${SRCROOT}/${PROJECT_NAME}/Dependencies/CocoaAsyncSocket/\"*.h ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		C29D3316191B253E001015CC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4736,6 +4749,7 @@
 				BE71FE131DA3B25B00B5E209 /* DConnectSettingProfile.m in Sources */,
 				309CD48619877C9E002A5684 /* DConnectMessageFactory.m in Sources */,
 				6B4EEF571AAF248000A92E0D /* DConnectOriginInfo.m in Sources */,
+				6BE9915C203E9A9D00B69D1C /* DConnectIdentityStore.m in Sources */,
 				BE71FE0D1DA3B25B00B5E209 /* DConnectPhoneProfile.m in Sources */,
 				BE71FE151DA3B25B00B5E209 /* DConnectTouchProfile.m in Sources */,
 				BE71FE361DA3B25B00B5E209 /* DConnectStringParameterSpec.m in Sources */,

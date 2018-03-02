@@ -159,6 +159,8 @@ static NSInteger maxIconCount = 8;
     mgr.settings.useExternalIP = isExternalIp;
     BOOL isManagerName = [[NSUserDefaults standardUserDefaults] boolForKey:IS_AVAILABILITY];
     mgr.settings.useManagerName = isManagerName;
+    BOOL isSSL = [[NSUserDefaults standardUserDefaults] boolForKey:IS_SSL];
+    mgr.settings.useSSL = isSSL;
 }
 
 - (void)saveSettings
@@ -170,6 +172,7 @@ static NSInteger maxIconCount = 8;
     [def setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
     [def setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
     [def setBool:mgr.settings.useManagerName forKey:IS_AVAILABILITY];
+    [def setBool:mgr.settings.useSSL forKey:IS_SSL];
     [def synchronize];
 }
 
