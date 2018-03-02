@@ -27,6 +27,7 @@
 #define IS_ORIGIN_ENABLE @"is_origin_enable"
 #define IS_EXTERNAL_IP @"is_external_ip"
 #define IS_AVAILABILITY @"is_avaiability"
+#define IS_SSL @"is_ssl"
 
 // アクセストークン
 #define ACCESS_TOKEN @"access_token"

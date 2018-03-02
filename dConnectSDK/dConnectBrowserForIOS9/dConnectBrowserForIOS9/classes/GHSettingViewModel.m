@@ -30,7 +30,9 @@
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
-                              @(SecurityCellTypeExternIP)]
+                              @(SecurityCellTypeExternIP),
+                              @(SecurityCellTypeSSL),
+                              @(SecurityCellTypeRootCertInstall)]
                             ];
     }
 
@@ -117,6 +119,10 @@
                     return @"Origin (有効/無効)";
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
+                case SecurityCellTypeSSL:
+                    return @"SSL (ON/OFF)";
+                case SecurityCellTypeRootCertInstall:
+                    return @"証明書インストール";
             }
             break;
     }
@@ -152,6 +158,10 @@
         case SecurityCellTypeExternIP:
             [DConnectManager sharedManager].settings.useExternalIP = isOn;
             break;
+        case SecurityCellTypeSSL:
+            [DConnectManager sharedManager].settings.useSSL = isOn;
+            [[DConnectManager sharedManager] stop];
+            [[DConnectManager sharedManager] start];
         default:
             break;
     }
@@ -168,6 +178,7 @@
     [def setBool:settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
     [def setBool:settings.useExternalIP forKey:IS_EXTERNAL_IP];
     [def setBool:settings.useManagerName forKey:IS_AVAILABILITY];
+    [def setBool:settings.useSSL forKey:IS_SSL];
     [def synchronize];
 }
 
@@ -191,6 +202,9 @@
                     break;
                 case SecurityCellTypeOriginWhitelist:
                     [DConnectUtil showOriginWhitelist];
+                    break;
+                case SecurityCellTypeRootCertInstall:
+                    [self showRootCertInstallDialog];
                     break;
             }
             break;
@@ -221,6 +235,10 @@
             [DConnectManager sharedManager].settings.useManagerName
             = [[NSUserDefaults standardUserDefaults] boolForKey:IS_AVAILABILITY];
             return [DConnectManager sharedManager].settings.useManagerName;
+        case SecurityCellTypeSSL:
+            [DConnectManager sharedManager].settings.useSSL
+            = [[NSUserDefaults standardUserDefaults] boolForKey:IS_SSL];
+            return [DConnectManager sharedManager].settings.useSSL;
 
         default:
             break;
@@ -346,6 +364,50 @@
                                }
                            }];
 
+    [alertController addAction:createAction];
+    
+    [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
+}
+
+/*!
+ @brief 証明書の取得先を入力するためのダイアログを表示する。
+ */
+- (void)showRootCertInstallDialog
+{
+    NSString *prompt = @"Safari経由で証明書をインストールします。証明書のURLを入力してください。";
+    if (@available(iOS 10.3, *)) {
+        prompt = [NSString stringWithFormat:@"%@\n\nインストール後、以下の設定で証明書を有効にすると、SSL通信が可能になります。\n\n一般 > 情報 > 証明書信頼設定", prompt];
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"証明書インストール"
+                                                                              message:prompt
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+        textField.placeholder = @"URL";
+        textField.text = @"https://raw.githubusercontent.com/TakayukiHoshi1984/DeviceConnect-iOS/modify_https_server/dConnectSDK/dConnectSDKForIOS/DConnectSDK/Resources/dconnect-ios.crt";
+    }];
+    UIAlertAction * cancelAction =
+    [UIAlertAction actionWithTitle:@"キャンセル"
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+    [alertController addAction:cancelAction];
+    
+    UIAlertAction * createAction =
+    [UIAlertAction actionWithTitle:@"Safariを起動"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               UITextField * textField = alertController.textFields[0];
+                               if (textField.text.length > 0) {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       NSURL *url = [NSURL URLWithString:textField.text];
+                                       if (@available(iOS 10, *)) {
+                                           [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+                                       } else {
+                                           [[UIApplication sharedApplication] openURL:url];
+                                       }
+                                   });
+                               }
+                           }];
+    
     [alertController addAction:createAction];
     
     [[self rootViewController] presentViewController:alertController animated:YES completion:nil];

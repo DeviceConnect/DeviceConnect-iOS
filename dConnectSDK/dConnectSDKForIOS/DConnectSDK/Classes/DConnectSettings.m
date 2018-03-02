@@ -21,6 +21,7 @@
         self.useOriginEnable = YES;
         self.useExternalIP = NO;
         self.useManagerName = NO;
+        self.useSSL = NO;
     }
     return self;
 }

@@ -156,6 +156,7 @@
             switch (type) {
                 case SecurityCellTypeDeleteAccessToken:
                 case SecurityCellTypeOriginWhitelist:
+                case SecurityCellTypeRootCertInstall:
                     return [self configureDetailCell:tableView atIndexPath: indexPath];
                     break;
                 case SecurityCellTypeOriginBlock:
@@ -163,6 +164,7 @@
                 case SecurityCellTypeOrigin:
                 case SecurityCellTypeExternIP:
                 case SecurityCellTypeAvailability:
+                case SecurityCellTypeSSL:
                 {
                     SwitchableCell *cell = (SwitchableCell*)[tableView dequeueReusableCellWithIdentifier:@"SwitchableCell"
                                                                                             forIndexPath:indexPath];
