@@ -47,8 +47,24 @@
                              }
                              NSDictionary *lightList = [[DPHueManager sharedManager] getLightStatus];
                              DConnectArray *lights = [DConnectArray array];
-                             
-                             for (PHLight *light in lightList.allValues) {
+                             NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                             NSString *lightId = nil;
+                             if (arr.count == 3) {
+                                 lightId = arr[2];
+                             }
+                             if (!lightId) {
+                                 for (PHLight *light in lightList.allValues) {
+                                     //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
+                                     DConnectMessage *led = [DConnectMessage new];
+                                     [DConnectLightProfile setLightId:light.identifier target:led];
+                                     [DConnectLightProfile setLightName:light.name target:led];
+                                     [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
+                                     [DConnectLightProfile setLightConfig:@"" target:led];
+                                     
+                                     [lights addMessage:led];
+                                 }
+                             } else {
+                                 PHLight *light = [[DPHueManager sharedManager] getLightStatusForLightId:lightId];
                                  //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
                                  DConnectMessage *led = [DConnectMessage new];
                                  [DConnectLightProfile setLightId:light.identifier target:led];
@@ -97,7 +113,10 @@
                               [response setErrorToEmptyServiceId];
                               return YES;
                           }
-                          
+                          NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                          if (arr.count == 3) {
+                              lightId = arr[2];
+                          }
                           // lightIdが省略された場合はデフォルトを使用
                           if (!lightId) {
                               lightId = [self getDefaultLightId];
@@ -146,7 +165,10 @@
                              [response setErrorToEmptyServiceId];
                              return YES;
                          }
-                         
+                         NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                         if (arr.count == 3) {
+                             lightId = arr[2];
+                         }
                          // lightIdが省略された場合はデフォルトを使用
                          if (!lightId) {
                              lightId = [self getDefaultLightId];
@@ -192,7 +214,10 @@
                                 [response setErrorToEmptyServiceId];
                                 return YES;
                             }
-
+                            NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                            if (arr.count == 3) {
+                                lightId = arr[2];
+                            }
                             // lightIdが省略された場合はデフォルトを使用
                             if (!lightId) {
                                 lightId = [self getDefaultLightId];
