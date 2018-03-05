@@ -32,6 +32,12 @@ typedef struct DPQuaternion_ {
 typedef struct DPGyroData_ {
     double x, y, z;
 } DPGyroData;
+//LEDは色を変えられる
+extern NSString *const kDPSpheroLED;
+extern NSString *const kDPSpheroLEDName;
+//Calibrationは色を変えられない
+extern NSString *const kDPSpheroCalibration;
+extern NSString *const kDPSpheroCalibrationName;
 
 /*!
  @brief Spheroのセンサー処理用デリゲート。
