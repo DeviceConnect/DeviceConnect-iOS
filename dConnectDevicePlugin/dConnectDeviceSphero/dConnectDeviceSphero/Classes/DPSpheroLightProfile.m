@@ -260,9 +260,9 @@
                 return YES;
             }
             
-            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue]];
+            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue] / 255.];
         } else {
-            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue]];
+            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue] / 255.];
         }
         if (flashing.count>0) {
             // 点滅

@@ -187,7 +187,7 @@ NSMutableDictionary *deviceList;
                 [service setOnline: isOnline];
             }
             NSString *serviceIdForLED = [NSString stringWithFormat:@"%@_%@", serviceId, kDPSpheroLED];
-            NSLog(@"update light name:%@", serviceIdForLED);
+
 
             DConnectService *led = [self.serviceProvider service: serviceIdForLED];
             if (led) {
@@ -202,7 +202,7 @@ NSMutableDictionary *deviceList;
             }
             NSString *serviceIdForCalibration = [NSString stringWithFormat:@"%@_%@", serviceId, kDPSpheroCalibration];
             DConnectService *calibration = [self.serviceProvider service: serviceIdForCalibration];
-            NSLog(@"update light name:%@", serviceIdForCalibration);
+
             if (calibration) {
                 [calibration setOnline: isOnline];
             } else {
