@@ -9,6 +9,7 @@
 
 #import "DPHueManager.h"
 #import "DPHueService.h"
+#import "DPHueLightService.h"
 #import "DPHueReachability.h"
 #import "DPHueDeviceRepeatExecutor.h"
 
@@ -177,6 +178,17 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     return cache.lights;
 }
 
+//ライトステータスの取得
+-(PHLight *)getLightStatusForLightId:(NSString *)lightId
+{
+    PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
+    for (PHLight *light in cache.lights.allValues) {
+        if ([light.identifier isEqualToString:lightId]) {
+            return light;
+        }
+    }
+    return nil;
+}
 //ライトの点灯
 -(BOOL)setLightOnWithResponse:(DConnectResponseMessage*)response
                       lightId:(NSString*)lightId
@@ -878,14 +890,30 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         // ServiceProviderに未登録のデバイスが見つかったら追加登録する。登録済ならそのサービスをオンラインにする
         if (bridgesFound.count > 0) {
             for (id key in [bridgesFound keyEnumerator]) {
-                NSString *serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
+                NSString *serviceId = [NSString stringWithFormat:@"%@_%@", bridgesFound[key], key];
                 DConnectService *service = [self.mServiceProvider service: serviceId];
                 if (service) {
                     [service setOnline: YES];
                 } else {
-                    service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key] plugin: [self plugin]];
+                    service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:bridgesFound[key] plugin: [self plugin]];
                     [self.mServiceProvider addService: service];
                     [service setOnline:YES];
+                }
+                NSDictionary *lightList = [self getLightStatus];
+                for (PHLight *light in lightList.allValues) {
+                    NSString *serviceId = [NSString stringWithFormat:@"%@_%@_%@",bridgesFound[key],key,light.identifier];
+                    DConnectService *service = [self.mServiceProvider service: serviceId];
+                    if (service) {
+                        [service setOnline: YES];
+                    } else {
+                        service = [[DPHueLightService alloc] initWithBridgeKey:key
+                                                                   bridgeValue:bridgesFound[key]
+                                                                       lightId:light.identifier
+                                                                     lightName:light.name
+                                                                        plugin:[self plugin]];
+                        [self.mServiceProvider addService: service];
+                        [service setOnline:YES];
+                    }
                 }
             }
             

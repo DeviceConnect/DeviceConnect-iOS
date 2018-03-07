@@ -13,7 +13,14 @@
 #import <RobotKit/RobotKit.h>
 #import <DConnectSDK/DConnectService.h>
 #import "DPSpheroService.h"
+#import "DPSpheroLightService.h"
 
+//LEDは色を変えられる
+NSString *const kDPSpheroLED = @"1";
+NSString *const kDPSpheroLEDName = @"Sphero LED";
+//Calibrationは色を変えられない
+NSString *const kDPSpheroCalibration = @"2";
+NSString *const kDPSpheroCalibrationName = @"Sphero CalibrationLED";
 
 // センサー監視間隔（400Hz/kSensorDivisor）
 static int const kSensorDivisor = 40;
@@ -178,6 +185,33 @@ NSMutableDictionary *deviceList;
                                                               plugin: self.plugin];
                 [self.serviceProvider addService: service];
                 [service setOnline: isOnline];
+            }
+            NSString *serviceIdForLED = [NSString stringWithFormat:@"%@_%@", serviceId, kDPSpheroLED];
+
+
+            DConnectService *led = [self.serviceProvider service: serviceIdForLED];
+            if (led) {
+                [led setOnline: isOnline];
+            } else {
+                led = [[DPSpheroLightService alloc] initWithServiceId:serviceId
+                                                              lightId:kDPSpheroLED
+                                                          deviceName:kDPSpheroLEDName
+                                                              plugin: self.plugin];
+                [self.serviceProvider addService: led];
+                [led setOnline: isOnline];
+            }
+            NSString *serviceIdForCalibration = [NSString stringWithFormat:@"%@_%@", serviceId, kDPSpheroCalibration];
+            DConnectService *calibration = [self.serviceProvider service: serviceIdForCalibration];
+
+            if (calibration) {
+                [calibration setOnline: isOnline];
+            } else {
+                calibration = [[DPSpheroLightService alloc] initWithServiceId:serviceId
+                                                                      lightId:kDPSpheroCalibration
+                                                           deviceName:kDPSpheroCalibrationName
+                                                               plugin: self.plugin];
+                [self.serviceProvider addService: calibration];
+                [calibration setOnline: isOnline];
             }
         }
     }

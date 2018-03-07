@@ -155,7 +155,13 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 -(NSDictionary*)getLightStatus;
 
+/*!
+ @brief 指定されたライトIDのライトステータスの取得。
+ @param[in] lightId ステータスを取得したいライトのID。
+ @retval PHLightオブジェクト
+ */
 
+-(PHLight *)getLightStatusForLightId:(NSString *)lightId;
 
 /*!
  @brief ライトグループステータスの取得。
@@ -322,5 +328,9 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @brief Hueのブリッジの読み込み。
  */
 -(void)readBridgeList;
-
+/*!
+ @brief Hueプラグインが管理するサービスのオンライン・オフラインを切り替える。
+ @param[in] onlineForSet YES:オンラインに切り替える NO:オフラインに切り替える
+ */
+- (void)updateManageServices : (BOOL) onlineForSet;
 @end

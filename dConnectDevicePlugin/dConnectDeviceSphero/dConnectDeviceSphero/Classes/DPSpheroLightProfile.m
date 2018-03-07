@@ -12,12 +12,6 @@
 #import "DPSpheroManager.h"
 #import "DPSpheroDeviceRepeatExecutor.h"
 
-//LEDは色を変えられる
-static NSString *const SpheroLED = @"1";
-static NSString *const SpheroLEDName = @"Sphero LED";
-//Calibrationは色を変えられない
-static NSString *const SpheroCalibration = @"2";
-static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 @implementation DPSpheroLightProfile {
     DPSpheroDeviceRepeatExecutor *_flashingExecutor;
@@ -41,7 +35,12 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                              [response setErrorToEmptyServiceId];
                              return YES;
                          }
-                         
+                         NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                         NSString *lightId = nil;
+                         if (arr.count == 2) {
+                             lightId = arr[1];
+                             serviceId = arr[0];
+                         }
                          // 接続確認
                          CONNECT_CHECK();
                          
@@ -50,20 +49,22 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                          DConnectMessage *calibration = [DConnectMessage new];
                          
                          [response setResult:DConnectMessageResultTypeOk];
-                         
-                         // 全体の色を変えるためのID
-                         [DConnectLightProfile setLightId:SpheroLED target:led];
-                         [DConnectLightProfile setLightName:SpheroLEDName target:led];
-                         [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].isLEDOn target:led];
-                         [DConnectLightProfile setLightConfig:@"" target:led];
-                         [lights addMessage:led];
-
-                         // CalibrationのライトをつけるためのID(ON/OFFのみ)
-                         [DConnectLightProfile setLightId:SpheroCalibration target:calibration];
-                         [DConnectLightProfile setLightName:SpheroCalibrationName target:calibration];
-                         [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].calibrationLightBright>0 target:calibration];
-                         [DConnectLightProfile setLightConfig:@"" target:calibration];
-                         [lights addMessage:calibration];
+                         if (!lightId || (lightId && [lightId isEqualToString:kDPSpheroLED])) {
+                             // 全体の色を変えるためのID
+                             [DConnectLightProfile setLightId:kDPSpheroLED target:led];
+                             [DConnectLightProfile setLightName:kDPSpheroLEDName target:led];
+                             [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].isLEDOn target:led];
+                             [DConnectLightProfile setLightConfig:@"" target:led];
+                             [lights addMessage:led];
+                         }
+                         if (!lightId || (lightId && [lightId isEqualToString:kDPSpheroCalibration])) {
+                             // CalibrationのライトをつけるためのID(ON/OFFのみ)
+                             [DConnectLightProfile setLightId:kDPSpheroCalibration target:calibration];
+                             [DConnectLightProfile setLightName:kDPSpheroCalibrationName target:calibration];
+                             [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].calibrationLightBright>0 target:calibration];
+                             [DConnectLightProfile setLightConfig:@"" target:calibration];
+                             [lights addMessage:calibration];
+                         }
                          
                          [DConnectLightProfile setLights:lights target:response];
                          
@@ -81,7 +82,11 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                           NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
                           NSString *color = [DConnectLightProfile colorFromRequest: request];
                           NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
-                          
+                          NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                          if (arr.count == 2) {
+                              lightId = arr[1];
+                              serviceId = arr[0];
+                          }
                           return [weakSelf postLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
                       }];
         
@@ -106,17 +111,16 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                              [response setErrorToInvalidRequestParameter];
                              return YES;
                          }
-                         
-                         if (!serviceId) {
-                             [response setErrorToEmptyServiceId];
-                             return YES;
-                         }
-                         
+
                          if (name == nil || [name isEqualToString:@""]) {
                              [response setErrorToInvalidRequestParameterWithMessage:@"name is invalid."];
                              return YES;
                          }
-                         
+                         NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                         if (arr.count == 2) {
+                             serviceId = arr[0];
+                             lightId = arr[1];
+                         }
                          return [weakSelf postLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
                      }];
         
@@ -133,19 +137,24 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                                 [response setErrorToEmptyServiceId];
                                 return YES;
                             }
-
+                            NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
+                            if (arr.count == 2) {
+                                serviceId = arr[0];
+                                lightId = arr[1];
+                            }
+                            
                             // lightIdが省略された場合には、SpherorLEBを使用する
                             if (!lightId) {
-                                lightId = SpheroLED;
+                                lightId = kDPSpheroLED;
                             }
                             
                             // 接続確認
                             CONNECT_CHECK();
                             
-                            if ([lightId isEqualToString:SpheroCalibration]) {
+                            if ([lightId isEqualToString:kDPSpheroCalibration]) {
                                 // キャリブレーションライト消灯。
                                 [[DPSpheroManager sharedManager] setCalibrationLightBright:0 serviceId:serviceId];
-                            } else if ([lightId isEqualToString:SpheroLED]) {
+                            } else if ([lightId isEqualToString:kDPSpheroLED]) {
                                 // LED消灯
                                 [[DPSpheroManager sharedManager] setLEDLightColor:[UIColor blackColor] serviceId:serviceId];
                             } else {
@@ -188,15 +197,15 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
     
     // lightIdが省略された場合には、SpherorLEDを使用する
     if (!lightId) {
-        lightId = SpheroLED;
+        lightId = kDPSpheroLED;
     }
     
     // 接続確認
     CONNECT_CHECK();
     
     // lightId確認
-    if (![lightId isEqualToString:SpheroCalibration] &&
-        ![lightId isEqualToString:SpheroLED]) {
+    if (![lightId isEqualToString:kDPSpheroCalibration] &&
+        ![lightId isEqualToString:kDPSpheroLED]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"lightId is Invalid."];
         return YES;
     }
@@ -209,7 +218,7 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
             return YES;
         }
     
-    if ([lightId isEqualToString:SpheroCalibration]) {
+    if ([lightId isEqualToString:kDPSpheroCalibration]) {
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
         if (flashing.count > 0) {
             // 点滅
@@ -222,7 +231,7 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
             // 点灯
             [[DPSpheroManager sharedManager] setCalibrationLightBright:[brightness doubleValue] serviceId:serviceId];
         }
-    } else if ([lightId isEqualToString:SpheroLED]) {
+    } else if ([lightId isEqualToString:kDPSpheroLED]) {
         // LED点灯
         UIColor *ledColor;
         if (color) {
@@ -251,9 +260,9 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                 return YES;
             }
             
-            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue]];
+            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue] / 255.];
         } else {
-            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue]];
+            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue] / 255.];
         }
         if (flashing.count>0) {
             // 点滅

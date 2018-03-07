@@ -34,6 +34,7 @@
 /* Begin PBXBuildFile section */
 		8EB854541D4240950035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854521D4240950035C0DC /* dconnect_icon_off.png */; };
 		8EB854551D4240950035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854531D4240950035C0DC /* dconnect_icon.png */; };
+		AB00F28A204AF8AC00D9BF8A /* DPSpheroLightService.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F289204AF8AC00D9BF8A /* DPSpheroLightService.m */; };
 		AB73D6A41F7CFCCE00B77A10 /* DPGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB73D6721F7CFCA600B77A10 /* DPGuideViewController.m */; };
 		AB73D6A51F7CFCCF00B77A10 /* DPSpheroDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB73D6741F7CFCA600B77A10 /* DPSpheroDeviceOrientationProfile.m */; };
 		AB73D6A61F7CFCCF00B77A10 /* DPSpheroDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB73D6761F7CFCA600B77A10 /* DPSpheroDevicePlugin.m */; };
@@ -99,6 +100,8 @@
 /* Begin PBXFileReference section */
 		8EB854521D4240950035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
 		8EB854531D4240950035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
+		AB00F288204AF8AC00D9BF8A /* DPSpheroLightService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPSpheroLightService.h; sourceTree = "<group>"; };
+		AB00F289204AF8AC00D9BF8A /* DPSpheroLightService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPSpheroLightService.m; sourceTree = "<group>"; };
 		AB3520AF1BACDE6A0010FF55 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AB3520B01BACDE6A0010FF55 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AB39FEBD1B4E19C000A8139E /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RobotKit.framework; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 				AB73D67F1F7CFCA600B77A10 /* DPSpheroSensorProfile.m */,
 				AB73D6801F7CFCA600B77A10 /* DPSpheroService.h */,
 				AB73D6811F7CFCA600B77A10 /* DPSpheroService.m */,
+				AB00F288204AF8AC00D9BF8A /* DPSpheroLightService.h */,
+				AB00F289204AF8AC00D9BF8A /* DPSpheroLightService.m */,
 				AB73D6821F7CFCA600B77A10 /* DPSpheroSettingViewController.h */,
 				AB73D6831F7CFCA600B77A10 /* DPSpheroSettingViewController.m */,
 				AB73D6841F7CFCA600B77A10 /* DPSpheroSystemProfile.h */,
@@ -505,6 +510,7 @@
 			files = (
 				AB73D6A41F7CFCCE00B77A10 /* DPGuideViewController.m in Sources */,
 				AB73D6A51F7CFCCF00B77A10 /* DPSpheroDeviceOrientationProfile.m in Sources */,
+				AB00F28A204AF8AC00D9BF8A /* DPSpheroLightService.m in Sources */,
 				AB73D6A61F7CFCCF00B77A10 /* DPSpheroDevicePlugin.m in Sources */,
 				AB73D6A71F7CFCCF00B77A10 /* DPSpheroDriveControllerProfile.m in Sources */,
 				AB73D6A81F7CFCCF00B77A10 /* DPSpheroLightProfile.m in Sources */,
