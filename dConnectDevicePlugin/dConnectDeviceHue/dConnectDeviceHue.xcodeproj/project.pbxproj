@@ -46,6 +46,7 @@
 		64BB087D19C335EE00C66903 /* HueSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */; };
 		8EB854441D423FDD0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */; };
 		8EB854451D423FDD0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854431D423FDD0035C0DC /* dconnect_icon.png */; };
+		AB00F287204AB53E00D9BF8A /* DPHueLightService.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F286204AB53E00D9BF8A /* DPHueLightService.m */; };
 		AB08A0F019920F8F0024C996 /* hue001.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E719920C860024C996 /* hue001.png */; };
 		AB08A0F119920F8F0024C996 /* hue002.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E819920C860024C996 /* hue002.png */; };
 		AB08A0F219920F8F0024C996 /* hue003.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E919920C860024C996 /* hue003.png */; };
@@ -120,6 +121,8 @@
 		64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HueSDK_iOS.framework; path = "deps/PhilipsHueSDK-iOS-OSX/HueSDK_iOS.framework"; sourceTree = "<group>"; };
 		8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
 		8EB854431D423FDD0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
+		AB00F285204AB53E00D9BF8A /* DPHueLightService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHueLightService.h; sourceTree = "<group>"; };
+		AB00F286204AB53E00D9BF8A /* DPHueLightService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHueLightService.m; sourceTree = "<group>"; };
 		AB08A0E719920C860024C996 /* hue001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue001.png; sourceTree = "<group>"; };
 		AB08A0E819920C860024C996 /* hue002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue002.png; sourceTree = "<group>"; };
 		AB08A0E919920C860024C996 /* hue003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue003.png; sourceTree = "<group>"; };
@@ -314,6 +317,8 @@
 				D6C860271D390C0300232EEF /* DPHueService.m */,
 				D6D1727F1D647B7200444337 /* DPHueReachability.h */,
 				D6D172801D647B7200444337 /* DPHueReachability.m */,
+				AB00F285204AB53E00D9BF8A /* DPHueLightService.h */,
+				AB00F286204AB53E00D9BF8A /* DPHueLightService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -554,6 +559,7 @@
 				64A3E56119B9393400B83DAF /* DPHueModelController.m in Sources */,
 				64A3E56419B93AE400B83DAF /* DPHueSettingViewControllerBase.m in Sources */,
 				64278B6A19B8AEA800AC54E5 /* DPHueViewController.m in Sources */,
+				AB00F287204AB53E00D9BF8A /* DPHueLightService.m in Sources */,
 				64278B6119B8ABAB00AC54E5 /* DPHueSettingViewController1.m in Sources */,
 				64278B6719B8AC6C00AC54E5 /* DPHueSettingViewController3.m in Sources */,
 				D6D172811D647B7200444337 /* DPHueReachability.m in Sources */,

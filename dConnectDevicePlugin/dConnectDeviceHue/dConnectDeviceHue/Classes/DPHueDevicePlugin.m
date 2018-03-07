@@ -42,7 +42,10 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
             [notificationCenter addObserver:_self selector:@selector(enterForeground)
                        name:UIApplicationWillEnterForegroundNotification
                      object:application];
-            
+            [notificationCenter addObserver:_self selector:@selector(enterForeground)
+                                       name:UIApplicationDidBecomeActiveNotification
+                                     object:application];
+
             [notificationCenter addObserver:_self selector:@selector(enterBackground)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
@@ -57,6 +60,7 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
     
+    [notificationCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
 }
@@ -67,10 +71,38 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
     [[DPHueManager sharedManager] saveBridgeList];
 }
 /*!
- @brief フォアグラウンドに戻ったときの処理
+ @brief フォアグラウンドに戻ったときの処理。
+        すでにHueブリッジと認証されている場合、プロセスキル後にForegroundになった場合自動で再接続を行う。
  */
 - (void) enterForeground {
-    [[DPHueManager sharedManager] readBridgeList];
+    __weak typeof(self) _self = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[DPHueManager sharedManager] initHue];
+    [[DPHueManager sharedManager] searchBridgeWithCompletion:^(NSDictionary *bridgesFound) {
+        for (id key in [bridgesFound keyEnumerator]) {
+            NSString *ipAddress = bridgesFound[key];
+            NSString *macAddress = key;
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+            [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:ipAddress
+                                                 bridgeId:macAddress
+                                                 receiver:_self localConnectionSuccessSelector:@selector(doAuthSuccess)
+                                        noLocalConnection:nil
+                                         notAuthenticated:nil];
+            });
+        }
+    }];
+    });
+}
+
+- (void)doAuthSuccess
+{
+    [[DPHueManager sharedManager] disableHeartbeat];
+    [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+    [[DPHueManager sharedManager] deallocHueSDK];
+    NSDictionary *lights = [[DPHueManager sharedManager] getLightStatus];
+    
+    [[DPHueManager sharedManager] updateManageServices:(lights.count > 0)];
 }
 
 - (NSString*)iconFilePath:(BOOL)isOnline

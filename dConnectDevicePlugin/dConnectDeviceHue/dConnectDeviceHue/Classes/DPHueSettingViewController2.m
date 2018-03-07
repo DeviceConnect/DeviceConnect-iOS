@@ -101,13 +101,7 @@
     [manager disableHeartbeat];
     _statusLabel.text = @"ライト検索中!!";
     _authorizeStateLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeAuthorized");
-    [manager searchLightWithCompletion:^(NSArray *errors) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self  initHueSdk];
-        });
-    }];
-
-
+    [self  initHueSdk];
 }
 
 - (void)initHueSdk
