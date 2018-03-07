@@ -383,7 +383,7 @@
                                                                     preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * textField) {
         textField.placeholder = @"URL";
-        textField.text = @"https://raw.githubusercontent.com/TakayukiHoshi1984/DeviceConnect-iOS/modify_https_server/dConnectSDK/dConnectSDKForIOS/DConnectSDK/Resources/dconnect-ios.crt";
+        textField.text = @"https://raw.githubusercontent.com/TakayukiHoshi1984/DeviceConnect-iOS/master/dConnectSDK/dConnectSDKForIOS/DConnectSDK/Resources/dconnect-ios.crt";
     }];
     UIAlertAction * cancelAction =
     [UIAlertAction actionWithTitle:@"キャンセル"
