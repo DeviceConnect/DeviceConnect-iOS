@@ -160,13 +160,25 @@
             break;
         case SecurityCellTypeSSL:
             [DConnectManager sharedManager].settings.useSSL = isOn;
-            [[DConnectManager sharedManager] stop];
-            [[DConnectManager sharedManager] start];
+            [self restartManager];
         default:
             break;
     }
 }
 
+- (void)restartManager
+{
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr stop];
+    int count = 10;
+    do {
+        usleep(50 * 1000); //50ms
+        if ([mgr start]) {
+            return;
+        }
+        count--;
+    } while (count > 0);
+}
 
 ///スイッチの状態を保存
 - (void)updateSwitchState
