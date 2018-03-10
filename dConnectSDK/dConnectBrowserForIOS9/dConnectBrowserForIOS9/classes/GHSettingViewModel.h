@@ -55,4 +55,6 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 - (void)didSelectedRow:(NSIndexPath *)indexPath;
 - (BOOL)switchState:(SecurityCellType)type;
 
+-(void)restartManager;
+
 @end
