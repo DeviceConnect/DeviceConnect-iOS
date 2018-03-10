@@ -59,6 +59,7 @@
 		30A0A33919A5952D00822B73 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A0A33819A5952D00822B73 /* CoreFoundation.framework */; };
 		30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1EBDE19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m */; };
 		6682B8D719CA81E40039DCAA /* irkit09.png in Resources */ = {isa = PBXBuildFile; fileRef = 6682B8D619CA81E40039DCAA /* irkit09.png */; };
+		6BCBFE1F2053F84000E5541E /* dConnectDeviceIRKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30A0A33219A5932700822B73 /* dConnectDeviceIRKit-Info.plist */; };
 		8EB8544C1D42403E0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544A1D42403E0035C0DC /* dconnect_icon_off.png */; };
 		8EB8544D1D42403E0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544B1D42403E0035C0DC /* dconnect_icon.png */; };
 		AB03424519BD790A00B1967E /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB03424719BD790A00B1967E /* Storyboard_iPad.storyboard */; };
@@ -658,6 +659,7 @@
 				AB4B690819B46FC9009939C9 /* irkit05.png in Resources */,
 				8EB8544C1D42403E0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB4B690919B46FC9009939C9 /* irkit06.png in Resources */,
+				6BCBFE1F2053F84000E5541E /* dConnectDeviceIRKit-Info.plist in Resources */,
 				D63BB8C31DA2068000892E5E /* remotecontroller.json in Resources */,
 				AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */,
 				AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */,
