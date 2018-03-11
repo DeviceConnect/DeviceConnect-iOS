@@ -25,6 +25,16 @@
 
 @implementation DPIRKitSettingViewController
 
+- (void) transitToNextFromViewController:(UIViewController *)viewController
+{
+    UIViewController *nextPage = [_modelController pageViewController:_pageViewController
+                                    viewControllerAfterViewController:viewController];
+    NSArray *viewControllers = @[nextPage];
+    
+    [_pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:YES completion:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
