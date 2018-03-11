@@ -10,9 +10,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class DPIRKitSettingViewController;
+
 @interface DPIRKitModelController : NSObject<UIPageViewControllerDataSource>
 
-- (id) initWithRootViewController:(UIViewController *)root;
+- (id) initWithRootViewController:(DPIRKitSettingViewController *)root;
 
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(UIViewController *)viewController;

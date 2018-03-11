@@ -11,4 +11,6 @@
 
 @interface DPIRKitSettingViewController : UIViewController
 
+- (void) transitToNextFromViewController:(UIViewController *)viewController;
+
 @end

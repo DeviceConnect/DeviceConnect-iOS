@@ -9,6 +9,7 @@
 
 #import "DPIRKitModelController.h"
 #import "DPIRKitPageViewController.h"
+#import "DPIRKitSettingViewController.h"
 
 @interface DPIRKitModelController()
 {
@@ -21,7 +22,7 @@
 
 @implementation DPIRKitModelController
 
-- (id) initWithRootViewController:(UIViewController *)root {
+- (id) initWithRootViewController:(DPIRKitSettingViewController *)root {
     self = [super init];
     
     if (self) {
