@@ -88,7 +88,27 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
         [response setErrorToIllegalDeviceStateWithMessage:@"Sony's camera is not ready."];
         return YES;
     }
+    if (!direction ||!movement) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+    if (![direction isEqualToString:@"in"]) {
+        if (![direction isEqualToString:@"out"]) {
+            [response setErrorToInvalidRequestParameter];
+            return YES;
+        }
+    }
     
+    if (![movement isEqualToString:@"in-start"]) {
+        if (![movement isEqualToString:@"in-stop"]) {
+            if (![movement isEqualToString:@"1shot"]) {
+                if (![movement isEqualToString:@"max"]) {
+                    [response setErrorToInvalidRequestParameter];
+                    return YES;
+                }
+            }
+        }
+    }
     // サポートしていない
     if (![manager isSupportedZoom]) {
         [response setErrorToNotSupportAttribute];
