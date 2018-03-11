@@ -9,6 +9,7 @@
 
 #import "DPIRKitPageViewController.h"
 #import "DPIRKitConst.h"
+#import "DPIRKitSettingViewController.h"
 
 @interface DPIRKitPageViewController (){
     NSLayoutConstraint *_space;
@@ -106,6 +107,10 @@
 - (void) setScrollEnable:(BOOL)enable closeBtn:(BOOL)closeEnable {
     self.root.view.userInteractionEnabled = enable;
     self.root.navigationItem.leftBarButtonItem.enabled = closeEnable;
+}
+
+- (void) transitToNext {
+    [self.root transitToNextFromViewController:self];
 }
 
 @end

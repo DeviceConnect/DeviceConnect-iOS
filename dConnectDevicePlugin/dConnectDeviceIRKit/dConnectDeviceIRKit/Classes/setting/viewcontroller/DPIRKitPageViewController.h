@@ -9,12 +9,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class DPIRKitSettingViewController;
+
 @interface DPIRKitPageViewController : UIViewController
 
 @property (nonatomic) NSUInteger index;
-@property (nonatomic, weak) UIViewController *root;
+@property (nonatomic, weak) DPIRKitSettingViewController *root;
 
 - (void) setScrollEnable:(BOOL)enable;
 - (void) setScrollEnable:(BOOL)enable closeBtn:(BOOL)closeEnable;
+
+- (void) transitToNext;
 
 @end

@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
     DPIRKitSelectionStateGotDeviceKey,
     DPIRKitSelectionStateWaitingIRKitSSID,
     DPIRKitSelectionStateCheckingIRKit,
+    DPIRKitSelectionStatePrepared,
 };
 
 @interface DPIRKitWiFiSelectionGuideViewController ()
@@ -66,6 +67,8 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
                                           } else if (_state == DPIRKitSelectionStateCheckingIRKit) {
                                               _state = DPIRKitSelectionStateWaitingIRKitSSID;
                                               [self setScrollEnable:NO closeBtn:YES];
+                                          } else if (_state == DPIRKitSelectionStatePrepared) {
+                                              [self transitToNext];
                                           } else {
                                               [self dismissViewControllerAnimated:YES completion:nil];
                                           }
@@ -204,7 +207,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
                  if (isIRKit) {
                      
                      @synchronized (_self) {
-                         _state = DPIRKitSelectionStateIdling;
+                         _state = DPIRKitSelectionStatePrepared;
                      }
                      [_self showAlertWithTileKey:@"AlertTitlePrepared"
                                      messsageKey:@"AlertMessageIsIRKit"

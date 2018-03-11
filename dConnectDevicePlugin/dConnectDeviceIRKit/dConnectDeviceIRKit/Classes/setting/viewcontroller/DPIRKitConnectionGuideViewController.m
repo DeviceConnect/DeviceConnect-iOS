@@ -167,7 +167,6 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
                                  message:DPIRLocalizedString(_bundle, messageKey)
                                  preferredStyle:UIAlertControllerStyleAlert];
     
-    
     __weak typeof(self) _self = self;
     UIAlertAction* closeButton = [UIAlertAction
                                 actionWithTitle:DPIRLocalizedString(_bundle, closeButtonKey)
@@ -189,7 +188,6 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
     
     [alert addAction:closeButton];
     
-    [self presentViewController:alert animated:YES completion:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_self stopLoading];
         [_self presentViewController:alert animated:YES completion:nil];
