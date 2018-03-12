@@ -217,7 +217,9 @@
             [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
             return YES;
         }
-    
+    if (!brightness) {
+        brightness = @(1.0);
+    }
     if ([lightId isEqualToString:kDPSpheroCalibration]) {
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
         if (flashing.count > 0) {
@@ -260,9 +262,9 @@
                 return YES;
             }
             
-            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue] / 255.];
+            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue]];
         } else {
-            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue] / 255.];
+            ledColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:[brightness doubleValue]];
         }
         if (flashing.count>0) {
             // 点滅
