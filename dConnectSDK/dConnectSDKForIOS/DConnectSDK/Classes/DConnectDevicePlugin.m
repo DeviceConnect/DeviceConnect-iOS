@@ -41,7 +41,9 @@
 - (id) initWithObject: (id) object {
     self = [super init];
     if (self) {
-        
+        if (object == nil) {
+            object = self;
+        }
         // デバイスプラグインデータ設定
         CipherSignatureProc *md5Proc = [CipherSignatureFactory getInstance: CIPHER_SIGNATURE_KIND_MD5];
         self.useLocalOAuth = YES;

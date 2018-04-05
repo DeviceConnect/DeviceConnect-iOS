@@ -83,7 +83,7 @@
  @brief 任意のオブジェクトを指定してServiceManagerを初期化する。
  オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
  
- @param[in] object DConnectDevicePluginもしくはDConnectManagerのインスタンス
+ @param[in] object DConnectDevicePluginもしくはDConnectManagerのインスタンス。nilを渡した場合はこのプラグインインスタンス自身(self)が使われる。
  
  @retval ServiceManagerインスタンス。
  */
