@@ -38,7 +38,6 @@ The framework and bundle are generated in `DeviceConnect-iOS-master / dConnectSD
 | Project Name|Content  |
 |:-----------|:---------|
 |dConnectDeviceAllJoyn|Device Plug-in for AllJoyn.|
-|dConnectDeviceAWSIoT|Device Plug-in for AWSIoT|
 |dConnectDeviceChromeCast|Device Plug-in for Chromecast.|
 |dConnectDeviceHitoe|Device Plug-in for Hitoe.|
 |dConnectDeviceHost|Device Plug-in for iOS.|
@@ -99,7 +98,6 @@ Basically, you work with start-up of dConnectBrowser only, such as when you make
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
 * [Theta](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Theta-Build)
 * [Hitoe](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hitoe-Build)
-* [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 
 # Xcode version to support
@@ -118,4 +116,3 @@ Device plug-ins DeviceConnect does not support the build execution other than Xc
 |AllJoyn|8.0|
 |Linking|8.0|
 |Hitoe|7.2.1 or under|
-|AWSIoT|8.0|
