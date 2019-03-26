@@ -1,4 +1,4 @@
-Click [here](readme.en.md) for description of English. 
+Click [here](readme.en.md) for description of English.
 
 # DeviceConnect-iOS について
 
@@ -36,7 +36,6 @@ $ xcodebuild -scheme DConnectSDK_framework -configuration Release
 | プロジェクト名|内容  |
 |:-----------|:---------|
 |dConnectDeviceAllJoyn|AllJoynのプラグイン。|
-|dConnectDeviceAWSIoT|AWSIoTのプラグイン。|
 |dConnectDeviceChromeCast|Chromecastのプラグイン。|
 |dConnectDeviceHitoe|Hitoeのプラグイン。|
 |dConnectDeviceHost|iOS端末のプラグイン。|
@@ -91,7 +90,6 @@ $ doxygen Doxyfile
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
 * [Theta](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Theta-Build)
 * [Hitoe](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hitoe-Build)
-* [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 # サポートするXcodeのバージョン
 DeviceConnectのプラグインは、下記に記すXcode以外でのビルド・実行をサポートしていません。
@@ -109,4 +107,3 @@ DeviceConnectのプラグインは、下記に記すXcode以外でのビルド�
 |AllJoyn|8.0|
 |Linking|8.0|
 |Hitoe|7.2.1以下|
-|AWSIoT|8.0|
