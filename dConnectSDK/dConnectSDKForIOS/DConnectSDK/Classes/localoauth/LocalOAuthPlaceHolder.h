@@ -1,5 +1,5 @@
 //
-//  LocalOAuthDummy.h
+//  LocalOAuthPlaceHolder.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -10,13 +10,13 @@
 #import <Foundation/Foundation.h>
 
 /** ダミー値(RedirectURI). */
-extern NSString *const DUMMY_REDIRECTURI;
+extern NSString *const EXAMPLE_REDIRECTURI;
 
 /** ダミー値(OriginalRef). */
-extern NSString *const DUMMY_ORIGINALREF;
+extern NSString *const EXAMPLE_ORIGINALREF;
 
 /** ダミー値(Reference). */
-extern NSString *const DUMMY_REFERENCE;
+extern NSString *const EXAMPLE_REFERENCE;
 
 /** ダミー値(Scope). */
 extern NSString *const SCOPE1;

@@ -26,7 +26,7 @@
                             @[@(DeviceCellTypeList)],
                             @[@(SecurityCellTypeAvailability),
                               @(SecurityCellTypeDeleteAccessToken),
-                              @(SecurityCellTypeOriginWhitelist),
+                              @(SecurityCellTypeOriginAllowlist),
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
@@ -109,8 +109,8 @@
                     return @"Manager名の表示";
                 case SecurityCellTypeDeleteAccessToken:
                     return @"アクセストークン削除";
-                case SecurityCellTypeOriginWhitelist:
-                    return @"Originホワイトリスト管理";
+                case SecurityCellTypeOriginAllowlist:
+                    return @"Origin許可リスト管理";
                 case SecurityCellTypeOriginBlock:
                     return @"Originブロック機能";
                 case SecurityCellTypeLocalOAuth:
@@ -212,8 +212,8 @@
                 case SecurityCellTypeDeleteAccessToken:
                     [DConnectUtil showAccessTokenList];
                     break;
-                case SecurityCellTypeOriginWhitelist:
-                    [DConnectUtil showOriginWhitelist];
+                case SecurityCellTypeOriginAllowlist:
+                    [DConnectUtil showOriginAllowlist];
                     break;
                 case SecurityCellTypeRootCertInstall:
                     [self showRootCertInstallDialog];

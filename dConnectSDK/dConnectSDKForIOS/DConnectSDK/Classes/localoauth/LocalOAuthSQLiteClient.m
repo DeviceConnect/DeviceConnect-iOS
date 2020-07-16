@@ -9,7 +9,7 @@
 
 #import "LocalOAuthSQLiteClient.h"
 #import "LocalOAuthUtils.h"
-#import "LocalOAuthDummy.h"
+#import "LocalOAuthPlaceHolder.h"
 
 @interface LocalOAuthSQLiteClient() {
     
@@ -91,12 +91,12 @@
 }
 
 - (NSArray *) redirectURIs {
-    NSArray * redirectURIs = @[DUMMY_REDIRECTURI];
+    NSArray * redirectURIs = @[EXAMPLE_REDIRECTURI];
     return redirectURIs;
 }
 
 - (void) setRedirectURIs: (NSArray *)redirectURIs {
-    /* @[DUMMY_REDIRECTURI] */
+    /* @[EXAMPLE_REDIRECTURI] */
 }
 
 - (NSArray *) properties {

@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelistUtil.m
+//  DConnectAllowlistUtil.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -8,12 +8,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DConnectWhitelistUtil.h"
-#import "DConnectWhitelistViewController.h"
+#import "DConnectAllowlistUtil.h"
+#import "DConnectAllowlistViewController.h"
 
-@implementation DConnectWhitelistUtil
+@implementation DConnectAllowlistUtil
 
-+ (void) showOriginWhitelist
++ (void) showOriginAllowlist
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSBundle *bundle = DCBundle();
@@ -29,7 +29,7 @@
                                                    bundle:bundle];
         }
         
-        UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"OriginWhitelist"];
+        UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"OriginAllowlist"];
         UIViewController *rootView;
         DCPutPresentedViewController(rootView);
         [rootView presentViewController:top animated:YES completion:nil];

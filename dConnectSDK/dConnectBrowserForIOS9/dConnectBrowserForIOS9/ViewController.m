@@ -371,7 +371,7 @@
         {
             BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
             Page* page = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
-            if ([page isKindOfClass:[GHPageModel class]] && [page.type isEqualToString: TYPE_BOOKMARK_DUMMY]) {
+            if ([page isKindOfClass:[GHPageModel class]] && [page.type isEqualToString: TYPE_BOOKMARK_EXAMPLE]) {
                 [cell setEnabled:NO];
             } else {
                 [cell setBookmark:page];

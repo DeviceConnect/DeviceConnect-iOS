@@ -10,7 +10,7 @@
 #import "DConnectEditOriginViewController.h"
 #import "DConnectOrigin.h"
 #import "DConnectOriginParser.h"
-#import "DConnectWhitelist.h"
+#import "DConnectAllowlist.h"
 
 @interface DConnectEditOriginViewController ()
 
@@ -41,11 +41,11 @@
     id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
     _originInfo.origin = origin;
     _originInfo.title = title;
-    DConnectWhitelist *whitelist = [DConnectWhitelist sharedWhitelist];
+    DConnectAllowlist *allowlist = [DConnectAllowlist sharedAllowlist];
     if (_mode == DConnectEditOriginModeChange) {
-        [whitelist updateOrigin:_originInfo];
+        [allowlist updateOrigin:_originInfo];
     } else {
-        [whitelist addOrigin:origin title:title];
+        [allowlist addOrigin:origin title:title];
     }
     return YES;
 }

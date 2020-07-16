@@ -53,8 +53,8 @@
 /* Class = "IBUIButton"; normalTitle = "Button"; ObjectID = "jyU-cg-FMy"; */
 "jyU-cg-FMy.normalTitle" = "ACCEPT";
 
-/* Class = "IBUINavigationItem"; title = "Whitelist"; ObjectID = "lRn-ip-hSq"; */
-"lRn-ip-hSq.title" = "Whitelist";
+/* Class = "IBUINavigationItem"; title = "Allowlist"; ObjectID = "lRn-ip-hSq"; */
+"lRn-ip-hSq.title" = "Allowlist";
 
 /* Class = "IBUILabel"; text = "トークンがありません"; ObjectID = "ldN-WR-bgV"; */
 "ldN-WR-bgV.text" = "No Token.";

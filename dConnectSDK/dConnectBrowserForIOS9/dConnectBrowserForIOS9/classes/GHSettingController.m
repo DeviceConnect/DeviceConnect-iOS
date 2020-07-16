@@ -155,7 +155,7 @@
         case SectionTypeSecurity:
             switch (type) {
                 case SecurityCellTypeDeleteAccessToken:
-                case SecurityCellTypeOriginWhitelist:
+                case SecurityCellTypeOriginAllowlist:
                 case SecurityCellTypeRootCertInstall:
                     return [self configureDetailCell:tableView atIndexPath: indexPath];
                     break;

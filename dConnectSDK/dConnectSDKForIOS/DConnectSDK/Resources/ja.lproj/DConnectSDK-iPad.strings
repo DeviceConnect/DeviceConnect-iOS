@@ -53,8 +53,8 @@
 /* Class = "IBUIButton"; normalTitle = "Button"; ObjectID = "jyU-cg-FMy"; */
 "jyU-cg-FMy.normalTitle" = "同意する";
 
-/* Class = "IBUINavigationItem"; title = "Whitelist"; ObjectID = "lRn-ip-hSq"; */
-"lRn-ip-hSq.title" = "ホワイトリスト";
+/* Class = "IBUINavigationItem"; title = "Allowlist"; ObjectID = "lRn-ip-hSq"; */
+"lRn-ip-hSq.title" = "許可リスト";
 
 /* Class = "IBUILabel"; text = "トークンがありません"; ObjectID = "ldN-WR-bgV"; */
 "ldN-WR-bgV.text" = "トークンがありません";

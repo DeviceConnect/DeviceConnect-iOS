@@ -168,7 +168,7 @@ NSString * const kCastViewController = @"castViewController";
   // This allows you to publish your app to the Apple App store before before publishing in Cast
   // console. Once the app is published in Cast console the cast icon will begin showing up on ios
   // devices. If an app is not published in the Cast console the cast icon will only appear for
-  // whitelisted dongles
+  // allowlisted dongles
   self.deviceScanner = [[GCKDeviceScanner alloc] initWithFilterCriteria:filterCriteria];
 
   // Always start a scan as soon as we have an application ID.

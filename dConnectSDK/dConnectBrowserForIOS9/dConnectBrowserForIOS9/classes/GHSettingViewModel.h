@@ -36,7 +36,7 @@ typedef NS_ENUM (NSInteger, DeviceCellType) {
 typedef NS_ENUM (NSInteger, SecurityCellType) {
     SecurityCellTypeAvailability,
     SecurityCellTypeDeleteAccessToken,
-    SecurityCellTypeOriginWhitelist,
+    SecurityCellTypeOriginAllowlist,
     SecurityCellTypeOriginBlock,
     SecurityCellTypeLocalOAuth,
     SecurityCellTypeOrigin,

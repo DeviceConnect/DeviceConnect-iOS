@@ -289,7 +289,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         search.profile = profile;
         search.interface = interface;
         search.attribute = attribute;
-        search.origin = @"dummy";
+        search.origin = @"";
         
         if (![_self checkParameterOfEvent:search]) {
             return;

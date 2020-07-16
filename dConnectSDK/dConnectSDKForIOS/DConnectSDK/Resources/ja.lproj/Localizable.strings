@@ -50,6 +50,6 @@
 "alert_btn_cancel" = "キャンセル";
 "alert_btn_delete" = "削除";
 
-// Whitelist
-"whitelist_ui_button_edit" = "編集";
-"whitelist_ui_button_done" = "完了";
+// Allowlist
+"allowlist_ui_button_edit" = "編集";
+"allowlist_ui_button_done" = "完了";

@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelistViewController
+//  DConnectAllowlistViewController
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DConnectWhitelistViewController : UITableViewController
+@interface DConnectAllowlistViewController : UITableViewController
 
 @property IBOutlet UIBarButtonItem *addButton;
 
