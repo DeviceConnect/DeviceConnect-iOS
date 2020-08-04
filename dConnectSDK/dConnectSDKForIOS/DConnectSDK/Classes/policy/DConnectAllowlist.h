@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelist.h
+//  DConnectAllowlist.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -10,9 +10,9 @@
 #import "DConnectOrigin.h"
 #import "DConnectOriginInfo.h"
 
-@interface DConnectWhitelist : NSObject
+@interface DConnectAllowlist : NSObject
 
-+ (DConnectWhitelist *) sharedWhitelist;
++ (DConnectAllowlist *) sharedAllowlist;
 
 - (NSArray *) origins;
 

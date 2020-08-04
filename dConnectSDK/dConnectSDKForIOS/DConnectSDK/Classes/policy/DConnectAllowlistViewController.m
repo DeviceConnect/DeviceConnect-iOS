@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelistViewController.m
+//  DConnectAllowlistViewController.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -8,13 +8,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DConnectWhitelistViewController.h"
+#import "DConnectAllowlistViewController.h"
 #import "DConnectEditOriginViewController.h"
-#import "DConnectWhitelist.h"
+#import "DConnectAllowlist.h"
 #import "DConnectOriginParser.h"
 #import "DConnectManager.h"
 
-@interface DConnectWhitelistViewController()
+@interface DConnectAllowlistViewController()
 {
     NSArray *_origins;
     NSBundle *_bundle;
@@ -24,12 +24,12 @@
 - (IBAction) handleLongPress:(id)sender;
 @end
 
-@implementation DConnectWhitelistViewController
+@implementation DConnectAllowlistViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _origins = [[DConnectWhitelist sharedWhitelist] origins];
+    _origins = [[DConnectAllowlist sharedAllowlist] origins];
     _bundle = DCBundle();
     _isEditing = NO;
     [self updateToolbar];
@@ -58,9 +58,9 @@
 {
     [self setEditing:_isEditing animated:YES];
     if (_isEditing) {
-        [self.editButton setTitle:DCLocalizedString(_bundle, @"whitelist_ui_button_done")];
+        [self.editButton setTitle:DCLocalizedString(_bundle, @"allowlist_ui_button_done")];
     } else {
-        [self.editButton setTitle:DCLocalizedString(_bundle, @"whitelist_ui_button_edit")];
+        [self.editButton setTitle:DCLocalizedString(_bundle, @"allowlist_ui_button_edit")];
     }
     [self.editButton setEnabled:(_origins.count > 0)];
 }
@@ -105,9 +105,9 @@
             forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        DConnectWhitelist *whitelist = [DConnectWhitelist sharedWhitelist];
-        [whitelist removeOrigin:_origins[indexPath.row]];
-        _origins = [whitelist origins];
+        DConnectAllowlist *allowlist = [DConnectAllowlist sharedAllowlist];
+        [allowlist removeOrigin:_origins[indexPath.row]];
+        _origins = [allowlist origins];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
         
         // 編集ボタンの表示更新
@@ -123,7 +123,7 @@
 
 - (IBAction) didEnteredNewOriginForSegue:(UIStoryboardSegue *)segue
 {
-    _origins = [[DConnectWhitelist sharedWhitelist] origins];
+    _origins = [[DConnectAllowlist sharedAllowlist] origins];
     [self.tableView reloadData];
 
     // 編集ボタンの表示更新

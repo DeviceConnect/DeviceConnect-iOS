@@ -11,7 +11,7 @@
 #import "LocalOAuthProfileDao.h"
 #import "LocalOAuthScopeDao.h"
 #import "LocalOAuthUtils.h"
-#import "LocalOAuthDummy.h"
+#import "LocalOAuthPlaceHolder.h"
 #import "LocalOAuthSQLiteToken.h"
 #import "LocalOAuthSQLiteScopeDb.h"
 #import "LocalOAuthScope.h"

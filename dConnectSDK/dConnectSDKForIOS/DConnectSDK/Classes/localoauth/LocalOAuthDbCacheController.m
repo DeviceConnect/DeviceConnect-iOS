@@ -17,7 +17,7 @@
 
 #import "LocalOAuth2Settings.h"
 #import "LocalOAuthUtils.h"
-#import "LocalOAuthDummy.h"
+#import "LocalOAuthPlaceHolder.h"
 #import "LocalOAuthSampleUser.h"
 #import "LocalOAuthScope.h"
 #import "LocalOAuthSQLiteScopeInfo.h"
@@ -810,7 +810,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 - (LocalOAuthClient *) addClientData: (LocalOAuthPackageInfo *)packageInfo
                   database: (DConnectSQLiteDatabase *)database {
     
-    NSArray *redirectURIs = @[DUMMY_REDIRECTURI];
+    NSArray *redirectURIs = @[EXAMPLE_REDIRECTURI];
     NSDictionary *params = @{};
     
     LocalOAuthClient *client =

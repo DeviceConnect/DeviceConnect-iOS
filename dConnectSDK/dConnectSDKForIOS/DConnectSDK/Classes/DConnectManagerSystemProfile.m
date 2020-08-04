@@ -182,7 +182,7 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
         NSArray *deviceplugins = [pluginMgr devicePluginList];
         for (DConnectDevicePlugin *plugin in deviceplugins) {
             DConnectRequestMessage *copyRequest = [request copy];
-            DConnectResponseMessage *dummyResponse = [DConnectResponseMessage message];
+            DConnectResponseMessage *Response = [DConnectResponseMessage message];
             
             // sessionkeyのコンバート
             NSMutableString *key = [NSMutableString stringWithString:sessionKey];
@@ -191,7 +191,7 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
             [copyRequest setString:key forKey:DConnectMessageSessionKey];
             
             // デバイスプラグインに配送
-            [plugin didReceiveRequest:copyRequest response:dummyResponse];
+            [plugin didReceiveRequest:copyRequest response:Response];
         }
         
         [response setResult:DConnectMessageResultTypeOk];

@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelistUtil.h
+//  DConnectAllowlistUtil.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-@interface DConnectWhitelistUtil : NSObject
+@interface DConnectAllowlistUtil : NSObject
 
-+ (void) showOriginWhitelist;
++ (void) showOriginAllowlist;
 
 @end

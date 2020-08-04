@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DB8621998252D98DAE5DEC8EC20179EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		E313C79961AA91280A727BE072423E24 /* Pods-AllJoynSSL-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-dummy.m */; };
+		E313C79961AA91280A727BE072423E24 /* Pods-AllJoynSSL-example.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-example.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +65,7 @@
 		9024809FAD6B233C301ED650E5C5E436 /* conf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = conf.h; path = "include-ios/openssl/conf.h"; sourceTree = "<group>"; };
 		939F77FC1FAA00A030D8E4461316D020 /* aes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes.h; path = "include-ios/openssl/aes.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AllJoynSSL-dummy.m"; sourceTree = "<group>"; };
+		A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-example.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AllJoynSSL-example.m"; sourceTree = "<group>"; };
 		A388AF11860EE587EE4373B563D2D57A /* cmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cmac.h; path = "include-ios/openssl/cmac.h"; sourceTree = "<group>"; };
 		A3E31FD7FDA32CBC86D63EA2C2A1A321 /* objects.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = objects.h; path = "include-ios/openssl/objects.h"; sourceTree = "<group>"; };
 		A45A15D98136A8859E4A7F0B58C69F05 /* comp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = comp.h; path = "include-ios/openssl/comp.h"; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 			children = (
 				D6F90295803C2F1AD06C7C9CC4FEA866 /* Pods-AllJoynSSL-acknowledgements.markdown */,
 				B9C586B8CEDA3CF35C196AA295A34AF9 /* Pods-AllJoynSSL-acknowledgements.plist */,
-				A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-dummy.m */,
+				A1E4D003AD46AEB1D2A8AD2B0A984251 /* Pods-AllJoynSSL-example.m */,
 				1B0064FF13979C9700260870A6614708 /* Pods-AllJoynSSL-resources.sh */,
 				77CE5AC380750DE4A986463D4AA457DC /* Pods-AllJoynSSL.debug.xcconfig */,
 				4337B6E539EC6FF043653D35BE9EDBE5 /* Pods-AllJoynSSL.release.xcconfig */,
@@ -320,7 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E313C79961AA91280A727BE072423E24 /* Pods-AllJoynSSL-dummy.m in Sources */,
+				E313C79961AA91280A727BE072423E24 /* Pods-AllJoynSSL-example.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

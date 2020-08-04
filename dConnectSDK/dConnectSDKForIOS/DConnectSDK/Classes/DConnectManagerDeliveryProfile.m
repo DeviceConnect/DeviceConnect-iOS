@@ -187,7 +187,7 @@
     NSString *accessToken;
     
     if (!plugin.useLocalOAuth) {
-        // ダミーの認可情報を保存
+        //代用の認可情報を保存
         data = [authDB getAuthDataByServiceId:serviceId];
         if (!data) {
             [authDB addAuthDataWithServiceId:serviceId clientId:[plugin pluginId]];
@@ -195,7 +195,7 @@
         }
         accessToken = [authDB getAccessTokenByAuthData:data];
         if (!accessToken) {
-            accessToken = [plugin pluginId]; // プラグインIDをダミーのアクセストークンとする.
+            accessToken = [plugin pluginId]; // プラグインIDを代用のアクセストークンとする.
             [authDB addAccessToken:accessToken withAuthData:data];
         }
         return accessToken;

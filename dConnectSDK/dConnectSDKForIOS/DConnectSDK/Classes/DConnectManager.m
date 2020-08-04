@@ -21,7 +21,7 @@
 #import "DConnectEventManager.h"
 #import "DConnectDBCacheController.h"
 #import "DConnectConst.h"
-#import "DConnectWhitelist.h"
+#import "DConnectAllowlist.h"
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 #import "DConnectServerManager.h"
@@ -704,7 +704,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         return YES;
     }
     id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
-    return [[DConnectWhitelist sharedWhitelist] allows:origin];
+    return [[DConnectAllowlist sharedAllowlist] allows:origin];
 }
 
 - (void)convertLowerProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request {

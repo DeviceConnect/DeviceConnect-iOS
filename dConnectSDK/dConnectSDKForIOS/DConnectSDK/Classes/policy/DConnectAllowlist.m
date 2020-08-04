@@ -1,5 +1,5 @@
 //
-//  DConnectWhitelist.m
+//  DConnectAllowlist.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -7,30 +7,30 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectWhitelist.h"
+#import "DConnectAllowlist.h"
 #import "DConnectSQLiteOpenHelper.h"
 #import "DConnectOriginDao.h"
 #import "DConnectOriginParser.h"
 
-NSString *const DConnectWhitelistDBName = @"__dconnect_whitelist.db";
-static NSString *const DConnectWhitelistDefaultURL = @"http://localhost:80";
-static NSString *const DConnectWhitelistDefaultTitle = @"Manager(HTTP)";
-const int DCONNECT_WHITELIST_DB_VERSION = 1;
+NSString *const DConnectAllowlistDBName = @"__dconnect_allowlist.db";
+static NSString *const DConnectAllowlistDefaultURL = @"http://localhost:80";
+static NSString *const DConnectAllowlistDefaultTitle = @"Manager(HTTP)";
+const int DCONNECT_ALLOWLIST_DB_VERSION = 1;
 
-@interface DConnectWhitelist () <DConnectSQLiteOpenHelperDelegate>
+@interface DConnectAllowlist () <DConnectSQLiteOpenHelperDelegate>
 {
     DConnectSQLiteOpenHelper *_helper;
 }
 @end
 
-@implementation DConnectWhitelist
+@implementation DConnectAllowlist
 
 - (id) init
 {
     self = [super init];
     if (self) {
-        _helper = [DConnectSQLiteOpenHelper helperWithDBName:DConnectWhitelistDBName
-                                                     version:DCONNECT_WHITELIST_DB_VERSION];
+        _helper = [DConnectSQLiteOpenHelper helperWithDBName:DConnectAllowlistDBName
+                                                     version:DCONNECT_ALLOWLIST_DB_VERSION];
         _helper.delegate = self;
         DConnectSQLiteDatabase *sqlDB = [_helper database];
         [sqlDB close];
@@ -38,18 +38,18 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
     return self;
 }
 
-+ (DConnectWhitelist *) sharedWhitelist
++ (DConnectAllowlist *) sharedAllowlist
 {
-    static DConnectWhitelist *sharedWhitelist = nil;
+    static DConnectAllowlist *sharedAllowlist = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedWhitelist = [[DConnectWhitelist alloc] init];
+        sharedAllowlist = [[DConnectAllowlist alloc] init];
     });
-    id<DConnectOrigin> origin = [DConnectOriginParser parse:DConnectWhitelistDefaultURL];
-    if (![sharedWhitelist existOrigin:origin title:DConnectWhitelistDefaultTitle]) {
-        [sharedWhitelist addOrigin:origin title:DConnectWhitelistDefaultTitle];
+    id<DConnectOrigin> origin = [DConnectOriginParser parse:DConnectAllowlistDefaultURL];
+    if (![sharedAllowlist existOrigin:origin title:DConnectAllowlistDefaultTitle]) {
+        [sharedAllowlist addOrigin:origin title:DConnectAllowlistDefaultTitle];
     }
-    return sharedWhitelist;
+    return sharedAllowlist;
 }
 
 - (NSArray *) origins

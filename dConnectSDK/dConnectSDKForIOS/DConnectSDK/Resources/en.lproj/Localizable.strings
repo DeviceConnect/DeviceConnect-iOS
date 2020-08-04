@@ -49,6 +49,6 @@
 "alert_btn_cancel" = "Cancel";
 "alert_btn_delete" = "Delete";
 
-// Whitelist
-"whitelist_ui_button_edit" = "Edit";
-"whitelist_ui_button_done" = "Done";
+// Allowlist
+"allowlist_ui_button_edit" = "Edit";
+"allowlist_ui_button_done" = "Done";

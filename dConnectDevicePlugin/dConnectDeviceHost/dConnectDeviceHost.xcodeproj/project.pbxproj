@@ -1025,7 +1025,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Headers-dummy-framework",
+					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Headers-example-framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
@@ -1047,7 +1047,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Headers-dummy-framework",
+					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Headers-example-framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
