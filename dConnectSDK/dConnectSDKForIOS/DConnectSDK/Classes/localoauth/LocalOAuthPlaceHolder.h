@@ -9,16 +9,16 @@
 
 #import <Foundation/Foundation.h>
 
-/** ダミー値(RedirectURI). */
+/**代用値(RedirectURI). */
 extern NSString *const EXAMPLE_REDIRECTURI;
 
-/** ダミー値(OriginalRef). */
+/**代用値(OriginalRef). */
 extern NSString *const EXAMPLE_ORIGINALREF;
 
-/** ダミー値(Reference). */
+/**代用値(Reference). */
 extern NSString *const EXAMPLE_REFERENCE;
 
-/** ダミー値(Scope). */
+/**代用値(Scope). */
 extern NSString *const SCOPE1;
 
 /** userテーブルのuser_id(usersは今回作らないので、useridに格納する値を定義する). */

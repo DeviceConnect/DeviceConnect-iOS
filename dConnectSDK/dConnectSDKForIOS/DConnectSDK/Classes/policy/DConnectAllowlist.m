@@ -15,7 +15,7 @@
 NSString *const DConnectAllowlistDBName = @"__dconnect_allowlist.db";
 static NSString *const DConnectAllowlistDefaultURL = @"http://localhost:80";
 static NSString *const DConnectAllowlistDefaultTitle = @"Manager(HTTP)";
-const int DCONNECT_WHITELIST_DB_VERSION = 1;
+const int DCONNECT_ALLOWLIST_DB_VERSION = 1;
 
 @interface DConnectAllowlist () <DConnectSQLiteOpenHelperDelegate>
 {
@@ -30,7 +30,7 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
     self = [super init];
     if (self) {
         _helper = [DConnectSQLiteOpenHelper helperWithDBName:DConnectAllowlistDBName
-                                                     version:DCONNECT_WHITELIST_DB_VERSION];
+                                                     version:DCONNECT_ALLOWLIST_DB_VERSION];
         _helper.delegate = self;
         DConnectSQLiteDatabase *sqlDB = [_helper database];
         [sqlDB close];
