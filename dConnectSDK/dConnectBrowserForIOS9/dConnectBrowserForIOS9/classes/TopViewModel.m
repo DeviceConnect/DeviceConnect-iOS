@@ -70,7 +70,7 @@ static NSInteger maxIconCount = 8;
     if ([bookmarks count] == 0) {
         bookmarks = [[NSMutableArray alloc]init];
     }
-    //maxIconCountに達していない場合はダミーを作成する
+    //maxIconCountに達していない場合は代用を作成する
     while (bookmarks.count < maxIconCount) {
         GHPageModel* page = [[GHPageModel alloc]init];
         page.type = TYPE_BOOKMARK_EXAMPLE;

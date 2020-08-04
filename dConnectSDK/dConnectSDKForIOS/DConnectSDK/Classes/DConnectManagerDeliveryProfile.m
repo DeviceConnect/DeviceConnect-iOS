@@ -195,7 +195,7 @@
         }
         accessToken = [authDB getAccessTokenByAuthData:data];
         if (!accessToken) {
-            accessToken = [plugin pluginId]; // プラグインIDをダミーのアクセストークンとする.
+            accessToken = [plugin pluginId]; // プラグインIDを代用のアクセストークンとする.
             [authDB addAccessToken:accessToken withAuthData:data];
         }
         return accessToken;
